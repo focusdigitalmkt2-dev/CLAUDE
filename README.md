@@ -1,10 +1,12 @@
-# Longevuz Uberaba — Landing Page de Alta Conversão
+# Felipe Sampaio — Tricologia & Estética | Landing Page
 
-Landing page (LP) personalizada para captação de clientes da **Longevuz Uberaba**, baseada na
-estrutura do site institucional da franquia (https://longevuz.com.br/), porém transformada em uma
-página focada em **venda e tráfego pago** (Meta Ads / Google Ads).
+Landing page de alta conversão para captação de pacientes de **Felipe Sampaio — Tricologia &
+Estética**, focada em tráfego pago (Meta Ads / Google Ads) para o público masculino: queda de
+cabelo, calvície, falhas na barba e estética facial.
 
-A parte de "Seja Franqueado" foi removida — toda a página é voltada para o cliente final.
+A logo é reproduzida em SVG (monograma "SF" em degradê dourado + wordmark "Felipe Sampaio" /
+"Tricologia & Estética") no cabeçalho, na seção "Sobre" e no rodapé — nítida em qualquer tamanho
+de tela, sem depender de um arquivo de imagem.
 
 ## Arquivo
 
@@ -14,19 +16,21 @@ A parte de "Seja Franqueado" foi removida — toda a página é voltada para o c
 
 ## Estrutura da página (na ordem)
 
-1. **Cabeçalho fixo** com menu e CTA "Agendar avaliação"
+1. **Cabeçalho fixo** com logo, menu e CTA "Agendar avaliação"
 2. **Hero** com título de conversão + **formulário de captação** (envia direto para o WhatsApp)
-3. **Faixa de credibilidade** (protocolos médicos, +15 protocolos, acompanhamento, avaliações)
-4. **Você se identifica?** — seção de dores (energia, peso, performance, hormônios…)
-5. **A Longevuz Uberaba** — sobre / posicionamento da marca
-6. **Nossos protocolos** — grid de tratamentos (energia, emagrecimento, performance, longevidade,
-   saúde intestinal/detox, massa muscular, saúde hormonal/sexual, colesterol/metabolismo)
+3. **Faixa de credibilidade** (diagnóstico especializado, protocolos individuais, acompanhamento,
+   avaliações)
+4. **Você se identifica?** — seção de dores (queda de cabelo, entradas, falhas na barba, couro
+   cabeludo, autoestima…)
+5. **Sobre** — posicionamento do Felipe Sampaio
+6. **Nossos protocolos** — tricoscopia, PRP capilar, microagulhamento, mesoterapia, protocolo
+   anti-queda, densidade de barba, estética facial masculina, encaminhamento para transplante
 7. **Como funciona** — jornada em 4 passos
-8. **Diferenciais** — por que escolher a Longevuz
+8. **Diferenciais** — por que escolher a Felipe Sampaio
 9. **Depoimentos** — prova social
 10. **FAQ** — dúvidas frequentes (acordeão)
 11. **CTA final** forte
-12. **Rodapé** com contato, redes e disclaimer
+12. **Rodapé** com logo, contato, redes e disclaimer
 13. **Botão flutuante de WhatsApp** em todas as telas
 
 ## Como configurar (2 minutos)
@@ -35,8 +39,8 @@ Abra o `index.html` e edite o bloco `CONFIG` no `<script>` no final do arquivo:
 
 ```js
 const CONFIG = {
-  whatsapp: "5534999999999",   // DDI + DDD + número, só dígitos
-  mensagem: "Olá! Vim pelo site da Longevuz Uberaba e quero agendar minha avaliação.",
+  whatsapp: "5500000000000",   // DDI + DDD + número, só dígitos
+  mensagem: "Olá! Vim pelo site da Felipe Sampaio e quero agendar minha avaliação.",
   instagram: "https://instagram.com/seu_perfil",
 };
 ```
@@ -55,16 +59,28 @@ A função `trackLead()` já dispara evento de **Lead** a cada clique de CTA par
 Para ativar, basta colar o script do seu Meta Pixel e/ou Google Tag dentro do `<head>` do
 `index.html`. O disparo de eventos já está pronto — não precisa mexer no código.
 
+## Sobre a logo
+
+A logo original (monograma dourado "SF" + wordmark) foi recriada em SVG diretamente no HTML, pois
+o arquivo de imagem enviado não pôde ser salvo no repositório. Se preferir usar o arquivo de logo
+original (PNG/SVG), basta:
+
+1. Adicionar o arquivo em `assets/logo.png` (ou `.svg`).
+2. Substituir os blocos `<svg class="monograma">...</svg>` no cabeçalho e rodapé por
+   `<img src="assets/logo.png" class="monograma" alt="Felipe Sampaio">`.
+
 ## Personalização adicional (opcional)
 
-- **Cores da marca:** ajuste as variáveis CSS em `:root` (`--verde-escuro`, `--dourado`, etc.).
+- **Cores da marca:** ajuste as variáveis CSS em `:root` (`--preto`, `--dourado`, etc.).
 - **Textos e depoimentos:** troque livremente pelos reais assim que disponíveis.
 - **Endereço e horários:** atualize na seção de rodapé e no FAQ.
-- **Imagens:** a página usa gradientes e ícones SVG para carregar rápido; você pode substituir por
-  fotos reais da unidade quando quiser.
+- **Fotos:** a página usa gradientes e ícones SVG para carregar rápido; você pode substituir por
+  fotos reais do consultório/atendimento quando quiser.
 
 ## Observações
 
 - Página 100% responsiva (desktop, tablet e mobile).
 - Leve e rápida — importante para a qualidade do anúncio e para a conversão.
 - Os depoimentos são exemplos ilustrativos; substitua por relatos reais antes de veicular.
+- Este repositório não estava conectado ao domínio `hair-for-man.vercel.app` no momento desta
+  atualização — confirme a conexão do projeto Vercel com esta branch para publicar as mudanças.

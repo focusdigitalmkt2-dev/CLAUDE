@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0F3D2E" />
-  <title>Longevuz Uberaba | Mais energia, vitalidade e longevidade a partir dos 40</title>
-  <meta name="description" content="Na Longevuz Uberaba você recupera energia, disposição e vitalidade com protocolos médicos personalizados e baseados em ciência. Agende sua avaliação e comece a viver mais e melhor." />
+  <meta name="theme-color" content="#14120F" />
+  <title>Felipe Sampaio | Tricologia &amp; Estética para Homens</title>
+  <meta name="description" content="Diagnóstico capilar de verdade e protocolos personalizados para queda de cabelo, calvície, falhas na barba e saúde do couro cabeludo. Tricologia e estética masculina com Felipe Sampaio." />
 
   <!-- Open Graph / Social -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Longevuz Uberaba | Viva mais e melhor a partir dos 40" />
-  <meta property="og:description" content="Protocolos médicos personalizados de longevidade, emagrecimento, energia e performance. Baseados em ciência, com acompanhamento humanizado em Uberaba/MG." />
+  <meta property="og:title" content="Felipe Sampaio | Tricologia & Estética" />
+  <meta property="og:description" content="Diagnóstico capilar, protocolos personalizados e acompanhamento contínuo para você recuperar a saúde do cabelo e a confiança." />
   <meta property="og:locale" content="pt_BR" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     /* ===========================================================
@@ -24,20 +24,18 @@
        =========================================================== */
 
     :root{
-      --verde-escuro:#0F3D2E;
-      --verde:#14503B;
-      --verde-medio:#2C6E52;
-      --sage:#E8EFE9;
-      --sage-2:#D8E6DC;
+      --preto:#14120F;
+      --preto-2:#1C1815;
+      --carvao:#241F19;
       --dourado:#C9A24B;
       --dourado-claro:#E4C87E;
+      --dourado-escuro:#8F6F27;
       --creme:#FAF7F0;
-      --creme-2:#F3EEE2;
-      --carvao:#1C2620;
-      --cinza:#5A665E;
+      --creme-2:#F1ECE0;
+      --cinza:#6B6259;
       --branco:#ffffff;
-      --sombra:0 18px 50px -20px rgba(15,61,46,.35);
-      --sombra-sm:0 8px 24px -12px rgba(15,61,46,.25);
+      --sombra:0 18px 50px -20px rgba(20,18,15,.35);
+      --sombra-sm:0 8px 24px -12px rgba(20,18,15,.25);
       --raio:18px;
       --max:1180px;
     }
@@ -52,16 +50,16 @@
       -webkit-font-smoothing:antialiased;
       overflow-x:hidden;
     }
-    h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15;font-weight:600;color:var(--verde-escuro)}
+    h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif;line-height:1.15;font-weight:600;color:var(--preto)}
     a{text-decoration:none;color:inherit}
-    img{max-width:100%;display:block}
+    img,svg{max-width:100%;display:block}
     .container{width:100%;max-width:var(--max);margin:0 auto;padding:0 22px}
     section{position:relative}
 
     .eyebrow{
       display:inline-block;font-family:'Inter',sans-serif;font-weight:600;
       font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
-      color:var(--dourado);margin-bottom:14px;
+      color:var(--dourado-escuro);margin-bottom:14px;
     }
     .eyebrow.light{color:var(--dourado-claro)}
 
@@ -74,16 +72,28 @@
       text-align:center;line-height:1.2;
     }
     .btn-primary{
-      background:linear-gradient(135deg,#D4AF37,#C9A24B);
+      background:linear-gradient(135deg,#E4C87E,#C9A24B);
       color:#20180a;box-shadow:0 12px 28px -10px rgba(201,162,75,.7);
     }
     .btn-primary:hover{transform:translateY(-3px);box-shadow:0 18px 36px -12px rgba(201,162,75,.85)}
-    .btn-outline{background:transparent;color:var(--verde-escuro);border:2px solid var(--verde);}
-    .btn-outline:hover{background:var(--verde);color:#fff;transform:translateY(-2px)}
-    .btn-white{background:#fff;color:var(--verde-escuro)}
+    .btn-outline{background:transparent;color:var(--preto);border:2px solid var(--dourado);}
+    .btn-outline:hover{background:var(--preto);color:#fff;transform:translateY(-2px)}
+    .btn-white{background:#fff;color:var(--preto)}
     .btn-white:hover{transform:translateY(-3px);box-shadow:var(--sombra-sm)}
     .btn-block{width:100%}
     .btn .wa{width:20px;height:20px;fill:currentColor;flex:none}
+
+    /* ---------- Logo (monograma SF + wordmark) ---------- */
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .monograma{width:38px;height:46px;flex:none}
+    .brand .wordmark{display:flex;flex-direction:column;line-height:1}
+    .brand .wordmark .nome{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;letter-spacing:.03em;color:var(--preto)}
+    .brand .wordmark .tag{font-family:'Inter',sans-serif;font-weight:600;font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dourado-escuro);margin-top:2px}
+    header:not(.scrolled) .brand .wordmark .nome{color:#fff}
+    header:not(.scrolled) .brand .wordmark .tag{color:var(--dourado-claro)}
+    .foot-brand .brand .wordmark .nome{color:#fff}
+    .foot-brand .brand .wordmark .tag{color:var(--dourado-claro)}
+    .foot-brand .brand{margin-bottom:16px}
 
     /* ---------- Header ---------- */
     header{
@@ -93,16 +103,6 @@
     }
     header.scrolled{background:rgba(250,247,240,.92);backdrop-filter:blur(12px);box-shadow:0 4px 24px -14px rgba(0,0,0,.3);padding:12px 0}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
-    .logo{display:flex;align-items:center;gap:12px;font-family:'Fraunces',serif;font-weight:600;font-size:1.45rem;color:var(--verde-escuro)}
-    .logo .mark{
-      width:40px;height:40px;border-radius:50%;flex:none;
-      background:linear-gradient(135deg,var(--verde),var(--verde-medio));
-      display:grid;place-items:center;box-shadow:var(--sombra-sm);
-    }
-    .logo .mark svg{width:22px;height:22px;fill:var(--dourado-claro)}
-    .logo small{display:block;font-family:'Inter',sans-serif;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--dourado);font-weight:600;margin-top:-2px}
-    header:not(.scrolled) .logo,header:not(.scrolled) .logo .mark svg{color:#fff}
-    header:not(.scrolled) .logo{color:#fff}
     .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
     .nav-links a{font-weight:500;font-size:.95rem;color:var(--carvao);transition:color .2s}
     header:not(.scrolled) .nav-links a{color:rgba(255,255,255,.9)}
@@ -110,7 +110,7 @@
     .nav-cta{display:inline-flex}
     .nav .btn{padding:12px 22px;font-size:.9rem}
     .menu-toggle{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
-    .menu-toggle span{width:26px;height:2.5px;background:var(--verde-escuro);border-radius:2px;transition:.3s}
+    .menu-toggle span{width:26px;height:2.5px;background:var(--preto);border-radius:2px;transition:.3s}
     header:not(.scrolled) .menu-toggle span{background:#fff}
 
     /* ---------- Hero ---------- */
@@ -118,9 +118,9 @@
       min-height:100vh;display:flex;align-items:center;
       padding:130px 0 80px;
       background:
-        radial-gradient(120% 90% at 80% 0%,rgba(44,110,82,.55) 0%,transparent 55%),
-        radial-gradient(100% 80% at 0% 100%,rgba(201,162,75,.18) 0%,transparent 50%),
-        linear-gradient(160deg,#0C3325 0%,#0F3D2E 45%,#14503B 100%);
+        radial-gradient(120% 90% at 80% 0%,rgba(201,162,75,.22) 0%,transparent 55%),
+        radial-gradient(100% 80% at 0% 100%,rgba(201,162,75,.12) 0%,transparent 50%),
+        linear-gradient(160deg,#0E0C0A 0%,#14120F 45%,#1C1815 100%);
       color:#fff;overflow:hidden;
     }
     .hero::after{
@@ -139,7 +139,7 @@
 
     .hero-card{
       position:relative;border-radius:26px;overflow:hidden;box-shadow:var(--sombra);
-      background:linear-gradient(155deg,#1a5b43,#0d3728);
+      background:linear-gradient(155deg,#241F19,#14120F);
       border:1px solid rgba(228,200,126,.25);padding:38px 34px;
     }
     .hero-card .halo{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(228,200,126,.35),transparent 70%);top:-90px;right:-70px}
@@ -152,14 +152,14 @@
     }
     .hero-form input::placeholder{color:rgba(255,255,255,.5)}
     .hero-form select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='%23E4C87E'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-    .hero-form option{color:#1C2620}
+    .hero-form option{color:#1C1815}
     .hero-form input:focus,.hero-form select:focus{outline:none;border-color:var(--dourado-claro)}
     .hero-form .btn{margin-top:22px}
     .hero-card .reassure{text-align:center;font-size:.78rem;color:rgba(255,255,255,.6);margin-top:14px;display:flex;align-items:center;justify-content:center;gap:6px}
     .hero-card .reassure svg{width:14px;height:14px;fill:var(--dourado-claro)}
 
     /* ---------- Faixa credibilidade ---------- */
-    .trust-bar{background:var(--verde-escuro);padding:26px 0;border-top:1px solid rgba(255,255,255,.06)}
+    .trust-bar{background:var(--preto);padding:26px 0;border-top:1px solid rgba(255,255,255,.06)}
     .trust-bar .container{display:flex;justify-content:space-around;align-items:center;gap:20px;flex-wrap:wrap}
     .trust-item{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.9)}
     .trust-item svg{width:28px;height:28px;fill:var(--dourado-claro);flex:none}
@@ -177,26 +177,25 @@
     .dores-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
     .dor-card{
       background:#fff;border-radius:var(--raio);padding:28px 26px;box-shadow:var(--sombra-sm);
-      border:1px solid rgba(20,80,59,.06);transition:transform .25s,box-shadow .25s;
+      border:1px solid rgba(20,18,15,.06);transition:transform .25s,box-shadow .25s;
     }
     .dor-card:hover{transform:translateY(-4px);box-shadow:var(--sombra)}
-    .dor-card .ic{width:52px;height:52px;border-radius:14px;background:var(--sage);display:grid;place-items:center;margin-bottom:16px}
-    .dor-card .ic svg{width:26px;height:26px;fill:var(--verde-medio)}
+    .dor-card .ic{width:52px;height:52px;border-radius:14px;background:var(--creme-2);display:grid;place-items:center;margin-bottom:16px}
+    .dor-card .ic svg{width:26px;height:26px;fill:var(--dourado-escuro)}
     .dor-card h3{font-size:1.15rem;margin-bottom:8px}
     .dor-card p{color:var(--cinza);font-size:.95rem}
     .dores-cta{text-align:center;margin-top:46px}
-    .dores-cta p{font-size:1.15rem;color:var(--verde-escuro);font-weight:500;margin-bottom:22px;font-family:'Fraunces',serif}
+    .dores-cta p{font-size:1.15rem;color:var(--preto);font-weight:500;margin-bottom:22px;font-family:'Fraunces',serif}
 
     /* ---------- Sobre ---------- */
     .sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
     .sobre-visual{
       border-radius:26px;min-height:440px;position:relative;overflow:hidden;box-shadow:var(--sombra);
-      background:linear-gradient(155deg,#14503B,#0F3D2E);
+      background:linear-gradient(155deg,#1C1815,#14120F);
       display:flex;align-items:flex-end;padding:34px;
     }
     .sobre-visual .glow{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(228,200,126,.3),transparent 70%);top:-100px;left:-80px}
-    .sobre-visual .leaf{position:absolute;right:-30px;bottom:-30px;width:260px;height:260px;opacity:.14}
-    .sobre-visual .leaf svg{width:100%;height:100%;fill:var(--dourado-claro)}
+    .sobre-visual .monograma-grande{position:absolute;right:-10px;bottom:-10px;width:220px;height:270px;opacity:.16}
     .sobre-stat{position:relative;z-index:2;background:rgba(255,255,255,.08);backdrop-filter:blur(6px);border:1px solid rgba(228,200,126,.25);border-radius:16px;padding:22px 26px;color:#fff}
     .sobre-stat b{font-family:'Fraunces',serif;font-size:2.2rem;color:var(--dourado-claro);display:block}
     .sobre-stat span{font-size:.9rem;color:rgba(255,255,255,.8)}
@@ -207,7 +206,7 @@
     .sobre-list li svg{width:22px;height:22px;fill:var(--dourado);flex:none;margin-top:2px}
 
     /* ---------- Tratamentos ---------- */
-    .tratamentos{background:var(--verde-escuro);color:#fff}
+    .tratamentos{background:var(--preto);color:#fff}
     .tratamentos .sec-head h2{color:#fff}
     .tratamentos .sec-head p{color:rgba(255,255,255,.75)}
     .trat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
@@ -226,10 +225,10 @@
     /* ---------- Como funciona ---------- */
     .como{background:var(--creme)}
     .passos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:26px;margin-top:20px}
-    .passo{position:relative;padding:34px 26px;background:#fff;border-radius:var(--raio);box-shadow:var(--sombra-sm);border:1px solid rgba(20,80,59,.06)}
+    .passo{position:relative;padding:34px 26px;background:#fff;border-radius:var(--raio);box-shadow:var(--sombra-sm);border:1px solid rgba(20,18,15,.06)}
     .passo .num{
-      width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-medio));
-      color:var(--dourado-claro);font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;
+      width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--dourado-escuro),var(--dourado));
+      color:#1c1815;font-family:'Fraunces',serif;font-weight:700;font-size:1.3rem;
       display:grid;place-items:center;margin-bottom:18px;box-shadow:var(--sombra-sm);
     }
     .passo h3{font-size:1.18rem;margin-bottom:8px}
@@ -237,29 +236,29 @@
 
     /* ---------- Diferenciais ---------- */
     .dif-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
-    .dif-card{padding:30px 26px;border-radius:var(--raio);background:var(--sage);border:1px solid rgba(20,80,59,.08)}
+    .dif-card{padding:30px 26px;border-radius:var(--raio);background:var(--creme-2);border:1px solid rgba(20,18,15,.08)}
     .dif-card .ic{width:52px;height:52px;border-radius:14px;background:#fff;display:grid;place-items:center;margin-bottom:16px;box-shadow:var(--sombra-sm)}
-    .dif-card .ic svg{width:26px;height:26px;fill:var(--verde-medio)}
+    .dif-card .ic svg{width:26px;height:26px;fill:var(--dourado-escuro)}
     .dif-card h3{font-size:1.15rem;margin-bottom:8px}
     .dif-card p{color:var(--cinza);font-size:.95rem}
 
     /* ---------- Depoimentos ---------- */
     .depo{background:var(--creme-2)}
     .depo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-    .depo-card{background:#fff;border-radius:var(--raio);padding:30px 28px;box-shadow:var(--sombra-sm);border:1px solid rgba(20,80,59,.06);display:flex;flex-direction:column}
+    .depo-card{background:#fff;border-radius:var(--raio);padding:30px 28px;box-shadow:var(--sombra-sm);border:1px solid rgba(20,18,15,.06);display:flex;flex-direction:column}
     .stars{display:flex;gap:3px;margin-bottom:14px}
     .stars svg{width:18px;height:18px;fill:var(--dourado)}
     .depo-card p{color:var(--carvao);font-size:1rem;font-style:italic;margin-bottom:20px;flex:1}
     .depo-author{display:flex;align-items:center;gap:12px}
-    .depo-author .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-medio));color:var(--dourado-claro);display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;flex:none}
-    .depo-author b{display:block;font-size:.98rem;color:var(--verde-escuro)}
+    .depo-author .av{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--dourado-escuro),var(--dourado));color:#1c1815;display:grid;place-items:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;flex:none}
+    .depo-author b{display:block;font-size:.98rem;color:var(--preto)}
     .depo-author span{font-size:.82rem;color:var(--cinza)}
 
     /* ---------- FAQ ---------- */
     .faq-wrap{max-width:820px;margin:0 auto}
-    .faq-item{background:#fff;border:1px solid rgba(20,80,59,.1);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:box-shadow .2s}
+    .faq-item{background:#fff;border:1px solid rgba(20,18,15,.1);border-radius:14px;margin-bottom:14px;overflow:hidden;transition:box-shadow .2s}
     .faq-item.open{box-shadow:var(--sombra-sm)}
-    .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:'Fraunces',serif;font-size:1.08rem;font-weight:600;color:var(--verde-escuro)}
+    .faq-q{width:100%;text-align:left;background:none;border:none;cursor:pointer;padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:'Fraunces',serif;font-size:1.08rem;font-weight:600;color:var(--preto)}
     .faq-q .plus{width:26px;height:26px;flex:none;position:relative;transition:transform .3s}
     .faq-q .plus::before,.faq-q .plus::after{content:"";position:absolute;background:var(--dourado);border-radius:2px;top:50%;left:50%;transform:translate(-50%,-50%)}
     .faq-q .plus::before{width:14px;height:2.5px}
@@ -271,8 +270,8 @@
     /* ---------- CTA final ---------- */
     .cta-final{
       background:
-        radial-gradient(100% 120% at 100% 0%,rgba(201,162,75,.25),transparent 55%),
-        linear-gradient(155deg,#0C3325,#14503B);
+        radial-gradient(100% 120% at 100% 0%,rgba(228,200,126,.2),transparent 55%),
+        linear-gradient(155deg,#0E0C0A,#1C1815);
       color:#fff;text-align:center;padding:96px 0;overflow:hidden;
     }
     .cta-final::after{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;opacity:.5;pointer-events:none}
@@ -283,10 +282,8 @@
     .cta-final .micro{margin-top:20px;font-size:.86rem;color:rgba(255,255,255,.6)}
 
     /* ---------- Footer ---------- */
-    footer{background:#0A2A1E;color:rgba(255,255,255,.7);padding:64px 0 30px}
+    footer{background:#0A0908;color:rgba(255,255,255,.7);padding:64px 0 30px}
     .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:44px}
-    .foot-brand .logo{color:#fff;margin-bottom:16px}
-    .foot-brand .logo small{color:var(--dourado)}
     .foot-brand p{font-size:.94rem;max-width:340px}
     .foot-col h4{color:#fff;font-size:1rem;margin-bottom:18px;font-family:'Inter',sans-serif;font-weight:600}
     .foot-col ul{list-style:none}
@@ -326,7 +323,7 @@
     @media(max-width:760px){
       .nav-links{
         position:fixed;top:0;right:-100%;width:78%;max-width:320px;height:100vh;
-        background:var(--verde-escuro);flex-direction:column;justify-content:center;
+        background:var(--preto);flex-direction:column;justify-content:center;
         gap:28px;transition:right .35s ease;box-shadow:-10px 0 40px rgba(0,0,0,.3);padding:40px;
       }
       .nav-links.open{right:0}
@@ -350,19 +347,34 @@
 </head>
 <body>
 
+  <!-- SVG defs compartilhados (gradiente dourado da logo) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="gradDourado" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#F3D98B"/>
+        <stop offset="45%" stop-color="#C9A24B"/>
+        <stop offset="100%" stop-color="#8F6F27"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
   <!-- ================= HEADER ================= -->
   <header id="header">
     <div class="container nav">
-      <a href="#top" class="logo" aria-label="Longevuz Uberaba">
-        <span class="mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg>
+      <a href="#top" class="brand" aria-label="Felipe Sampaio — Tricologia & Estética">
+        <svg class="monograma" viewBox="0 0 60 78" aria-hidden="true">
+          <text x="30" y="56" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="500" font-size="50" fill="url(#gradDourado)" text-anchor="middle">S</text>
+          <text x="33" y="46" font-family="Fraunces, Georgia, serif" font-weight="700" font-size="42" fill="url(#gradDourado)" text-anchor="middle">F</text>
+        </svg>
+        <span class="wordmark">
+          <span class="nome">Felipe Sampaio</span>
+          <span class="tag">Tricologia &amp; Estética</span>
         </span>
-        <span>Longevuz<small>Uberaba</small></span>
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="#tratamentos">Tratamentos</a></li>
-        <li><a href="#sobre">A Longevuz</a></li>
-        <li><a href="#como">Como funciona</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#como">Diagnóstico</a></li>
         <li><a href="#depoimentos">Resultados</a></li>
         <li><a href="#faq">Dúvidas</a></li>
         <li class="nav-cta"><a href="#" class="btn btn-primary" data-cta="nav">Agendar avaliação</a></li>
@@ -377,9 +389,9 @@
   <section class="hero" id="top">
     <div class="container hero-grid">
       <div class="hero-text reveal">
-        <span class="eyebrow light">Longevidade &amp; Saúde Integrada · Uberaba/MG</span>
-        <h1>Viva com mais <span class="g">energia, vitalidade</span> e saúde depois dos 40</h1>
-        <p class="lead">Protocolos médicos personalizados que unem ciência e acompanhamento humanizado para você recuperar disposição, emagrecer com saúde e prevenir o envelhecimento precoce — sem fórmulas mágicas.</p>
+        <span class="eyebrow light">Tricologia &amp; Estética Masculina</span>
+        <h1>Diagnóstico de verdade para <span class="g">recuperar seu cabelo</span> e sua confiança</h1>
+        <p class="lead">Protocolos personalizados baseados em tricoscopia e ciência para tratar queda de cabelo, calvície, falhas na barba e devolver a saúde do seu couro cabeludo — sem fórmula genérica.</p>
         <div class="hero-cta">
           <a href="#" class="btn btn-primary" data-cta="hero">
             <svg class="wa" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 10.15c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
@@ -388,9 +400,9 @@
           <a href="#tratamentos" class="btn btn-white">Ver tratamentos</a>
         </div>
         <div class="hero-trust">
-          <div class="t"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> Suporte médico especializado</div>
-          <div class="t"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1m3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg> Baseado em evidência científica</div>
-          <div class="t"><svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Atendimento humanizado</div>
+          <div class="t"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg> Diagnóstico com tricoscopia</div>
+          <div class="t"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1m3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg> Baseado em ciência</div>
+          <div class="t"><svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Acompanhamento contínuo</div>
         </div>
       </div>
 
@@ -403,20 +415,20 @@
           <label for="nome">Seu nome</label>
           <input type="text" id="nome" name="nome" placeholder="Como podemos te chamar?" required />
           <label for="tel">WhatsApp</label>
-          <input type="tel" id="tel" name="tel" placeholder="(34) 9 9999-9999" required />
+          <input type="tel" id="tel" name="tel" placeholder="(00) 9 9999-9999" required />
           <label for="obj">Principal objetivo</label>
           <select id="obj" name="obj">
             <option value="">Selecione...</option>
-            <option>Mais energia e disposição</option>
-            <option>Emagrecimento saudável</option>
-            <option>Prevenção do envelhecimento</option>
-            <option>Performance física</option>
-            <option>Saúde hormonal / menopausa / andropausa</option>
+            <option>Queda de cabelo</option>
+            <option>Calvície / entradas</option>
+            <option>Falhas na barba</option>
+            <option>Caspa, oleosidade ou coceira</option>
+            <option>Saúde geral do couro cabeludo</option>
             <option>Outro</option>
           </select>
           <button type="submit" class="btn btn-primary btn-block">
             <svg class="wa" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m4.52 12.15c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
-            Falar com a Longevuz
+            Falar com a equipe
           </button>
         </form>
         <div class="reassure"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2M9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/></svg> Seus dados estão seguros. Sem spam.</div>
@@ -427,10 +439,10 @@
   <!-- ================= FAIXA CREDIBILIDADE ================= -->
   <div class="trust-bar">
     <div class="container">
-      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z"/></svg><div><strong>Protocolos médicos</strong><span>Prescrição individualizada</span></div></div>
-      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"/></svg><div><strong>+ de 15 protocolos</strong><span>Para cada objetivo</span></div></div>
-      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3m-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3m0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5m8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><div><strong>Acompanhamento contínuo</strong><span>Você nunca sozinho</span></div></div>
-      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><div><strong>Avaliação 5 estrelas</strong><span>De quem já vive melhor</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z"/></svg><div><strong>Diagnóstico especializado</strong><span>Tricoscopia antes de qualquer indicação</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"/></svg><div><strong>Protocolos individuais</strong><span>Para cada tipo de queda</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3m-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3m0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5m8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><div><strong>Acompanhamento contínuo</strong><span>Você nunca sozinho no processo</span></div></div>
+      <div class="trust-item"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><div><strong>Avaliação 5 estrelas</strong><span>De quem já recuperou o cabelo</span></div></div>
     </div>
   </div>
 
@@ -439,43 +451,43 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Você se identifica?</span>
-        <h2>Cansaço, ganho de peso e falta de disposição não são "coisa da idade"</h2>
-        <p>A partir dos 40, o corpo muda — mas viver com menos energia não precisa ser o novo normal. Veja se algum desses sinais faz parte da sua rotina:</p>
+        <h2>Queda de cabelo e falhas na barba não são só "genética"</h2>
+        <p>Na maioria dos casos existe uma causa tratável — mas sem diagnóstico correto o cabelo continua caindo. Veja se algum desses sinais faz parte da sua rotina:</p>
       </div>
       <div class="dores-grid">
         <div class="dor-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
-          <h3>Sem energia o dia todo</h3>
-          <p>Você acorda cansado, se arrasta durante o dia e sente que a disposição de antes ficou no passado.</p>
+          <h3>Queda acima do normal</h3>
+          <p>Você percebe mais fios no travesseiro, no ralo do banho e na escova todos os dias.</p>
         </div>
         <div class="dor-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9m0 16a7 7 0 1 1 7-7 7 7 0 0 1-7 7m-1-11h2v6h-2m0 2h2v2h-2"/></svg></div>
-          <h3>Peso que não desce</h3>
-          <p>Dietas e academia não resolvem mais. O metabolismo desacelerou e a gordura teima em ficar.</p>
+          <h3>Entradas e calvície avançando</h3>
+          <p>As entradas estão subindo e a coroa começa a ficar rala — e nada que você usou parou o processo.</p>
         </div>
         <div class="dor-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2m-6 0h-4V4h4z"/></svg></div>
-          <h3>Menos performance</h3>
-          <p>Rende menos no trabalho, nos treinos e na vida. Falta foco, força e recuperação.</p>
+          <h3>Falhas na barba</h3>
+          <p>Barba rala, com falhas ou crescimento irregular que te incomoda no espelho e nas fotos.</p>
         </div>
         <div class="dor-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 5c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3m0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08s5.97 1.09 6 3.08c-1.29 1.94-3.5 3.22-6 3.22z"/></svg></div>
-          <h3>Envelhecimento precoce</h3>
-          <p>Pele, humor, sono e libido mudaram. Você sente que envelheceu mais rápido do que deveria.</p>
+          <h3>Couro cabeludo desconfortável</h3>
+          <p>Caspa, oleosidade excessiva ou coceira que pioram junto com a queda de cabelo.</p>
         </div>
         <div class="dor-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2m0 12a5 5 0 0 1-4-2c.05-1.32 3-2 4-2s3.95.68 4 2a5 5 0 0 1-4 2z"/></svg></div>
-          <h3>Alterações hormonais</h3>
-          <p>Menopausa, andropausa, oscilações de humor e sintomas que ninguém explicou direito.</p>
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg></div>
+          <h3>Autoestima afetada</h3>
+          <p>Evita fotos, boné toda hora, se compara com "antes" e sente que isso pesa na confiança.</p>
         </div>
         <div class="dor-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7m0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg></div>
           <h3>Já tentou de tudo</h3>
-          <p>Suplementos aleatórios, "dietas milagrosas" e conselhos soltos que nunca trouxeram resultado real.</p>
+          <p>Shampoos milagrosos, receitas caseiras e produtos de influenciador que nunca resolveram de verdade.</p>
         </div>
       </div>
       <div class="dores-cta reveal">
-        <p>Se você marcou pelo menos um, a Longevuz Uberaba tem um protocolo para você.</p>
+        <p>Se você marcou pelo menos um, existe um protocolo tricológico para o seu caso.</p>
         <a href="#" class="btn btn-primary" data-cta="dores">Quero descobrir meu protocolo</a>
       </div>
     </div>
@@ -486,23 +498,26 @@
     <div class="container sobre-grid">
       <div class="sobre-visual reveal">
         <div class="glow" aria-hidden="true"></div>
-        <div class="leaf" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg></div>
+        <svg class="monograma-grande" viewBox="0 0 60 78" aria-hidden="true">
+          <text x="30" y="56" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="500" font-size="50" fill="#E4C87E" text-anchor="middle">S</text>
+          <text x="33" y="46" font-family="Fraunces, Georgia, serif" font-weight="700" font-size="42" fill="#E4C87E" text-anchor="middle">F</text>
+        </svg>
         <div class="sobre-stat">
-          <b>40+</b>
-          <span>A longevidade ativa começa cedo. Cuide do seu futuro hoje.</span>
+          <b>360°</b>
+          <span>Diagnóstico, tratamento e acompanhamento em um só lugar.</span>
         </div>
       </div>
       <div class="sobre-text reveal">
-        <span class="eyebrow">A Longevuz Uberaba</span>
-        <h2>Integrando saúde e vida, com ciência e acolhimento</h2>
-        <p>A Longevuz nasceu para transformar a forma como cuidamos do envelhecimento. Em Uberaba, unimos medicina baseada em evidência, tecnologia e um olhar humano para oferecer mais tempo de vida com qualidade, autonomia e propósito.</p>
-        <p>Nada de protocolos genéricos. Aqui, cada plano é construído para o seu corpo, sua rotina e seus objetivos — sempre com suporte médico especializado do começo ao fim.</p>
+        <span class="eyebrow">Felipe Sampaio</span>
+        <h2>Tricologia e estética masculina com ciência e acolhimento</h2>
+        <p>Felipe Sampaio atua com foco exclusivo na saúde capilar e na estética masculina, unindo tricoscopia, protocolos personalizados e tecnologia para tratar a causa da queda de cabelo — e não apenas o sintoma.</p>
+        <p>Nada de receita padrão. Cada protocolo é construído a partir do seu diagnóstico, do seu histórico e da sua rotina, com acompanhamento próximo do início ao resultado.</p>
         <ul class="sobre-list">
-          <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Avaliação clínica completa antes de qualquer prescrição</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Avaliação tricológica completa antes de qualquer indicação</li>
           <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Protocolos personalizados e ajustados ao seu progresso</li>
-          <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Ambiente acolhedor e atendimento próximo</li>
+          <li><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Atendimento discreto, próximo e sem julgamento</li>
         </ul>
-        <a href="#" class="btn btn-outline" data-cta="sobre">Falar com um especialista</a>
+        <a href="#" class="btn btn-outline" data-cta="sobre">Falar com a equipe</a>
       </div>
     </div>
   </section>
@@ -512,49 +527,49 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow light">Nossos protocolos</span>
-        <h2>Um tratamento para cada objetivo da sua longevidade</h2>
-        <p>Protocolos exclusivos, seguros e baseados em ciência para quem quer mais energia, vitalidade e equilíbrio.</p>
+        <h2>Um tratamento para cada objetivo da sua saúde capilar</h2>
+        <p>Protocolos exclusivos, seguros e baseados em ciência para recuperar densidade, força e confiança.</p>
       </div>
       <div class="trat-grid">
         <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
-          <h3>Energia &amp; Disposição</h3>
-          <p>Otimização da energia e vitalidade para você render mais no trabalho, nos treinos e na vida.</p>
-        </div>
-        <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9m1 5h-2v6h2m0 2h-2v2h2"/></svg></div>
-          <h3>Emagrecimento Saudável</h3>
-          <p>Protocolos que tratam a causa: compulsão por doces, fome emocional, metabolismo lento e síndrome metabólica.</p>
-        </div>
-        <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M20.57 14.86 22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg></div>
-          <h3>Performance Física</h3>
-          <p>Para atletas profissionais e amadores: força, recuperação, resistência e ganho de massa muscular.</p>
-        </div>
-        <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m-1 15-5-5 1.41-1.41L11 14.17l6.59-6.59L19 9z"/></svg></div>
-          <h3>Prevenção do Envelhecimento</h3>
-          <p>Protocolos de longevidade para retardar o envelhecimento precoce e preservar sua saúde a longo prazo.</p>
-        </div>
-        <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 18h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-5l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg></div>
-          <h3>Saúde Intestinal &amp; Detox</h3>
-          <p>Detox hepático e equilíbrio do intestino — base para imunidade, disposição e emagrecimento.</p>
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.36 12.64 2 8.5 2S1 5.36 1 9.5 4.36 17 8.5 17c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L19.49 19zm-7 0C6.01 14 4 11.99 4 9.5S6.01 5 8.5 5 13 7.01 13 9.5 10.99 14 8.5 14z"/></svg></div>
+          <h3>Tricoscopia (Diagnóstico Capilar)</h3>
+          <p>Exame que identifica a causa real da queda — base de todo protocolo antes de qualquer indicação.</p>
         </div>
         <div class="trat-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5a2.5 2.5 0 0 0-5 0V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V19c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V21H17c1.1 0 2-.9 2-2v-4h1.5a2.5 2.5 0 0 0 0-5z"/></svg></div>
-          <h3>Massa Muscular (Sarcopenia)</h3>
-          <p>Recupere e aumente a massa muscular perdida com a idade — essencial para força e longevidade.</p>
+          <h3>PRP Capilar</h3>
+          <p>Plasma rico em plaquetas para estimular os folículos e fortalecer os fios naturalmente.</p>
         </div>
         <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg></div>
-          <h3>Saúde Hormonal &amp; Sexual</h3>
-          <p>Menopausa, andropausa, libido e disfunções — reequilíbrio hormonal com segurança e acompanhamento.</p>
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M20.57 14.86 22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg></div>
+          <h3>Microagulhamento Capilar</h3>
+          <p>Estimula a produção de colágeno e melhora a absorção de ativos direto no couro cabeludo.</p>
         </div>
         <div class="trat-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg></div>
-          <h3>Colesterol &amp; Metabolismo</h3>
-          <p>Redução do colesterol e controle da síndrome metabólica para proteger seu coração e sua saúde.</p>
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 18h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-5l-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2z"/></svg></div>
+          <h3>Mesoterapia Capilar</h3>
+          <p>Aplicação de ativos direto na derme para nutrir o folículo e reduzir a queda.</p>
+        </div>
+        <div class="trat-card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></div>
+          <h3>Protocolo Anti-Queda</h3>
+          <p>Combinação de terapias e cuidados diários para estabilizar a queda e fortalecer os fios.</p>
+        </div>
+        <div class="trat-card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-2 .89-2 2v11c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2m-6 0h-4V4h4z"/></svg></div>
+          <h3>Densidade &amp; Falhas na Barba</h3>
+          <p>Protocolos específicos para estimular crescimento e uniformidade da barba.</p>
+        </div>
+        <div class="trat-card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 9 9 0 0 0-9-9m1 5h-2v6h2m0 2h-2v2h2"/></svg></div>
+          <h3>Estética Facial Masculina</h3>
+          <p>Skincare, limpeza de pele e procedimentos estéticos pensados para a pele do homem.</p>
+        </div>
+        <div class="trat-card reveal">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V5l-8-3z"/></svg></div>
+          <h3>Encaminhamento para Transplante</h3>
+          <p>Quando indicado, orientação e encaminhamento para transplante capilar com parceiros de confiança.</p>
         </div>
       </div>
       <div class="trat-cta reveal">
@@ -568,8 +583,8 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Simples e seguro</span>
-        <h2>Como funciona a sua jornada na Longevuz</h2>
-        <p>Em poucos passos você sai da estagnação e começa a viver com mais saúde e disposição.</p>
+        <h2>Como funciona seu diagnóstico com a Felipe Sampaio</h2>
+        <p>Em poucos passos você sai da tentativa e erro e começa um protocolo feito para o seu caso.</p>
       </div>
       <div class="passos">
         <div class="passo reveal">
@@ -579,8 +594,8 @@
         </div>
         <div class="passo reveal">
           <div class="num">2</div>
-          <h3>Avaliação médica completa</h3>
-          <p>Entendemos seu histórico, seus objetivos e o que seu corpo realmente precisa.</p>
+          <h3>Tricoscopia e diagnóstico</h3>
+          <p>Avaliamos o couro cabeludo e os fios de perto para identificar a causa real da queda.</p>
         </div>
         <div class="passo reveal">
           <div class="num">3</div>
@@ -600,39 +615,29 @@
   <section class="sec" id="diferenciais">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="eyebrow">Por que a Longevuz</span>
+        <span class="eyebrow">Por que a Felipe Sampaio</span>
         <h2>O cuidado que você não encontra em qualquer lugar</h2>
       </div>
       <div class="dif-grid">
         <div class="dif-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1m3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg></div>
-          <h3>Ciência de verdade</h3>
-          <p>Tratamentos baseados em evidência, sem fórmulas mágicas ou promessas irreais.</p>
+          <h3>Diagnóstico de verdade</h3>
+          <p>Tricoscopia antes de qualquer indicação — sem "achismo" ou fórmula genérica.</p>
         </div>
         <div class="dif-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>
-          <h3>100% personalizado</h3>
-          <p>Cada protocolo é único, ajustado ao seu corpo, rotina e objetivos de vida.</p>
+          <h3>Foco 100% masculino</h3>
+          <p>Protocolos e ambiente pensados especificamente para as necessidades do homem.</p>
         </div>
         <div class="dif-card reveal">
           <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21.35 10.55 20C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg></div>
-          <h3>Atendimento humanizado</h3>
-          <p>Você é ouvido, acolhido e acompanhado de perto em cada etapa da jornada.</p>
+          <h3>Acompanhamento próximo</h3>
+          <p>Ajustes no protocolo conforme a resposta do seu couro cabeludo, não um plano fixo e genérico.</p>
         </div>
         <div class="dif-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4m-2 16-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9z"/></svg></div>
-          <h3>Segurança em primeiro lugar</h3>
-          <p>Prescrição médica responsável, com monitoramento e ajustes constantes.</p>
-        </div>
-        <div class="dif-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/></svg></div>
-          <h3>Resultados reais</h3>
-          <p>Foco em resultados sustentáveis: mais energia, saúde e qualidade de vida de verdade.</p>
-        </div>
-        <div class="dif-card reveal">
-          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m4.2 14.2L11 13V7h1.5v5.25l4.5 2.67z"/></svg></div>
-          <h3>Aqui em Uberaba</h3>
-          <p>Todo o cuidado da Longevuz pertinho de você, com equipe local e atendimento próximo.</p>
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 4a2 2 0 1 1-2 2 2 2 0 0 1 2-2m0 12a5 5 0 0 1-4-2c.05-1.32 3-2 4-2s3.95.68 4 2a5 5 0 0 1-4 2z"/></svg></div>
+          <h3>Ambiente discreto</h3>
+          <p>Atendimento respeitoso e sem julgamento, do primeiro contato ao resultado final.</p>
         </div>
       </div>
     </div>
@@ -642,24 +647,24 @@
   <section class="sec depo" id="depoimentos">
     <div class="container">
       <div class="sec-head reveal">
-        <span class="eyebrow">Resultados de quem vive melhor</span>
-        <h2>Histórias de quem recuperou a energia e a saúde</h2>
+        <span class="eyebrow">Resultados reais</span>
+        <h2>Quem confiou, recuperou o cabelo e a confiança</h2>
       </div>
       <div class="depo-grid">
         <div class="depo-card reveal">
           <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-          <p>“Aos 48 anos eu vivia exausta. Em poucas semanas de protocolo voltei a ter energia para trabalhar e brincar com meus filhos. Me sinto 10 anos mais nova.”</p>
-          <div class="depo-author"><span class="av">M</span><div><b>Márcia R.</b><span>Uberaba/MG</span></div></div>
+          <p>"Eu já tinha tentado de tudo antes de fazer a tricoscopia. Em poucos meses de protocolo já vi a queda estabilizar de verdade."</p>
+          <div class="depo-author"><div class="av">R</div><div><b>Rafael M.</b><span>Paciente há 8 meses</span></div></div>
         </div>
         <div class="depo-card reveal">
           <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-          <p>“Tentei de tudo para emagrecer e nada funcionava. Aqui entenderam a causa e montaram um plano só pra mim. Perdi peso com saúde e sem sofrimento.”</p>
-          <div class="depo-author"><span class="av">R</span><div><b>Rodrigo M.</b><span>Uberaba/MG</span></div></div>
+          <p>"O que me convenceu foi o diagnóstico antes de qualquer indicação. Finalmente entendi a causa da minha queda."</p>
+          <div class="depo-author"><div class="av">L</div><div><b>Lucas T.</b><span>Paciente há 1 ano</span></div></div>
         </div>
         <div class="depo-card reveal">
           <div class="stars"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
-          <p>“O acompanhamento faz toda a diferença. Nunca me senti sozinha no processo. Minha disposição, meu sono e meu humor melhoraram muito.”</p>
-          <div class="depo-author"><span class="av">A</span><div><b>Ana Paula S.</b><span>Uberaba/MG</span></div></div>
+          <p>"Fiz o protocolo pra falha na barba e o resultado passou do que eu esperava. Atendimento super discreto e profissional."</p>
+          <div class="depo-author"><div class="av">G</div><div><b>Gabriel S.</b><span>Paciente há 5 meses</span></div></div>
         </div>
       </div>
     </div>
@@ -670,48 +675,44 @@
     <div class="container">
       <div class="sec-head reveal">
         <span class="eyebrow">Dúvidas frequentes</span>
-        <h2>Tudo o que você precisa saber</h2>
+        <h2>Tudo o que você precisa saber antes de agendar</h2>
       </div>
       <div class="faq-wrap">
         <div class="faq-item reveal">
-          <button class="faq-q">A Longevuz é para mim? <span class="plus"></span></button>
-          <div class="faq-a"><p>Se você tem 40 anos ou mais (ou está se aproximando) e quer mais energia, emagrecer com saúde, melhorar a performance ou prevenir o envelhecimento, sim. Nossos protocolos também atendem quem busca reequilíbrio hormonal, saúde intestinal e qualidade de vida. Na avaliação, definimos o melhor caminho para o seu caso.</p></div>
+          <button class="faq-q">Funciona mesmo para calvície avançada? <span class="plus"></span></button>
+          <div class="faq-a"><p>Depende do grau e da causa identificada na tricoscopia. Em muitos casos é possível estabilizar a queda e fortalecer a área afetada; em casos mais avançados, também orientamos sobre transplante capilar.</p></div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">Como funciona a avaliação? <span class="plus"></span></button>
-          <div class="faq-a"><p>É uma avaliação médica completa, na qual entendemos seu histórico, seus exames, seus objetivos e o que seu corpo precisa. A partir disso, montamos um protocolo 100% personalizado — nada de tratamentos genéricos.</p></div>
+          <button class="faq-q">Em quanto tempo vejo resultado? <span class="plus"></span></button>
+          <div class="faq-a"><p>Os primeiros sinais de estabilização da queda costumam aparecer entre 2 e 3 meses de protocolo. Ganho de densidade visível varia de pessoa para pessoa e é acompanhado de perto durante o tratamento.</p></div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">Os tratamentos são seguros? <span class="plus"></span></button>
-          <div class="faq-a"><p>Sim. Todos os protocolos são baseados em evidência científica, com prescrição médica responsável e acompanhamento contínuo. Sua segurança é sempre a nossa prioridade.</p></div>
+          <button class="faq-q">É só para o couro cabeludo ou também trata a barba? <span class="plus"></span></button>
+          <div class="faq-a"><p>Trabalhamos tanto queda de cabelo e couro cabeludo quanto falhas e densidade de barba, com protocolos específicos para cada caso.</p></div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">Em quanto tempo vejo resultados? <span class="plus"></span></button>
-          <div class="faq-a"><p>Muitos pacientes relatam mais energia e disposição já nas primeiras semanas. Como cada corpo responde de uma forma, o tempo varia conforme o objetivo e o protocolo — e por isso o acompanhamento é tão importante.</p></div>
+          <button class="faq-q">Preciso fazer algum exame antes? <span class="plus"></span></button>
+          <div class="faq-a"><p>A avaliação inicial já inclui a tricoscopia. Se necessário, também podemos solicitar exames complementares para investigar causas hormonais ou nutricionais.</p></div>
         </div>
         <div class="faq-item reveal">
-          <button class="faq-q">Onde fica a Longevuz Uberaba? <span class="plus"></span></button>
-          <div class="faq-a"><p>Estamos em Uberaba/MG, com atendimento próximo e humanizado. Ao agendar sua avaliação pelo WhatsApp, nossa equipe passa todos os detalhes de endereço e horários.</p></div>
-        </div>
-        <div class="faq-item reveal">
-          <button class="faq-q">Como faço para começar? <span class="plus"></span></button>
-          <div class="faq-a"><p>É simples: clique em qualquer botão desta página ou preencha o formulário para falar com nossa equipe pelo WhatsApp. Agende sua avaliação e dê o primeiro passo para viver com mais saúde.</p></div>
+          <button class="faq-q">Como funciona o atendimento? <span class="plus"></span></button>
+          <div class="faq-a"><p>Você agenda pelo WhatsApp, faz a avaliação inicial com diagnóstico, recebe seu protocolo personalizado e segue com acompanhamento contínuo até o resultado.</p></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ================= CTA FINAL ================= -->
-  <section class="cta-final" id="cta">
+  <section class="cta-final">
     <div class="container">
-      <span class="eyebrow light">Comece hoje</span>
-      <h2>Sua melhor versão depois dos 40 começa com uma decisão</h2>
-      <p>Não deixe o cansaço, o peso e a falta de disposição roubarem mais anos da sua vida. Agende sua avaliação na Longevuz Uberaba e descubra o protocolo certo para você.</p>
-      <a href="#" class="btn btn-primary" data-cta="final">
+      <span class="eyebrow light">Chegou a hora</span>
+      <h2>Pare de tentar sozinho. Comece com o diagnóstico certo.</h2>
+      <p>Agende sua avaliação com a Felipe Sampaio e descubra o protocolo ideal para o seu cabelo e sua barba.</p>
+      <a href="#" class="btn btn-primary" data-cta="cta-final">
         <svg class="wa" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m4.52 12.15c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
-        Agendar minha avaliação agora
+        Quero agendar minha avaliação
       </a>
-      <p class="micro">Atendimento humanizado · Vagas limitadas por semana · Resposta rápida no WhatsApp</p>
+      <p class="micro">Atendimento por WhatsApp. Vagas limitadas por semana.</p>
     </div>
   </section>
 
@@ -720,152 +721,141 @@
     <div class="container">
       <div class="foot-grid">
         <div class="foot-brand">
-          <a href="#top" class="logo">
-            <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/></svg></span>
-            <span>Longevuz<small>Uberaba</small></span>
-          </a>
-          <p>Integrando saúde e vida. Longevidade ativa, com ciência e acolhimento, para você viver mais e melhor a partir dos 40.</p>
+          <div class="brand">
+            <svg class="monograma" viewBox="0 0 60 78" aria-hidden="true">
+              <text x="30" y="56" font-family="Fraunces, Georgia, serif" font-style="italic" font-weight="500" font-size="50" fill="url(#gradDourado)" text-anchor="middle">S</text>
+              <text x="33" y="46" font-family="Fraunces, Georgia, serif" font-weight="700" font-size="42" fill="url(#gradDourado)" text-anchor="middle">F</text>
+            </svg>
+            <span class="wordmark">
+              <span class="nome">Felipe Sampaio</span>
+              <span class="tag">Tricologia &amp; Estética</span>
+            </span>
+          </div>
+          <p>Diagnóstico e protocolos personalizados para queda de cabelo, calvície, barba e estética masculina — com ciência e acompanhamento próximo.</p>
           <div class="socials">
-            <a href="#" aria-label="Instagram" data-social="instagram"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.12 1.38C1.36 2.67.95 3.34.63 4.14.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.12.66.66 1.33 1.07 2.12 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.8 5.8 0 0 0 2.12-1.38 5.8 5.8 0 0 0 1.38-2.12c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.8 5.8 0 0 0-1.38-2.12A5.8 5.8 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.41-10.4a1.44 1.44 0 1 1-1.44-1.44 1.44 1.44 0 0 1 1.44 1.44z"/></svg></a>
-            <a href="#" aria-label="WhatsApp" data-social="whatsapp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m5.84 14.15c-.25.7-1.45 1.34-2 1.42-.53.08-1.18.11-1.9-.12-.44-.14-1-.32-1.72-.63-3.03-1.31-5-4.36-5.16-4.56-.15-.2-1.23-1.63-1.23-3.11s.78-2.21 1.05-2.51c.28-.3.6-.38.8-.38l.58.01c.18.01.44-.07.69.53.25.6.85 2.08.92 2.23.08.15.13.32.02.52-.1.2-.16.32-.31.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.61.18.3.8 1.31 1.71 2.13 1.18 1.05 2.17 1.37 2.48 1.52.31.15.49.13.67-.08.18-.2.77-.9.98-1.21.2-.3.41-.25.69-.15.28.1 1.77.83 2.07.98.3.15.5.22.57.35.08.13.08.72-.17 1.42"/></svg></a>
+            <a href="#" aria-label="Instagram" data-cta="social-instagram"><svg viewBox="0 0 24 24"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9a5.5 5.5 0 0 1-5.5 5.5h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2m0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9m9.75 1.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10m0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6"/></svg></a>
+            <a href="#" aria-label="WhatsApp" data-cta="social-whatsapp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m4.52 12.15c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg></a>
           </div>
         </div>
         <div class="foot-col">
           <h4>Navegação</h4>
           <ul>
             <li><a href="#tratamentos">Tratamentos</a></li>
-            <li><a href="#sobre">A Longevuz</a></li>
-            <li><a href="#como">Como funciona</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#como">Diagnóstico</a></li>
             <li><a href="#depoimentos">Resultados</a></li>
-            <li><a href="#faq">Dúvidas frequentes</a></li>
+            <li><a href="#faq">Dúvidas</a></li>
           </ul>
         </div>
         <div class="foot-col">
           <h4>Contato</h4>
           <ul>
-            <li><span><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7m0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/></svg> Uberaba / MG</span></li>
-            <li><a href="#" data-cta="footer-wa"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2"/></svg> Fale no WhatsApp</a></li>
-            <li><a href="#" data-cta="footer-agendar"><svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Agendar avaliação</a></li>
+            <li><span><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg> WhatsApp — agende sua avaliação</span></li>
+            <li><span><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg> Atendimento presencial e online</span></li>
           </ul>
         </div>
       </div>
       <div class="foot-bottom">
-        <span>© <span id="year">2026</span> Longevuz Uberaba. Todos os direitos reservados.</span>
-        <span>Integrando saúde e vida.</span>
+        <span>&copy; <span id="ano"></span> Felipe Sampaio — Tricologia &amp; Estética. Todos os direitos reservados.</span>
+        <a href="#top">Voltar ao topo ↑</a>
       </div>
-      <p class="foot-disclaimer">Este site tem caráter informativo e não substitui a consulta médica. Os tratamentos são individualizados e prescritos após avaliação profissional. Resultados podem variar de pessoa para pessoa.</p>
+      <p class="foot-disclaimer">Resultados podem variar de pessoa para pessoa. As informações deste site têm caráter educativo e não substituem uma avaliação individual.</p>
     </div>
   </footer>
 
-  <!-- WhatsApp flutuante -->
+  <!-- ================= WHATSAPP FLUTUANTE ================= -->
   <a href="#" class="wa-float" id="waFloat" aria-label="Falar no WhatsApp" data-cta="float">
-    <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m5.84 14.15c-.25.7-1.45 1.34-2 1.42-.53.08-1.18.11-1.9-.12-.44-.14-1-.32-1.72-.63-3.03-1.31-5-4.36-5.16-4.56-.15-.2-1.23-1.63-1.23-3.11s.78-2.21 1.05-2.51c.28-.3.6-.38.8-.38l.58.01c.18.01.44-.07.69.53.25.6.85 2.08.92 2.23.08.15.13.32.02.52-.1.2-.16.32-.31.5-.15.17-.32.39-.46.52-.15.15-.31.31-.13.61.18.3.8 1.31 1.71 2.13 1.18 1.05 2.17 1.37 2.48 1.52.31.15.49.13.67-.08.18-.2.77-.9.98-1.21.2-.3.41-.25.69-.15.28.1 1.77.83 2.07.98.3.15.5.22.57.35.08.13.08.72-.17 1.42"/></svg>
+    <svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.82 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.23-8.24 8.23a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 10.15c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29"/></svg>
   </a>
 
   <script>
-    /* ===========================================================
-       CONFIGURAÇÃO RÁPIDA — edite os valores abaixo
-       =========================================================== */
+    // ===========================================================
+    // CONFIG — Ajuste aqui o WhatsApp, mensagem padrão e Instagram
+    // ===========================================================
     const CONFIG = {
-      // Número do WhatsApp com DDI+DDD, apenas dígitos. Ex: 5534999999999
-      whatsapp: "5534999999999",
-      // Mensagem pré-preenchida enviada ao WhatsApp
-      mensagem: "Olá! Vim pelo site da Longevuz Uberaba e quero agendar minha avaliação.",
-      // Instagram (opcional)
-      instagram: "https://instagram.com/",
+      whatsapp: "5500000000000",   // DDI + DDD + número, só dígitos
+      mensagem: "Olá! Vim pelo site da Felipe Sampaio e quero agendar minha avaliação.",
+      instagram: "https://instagram.com/seu_perfil",
     };
 
-    /* --------- Monta os links de WhatsApp --------- */
+    document.getElementById("ano").textContent = new Date().getFullYear();
+
     function waLink(msg){
-      const texto = encodeURIComponent(msg || CONFIG.mensagem);
-      return `https://wa.me/${CONFIG.whatsapp}?text=${texto}`;
+      return `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg || CONFIG.mensagem)}`;
     }
 
-    /* --------- Rastreamento de conversão (opcional) ---------
-       Descomente e cole seu Meta Pixel / Google Tag no <head>.
-       Aqui disparamos o evento de Lead em cada clique de CTA. */
     function trackLead(origem){
       try{
-        if(window.fbq){ fbq('track','Lead',{source:origem}); }
-        if(window.gtag){ gtag('event','generate_lead',{source:origem}); }
-        if(window.dataLayer){ window.dataLayer.push({event:'lead_click',source:origem}); }
+        if (typeof fbq === "function") fbq('track','Lead',{content_name:origem});
+        if (typeof gtag === "function") gtag('event','generate_lead',{source:origem});
+        if (window.dataLayer) window.dataLayer.push({event:'generate_lead', source:origem});
       }catch(e){}
     }
 
-    /* --------- Aplica links de WhatsApp a todos os CTAs --------- */
     document.querySelectorAll('[data-cta]').forEach(el=>{
-      const origem = el.getAttribute('data-cta');
-      el.setAttribute('href', waLink());
-      el.setAttribute('target','_blank');
-      el.setAttribute('rel','noopener');
-      el.addEventListener('click',()=>trackLead(origem));
+      if (el.getAttribute('href') === '#' ) el.setAttribute('href', waLink());
+      el.addEventListener('click', ()=> trackLead(el.dataset.cta));
     });
-    // Redes sociais
-    document.querySelectorAll('[data-social="whatsapp"]').forEach(el=>{el.href=waLink();el.target="_blank";el.rel="noopener";});
-    document.querySelectorAll('[data-social="instagram"]').forEach(el=>{el.href=CONFIG.instagram;el.target="_blank";el.rel="noopener";});
 
-    /* --------- Formulário -> WhatsApp com dados --------- */
-    const form = document.getElementById('leadForm');
-    if(form){
-      form.addEventListener('submit',e=>{
-        e.preventDefault();
-        const nome = document.getElementById('nome').value.trim();
-        const tel = document.getElementById('tel').value.trim();
-        const obj = document.getElementById('obj').value;
-        if(!nome || !tel){
-          alert('Por favor, preencha seu nome e WhatsApp.');
-          return;
-        }
-        let msg = `Olá! Meu nome é ${nome} e quero agendar uma avaliação na Longevuz Uberaba.`;
-        if(obj) msg += ` Meu principal objetivo é: ${obj}.`;
-        msg += ` Meu WhatsApp é ${tel}.`;
-        trackLead('form');
-        window.open(waLink(msg),'_blank','noopener');
-      });
-    }
+    const waFloat = document.getElementById('waFloat');
+    if (waFloat) waFloat.href = waLink();
 
-    /* --------- Header ao rolar --------- */
+    const instagramLinks = document.querySelectorAll('[data-cta="social-instagram"]');
+    instagramLinks.forEach(a => a.href = CONFIG.instagram);
+
+    // Header scroll
     const header = document.getElementById('header');
-    const onScroll = ()=>{ header.classList.toggle('scrolled', window.scrollY > 40); };
-    window.addEventListener('scroll', onScroll); onScroll();
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll);
 
-    /* --------- Menu mobile --------- */
-    const toggle = document.getElementById('menuToggle');
+    // Menu mobile
+    const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
-    toggle.addEventListener('click',()=>{
-      toggle.classList.toggle('active');
+    menuToggle.addEventListener('click', ()=>{
+      menuToggle.classList.toggle('active');
       navLinks.classList.toggle('open');
     });
-    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
-      toggle.classList.remove('active');
+    navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+      menuToggle.classList.remove('active');
       navLinks.classList.remove('open');
     }));
 
-    /* --------- FAQ acordeão --------- */
-    document.querySelectorAll('.faq-q').forEach(btn=>{
-      btn.addEventListener('click',()=>{
-        const item = btn.parentElement;
-        const ans = btn.nextElementSibling;
-        const open = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i=>{
-          i.classList.remove('open');
-          i.querySelector('.faq-a').style.maxHeight = null;
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(entries=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, {threshold:.15});
+    revealEls.forEach(el=>io.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-item').forEach(item=>{
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', ()=>{
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(o=>{
+          o.classList.remove('open');
+          o.querySelector('.faq-a').style.maxHeight = null;
         });
-        if(!open){
+        if(!isOpen){
           item.classList.add('open');
-          ans.style.maxHeight = ans.scrollHeight + 'px';
+          a.style.maxHeight = a.scrollHeight + 'px';
         }
       });
     });
 
-    /* --------- Reveal on scroll --------- */
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target);} });
-    },{threshold:0.12});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-    /* --------- Ano no rodapé --------- */
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Formulário -> WhatsApp
+    const leadForm = document.getElementById('leadForm');
+    leadForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const nome = document.getElementById('nome').value.trim();
+      const tel = document.getElementById('tel').value.trim();
+      const obj = document.getElementById('obj').value;
+      const msg = `Olá! Meu nome é ${nome}, meu WhatsApp é ${tel} e meu objetivo principal é: ${obj || "não informado"}. Vim pelo site da Felipe Sampaio.`;
+      trackLead('form');
+      window.open(waLink(msg), '_blank');
+    });
   </script>
 </body>
 </html>
