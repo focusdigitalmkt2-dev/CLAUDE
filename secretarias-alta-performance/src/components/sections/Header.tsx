@@ -12,7 +12,7 @@ const nav = [
   { label: "O problema", href: `#${sections.problem}` },
   { label: "Método", href: `#${sections.method}` },
   { label: "Cases", href: `#${sections.cases}` },
-  { label: "Ingressos", href: `#${sections.pricing}` },
+  { label: "Inscrição", href: `#${sections.signup}` },
   { label: "FAQ", href: `#${sections.faq}` },
 ];
 
@@ -64,7 +64,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href={`#${sections.pricing}`} size="md" track="header_cta">
+          <Button href={`#${sections.signup}`} size="md" track="header_cta">
             Quero lotar minha agenda
           </Button>
         </div>
@@ -105,7 +105,7 @@ export function Header() {
           </ul>
           <div className="mt-auto pt-8">
             <Button
-              href={`#${sections.pricing}`}
+              href={`#${sections.signup}`}
               size="xl"
               fullWidth
               track="mobile_menu_cta"

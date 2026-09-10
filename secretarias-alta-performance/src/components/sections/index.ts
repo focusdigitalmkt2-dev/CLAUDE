@@ -10,7 +10,7 @@ export { MindsetSection } from "./MindsetSection";
 export { AuthoritySection } from "./AuthoritySection";
 export { CasesSection } from "./CasesSection";
 export { ComparisonSection } from "./ComparisonSection";
-export { PricingSection } from "./PricingSection";
+export { SignupSection } from "./SignupSection";
 export { ROISection } from "./ROISection";
 export { UrgencySection } from "./UrgencySection";
 export { FAQSection } from "./FAQSection";

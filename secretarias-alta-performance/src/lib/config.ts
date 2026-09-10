@@ -27,10 +27,6 @@ export const site = {
 } as const;
 
 export const links = {
-  /** Checkout do ingresso individual (R$ 997) */
-  checkoutIndividual: env("NEXT_PUBLIC_CHECKOUT_INDIVIDUAL", "#oferta"),
-  /** Checkout do ingresso duplo (R$ 1.497) */
-  checkoutDuplo: env("NEXT_PUBLIC_CHECKOUT_DUPLO", "#oferta"),
   /** WhatsApp comercial: DDI + DDD + número, apenas dígitos */
   whatsapp: env("NEXT_PUBLIC_WHATSAPP", "5534999999999"),
   whatsappMessage:
@@ -44,50 +40,26 @@ export const links = {
 export const whatsappUrl = () =>
   `https://wa.me/${links.whatsapp}?text=${encodeURIComponent(links.whatsappMessage)}`;
 
-export const pricing = {
-  individual: {
-    id: "individual",
-    label: "Plano 01",
-    name: "Ingresso Individual",
-    tagline: "Para 1 secretária ou participante.",
-    price: 997,
-    priceLabel: "R$ 997",
-    cta: "GARANTIR 1 VAGA",
-    href: links.checkoutIndividual,
-    features: [
-      "2 dias de treinamento",
-      "Apostila",
-      "Checklists",
-      "Material de implementação",
-      "Método completo",
-    ],
-  },
-  duplo: {
-    id: "duplo",
-    label: "Plano 02",
-    name: "Ingresso Duplo",
-    tagline:
-      "Ideal para levar duas pessoas da clínica ou participar junto com sua secretária.",
-    price: 1497,
-    priceLabel: "R$ 1.497",
-    badge: "MAIS ESCOLHIDO",
-    cta: "QUERO O INGRESSO DUPLO",
-    href: links.checkoutDuplo,
-    features: [
-      "2 participantes",
-      "2 dias de treinamento",
-      "Apostilas",
-      "Checklists",
-      "Material de implementação",
-      "Método completo",
-    ],
-    comparison: {
-      twoIndividual: "R$ 1.994",
-      duplo: "R$ 1.497",
-      savings: "R$ 497",
-    },
-  },
+/**
+ * CAPTURA DE LEADS (Nome + WhatsApp)
+ * - webhookUrl: URL que recebe um POST JSON { name, phone, source, page, date }
+ *   (Zapier, Make, n8n, RD Station, Google Sheets via Apps Script, etc.).
+ *   Deixe vazio para não enviar a nenhum sistema.
+ * - redirectToWhatsApp: após o envio, abre o WhatsApp comercial com a
+ *   mensagem já preenchida com os dados do lead.
+ */
+export const lead = {
+  webhookUrl: env("NEXT_PUBLIC_LEAD_WEBHOOK_URL", ""),
+  redirectToWhatsApp: true,
+  successTitle: "Recebemos seus dados!",
+  successText:
+    "Nossa equipe vai falar com você pelo WhatsApp para confirmar sua vaga.",
 } as const;
+
+export const leadWhatsappUrl = (name: string, phone: string) =>
+  `https://wa.me/${links.whatsapp}?text=${encodeURIComponent(
+    `Olá! Sou ${name}. Quero garantir minha vaga na Formação de Secretárias de Alta Performance (${event.dateLabel}). Meu WhatsApp: ${phone}`,
+  )}`;
 
 /** Datas do treinamento (edite aqui e o site inteiro atualiza) */
 export const event = {
@@ -110,7 +82,7 @@ export const sections = {
   authority: "autoridade",
   cases: "cases",
   comparison: "comparacao",
-  pricing: "oferta",
+  signup: "inscricao",
   roi: "roi",
   faq: "faq",
   final: "garantir-vaga",

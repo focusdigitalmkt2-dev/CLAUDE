@@ -12,19 +12,19 @@ export default function TermsPage() {
   return (
     <LegalPage title="Termos de Uso">
       <p>
-        Ao adquirir um ingresso para o treinamento {site.name}, você concorda com as condições
-        descritas nesta página.
+        Ao se inscrever no treinamento {site.name}, você concorda com as condições descritas
+        nesta página.
       </p>
-      <h2>Ingressos</h2>
+      <h2>Inscrição</h2>
       <p>
-        Os ingressos são pessoais e dão direito à participação nos 2 dias de treinamento e ao
-        material de implementação descrito na página de oferta.
+        A inscrição é pessoal e dá direito à participação nos 2 dias de treinamento e ao material
+        de implementação descrito na página. As condições de confirmação da vaga são informadas
+        pela equipe comercial no contato após o cadastro.
       </p>
-      <h2>Cancelamento e reembolso</h2>
+      <h2>Cancelamento</h2>
       <p>
-        As condições de cancelamento seguem o Código de Defesa do Consumidor e a política da
-        plataforma de pagamento utilizada. Para solicitações, entre em contato pelo e-mail{" "}
-        {links.email}.
+        As condições de cancelamento seguem o Código de Defesa do Consumidor. Para solicitações,
+        entre em contato pelo e-mail {links.email}.
       </p>
       <h2>Resultados</h2>
       <p>

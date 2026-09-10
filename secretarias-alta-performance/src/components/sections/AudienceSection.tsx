@@ -81,7 +81,7 @@ export function AudienceSection() {
                 atendimento.
               </p>
               <div className="mt-6 flex flex-col gap-3">
-                <Button href={`#${sections.pricing}`} size="lg" fullWidth track="audience_cta">
+                <Button href={`#${sections.signup}`} size="lg" fullWidth track="audience_cta">
                   Quero lotar minha agenda
                 </Button>
               </div>

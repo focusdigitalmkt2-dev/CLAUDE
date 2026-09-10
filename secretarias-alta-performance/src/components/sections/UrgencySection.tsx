@@ -26,7 +26,7 @@ export function UrgencySection() {
           </h2>
         </Reveal>
         <Reveal delay={0.15} className="mt-10 flex flex-col items-center gap-3">
-          <Button href={`#${sections.pricing}`} size="xl" pulse track="urgency_cta" className="w-full sm:w-auto">
+          <Button href={`#${sections.signup}`} size="xl" pulse track="urgency_cta" className="w-full sm:w-auto">
             Quero transformar meu atendimento
           </Button>
           <Microcopy />

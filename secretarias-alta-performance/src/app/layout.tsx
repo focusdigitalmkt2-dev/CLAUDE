@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/*
           RASTREAMENTO
           Cole aqui os scripts do Meta Pixel / Google Tag / GTM.
-          Os eventos de CTA e checkout já são disparados por src/lib/analytics.ts.
+          Os eventos de CTA e Lead já são disparados por src/lib/analytics.ts.
         */}
       </head>
       <body className="min-h-dvh antialiased">

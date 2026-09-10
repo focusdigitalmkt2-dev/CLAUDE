@@ -183,7 +183,7 @@ export function CasesSection() {
         </div>
 
         <Reveal delay={0.1} className="mt-12 flex flex-col items-center gap-3">
-          <Button href={`#${sections.pricing}`} size="xl" track="cases_cta" className="w-full sm:w-auto">
+          <Button href={`#${sections.signup}`} size="xl" track="cases_cta" className="w-full sm:w-auto">
             Quero lotar minha agenda
           </Button>
           <Microcopy />

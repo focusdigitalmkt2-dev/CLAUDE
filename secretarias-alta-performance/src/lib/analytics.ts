@@ -22,13 +22,13 @@ export function trackCTA(label: string, extra: Record<string, unknown> = {}) {
   }
 }
 
-export function trackCheckout(plan: "individual" | "duplo", value: number) {
+export function trackLead(extra: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
   const w = window as Win;
   try {
-    w.fbq?.("track", "InitiateCheckout", { content_name: plan, value, currency: "BRL" });
-    w.gtag?.("event", "begin_checkout", { items: [{ item_name: plan, price: value }], value, currency: "BRL" });
-    w.dataLayer?.push({ event: "begin_checkout", plan, value });
+    w.fbq?.("track", "Lead", extra);
+    w.gtag?.("event", "generate_lead", extra);
+    w.dataLayer?.push({ event: "generate_lead", ...extra });
   } catch {
     /* silencioso */
   }

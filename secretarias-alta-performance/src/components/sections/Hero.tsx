@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CalendarCheck, CalendarDays, MessageCircle, Users } from "lucide-react";
+import { CalendarCheck, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { LeadForm } from "@/components/LeadForm";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { event, sections } from "@/lib/config";
 
@@ -76,7 +76,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div {...fade(0.32)} className="flex w-full flex-col items-start gap-3 sm:w-auto">
-            <Button href={`#${sections.pricing}`} size="xl" pulse track="hero_cta" className="w-full sm:w-auto">
+            <Button href="#hero-form" size="xl" pulse track="hero_cta" className="w-full sm:w-auto lg:hidden">
               Quero lotar minha agenda
             </Button>
             <p className="text-xs font-medium text-muted sm:text-[13px]">
@@ -86,6 +86,7 @@ export function Hero() {
           </motion.div>
         </div>
 
+        {/* Formulário de captura — primeira dobra */}
         <motion.div
           initial={reduce ? false : { opacity: 0, scale: 0.96, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -93,47 +94,7 @@ export function Hero() {
           className="relative mx-auto w-full max-w-md lg:max-w-none"
         >
           <div aria-hidden className="absolute -inset-3 rounded-[28px] bg-gold/10 blur-2xl" />
-
-          {/*
-            IMAGEM PRINCIPAL DO HERO
-            Substituir por: foto dos especialistas/palestrantes ou imagem do treinamento presencial.
-            Arquivo sugerido: /public/images/speakers/palestrantes.jpg (proporção 4:5)
-            → passe src="/images/speakers/palestrantes.jpg"
-          */}
-          <ImagePlaceholder
-            alt="Foto dos especialistas que conduzem o treinamento"
-            label="Foto dos especialistas"
-            hint="Palestrantes ou imagem do treinamento presencial"
-            aspect="4/5"
-            priority
-            rounded="rounded-[24px]"
-            className="relative shadow-card"
-            icon={<Users className="size-6" aria-hidden />}
-          />
-
-          {/* Card flutuante — conversa no WhatsApp */}
-          <motion.div
-            aria-hidden
-            className="absolute -left-4 bottom-10 hidden w-60 rounded-2xl border border-line-strong bg-black/90 p-4 shadow-card backdrop-blur sm:block lg:-left-10"
-            animate={reduce ? undefined : { y: [0, -8, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <div className="flex items-center gap-2">
-              <span className="flex size-8 items-center justify-center rounded-full bg-gold text-black">
-                <MessageCircle className="size-4" />
-              </span>
-              <div>
-                <p className="text-xs font-bold">Paciente</p>
-                <p className="text-[10px] text-muted">agora</p>
-              </div>
-            </div>
-            <p className="mt-3 rounded-xl rounded-tl-sm bg-graphite-3 px-3 py-2 text-xs leading-snug text-paper/90">
-              Oi! Quanto custa a consulta?
-            </p>
-            <p className="mt-2 ml-6 rounded-xl rounded-tr-sm bg-gold px-3 py-2 text-xs font-semibold leading-snug text-black">
-              Posso te agendar hoje às 15h ou amanhã às 9h?
-            </p>
-          </motion.div>
+          <div id="hero-form" className="scroll-mt-24"><LeadForm source="hero" className="relative" /></div>
         </motion.div>
       </div>
     </section>

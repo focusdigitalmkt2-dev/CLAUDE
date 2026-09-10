@@ -1,5 +1,5 @@
 import { faq } from "@/content/faq";
-import { event, pricing, site } from "@/lib/config";
+import { event, site } from "@/lib/config";
 
 /** Dados estruturados (SEO): FAQ + Evento/Curso. */
 export function JsonLd() {
@@ -19,24 +19,6 @@ export function JsonLd() {
     name: site.name,
     description: site.description,
     provider: { "@type": "Organization", name: site.company, url: site.url },
-    offers: [
-      {
-        "@type": "Offer",
-        name: pricing.individual.name,
-        price: pricing.individual.price,
-        priceCurrency: "BRL",
-        availability: "https://schema.org/InStock",
-        url: `${site.url}/#oferta`,
-      },
-      {
-        "@type": "Offer",
-        name: pricing.duplo.name,
-        price: pricing.duplo.price,
-        priceCurrency: "BRL",
-        availability: "https://schema.org/InStock",
-        url: `${site.url}/#oferta`,
-      },
-    ],
     hasCourseInstance: {
       "@type": "CourseInstance",
       courseMode: "Onsite",

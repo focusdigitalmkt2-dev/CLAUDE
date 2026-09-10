@@ -4,7 +4,7 @@ import { Section } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Microcopy } from "@/components/ui/Microcopy";
-import { pricing, sections } from "@/lib/config";
+import { sections } from "@/lib/config";
 
 export function FinalCTA() {
   return (
@@ -39,33 +39,12 @@ export function FinalCTA() {
         </Reveal>
 
         <Reveal delay={0.2} className="mt-10 flex flex-col items-center gap-3">
-          <Button href={`#${sections.pricing}`} variant="white" size="xl" track="final_cta" className="w-full sm:w-auto">
+          <Button href={`#${sections.signup}`} variant="white" size="xl" track="final_cta" className="w-full sm:w-auto">
             Quero garantir minha vaga
           </Button>
           <Microcopy dark />
         </Reveal>
 
-        <Reveal delay={0.25} className="mx-auto mt-10 grid max-w-xl gap-3 sm:grid-cols-2">
-          <a
-            href={pricing.individual.href}
-            className="group flex items-center justify-between rounded-2xl border border-black/15 bg-black/5 px-5 py-4 text-left transition-colors hover:bg-black hover:text-paper"
-          >
-            <span className="text-xs font-bold uppercase tracking-wider">Ingresso individual</span>
-            <span className="whitespace-nowrap font-display text-xl font-black">{pricing.individual.priceLabel}</span>
-          </a>
-          <a
-            href={pricing.duplo.href}
-            className="group flex items-center justify-between rounded-2xl bg-black px-5 py-4 text-left text-paper shadow-card transition-transform hover:-translate-y-0.5"
-          >
-            <span className="flex flex-col gap-1">
-              <span className="text-xs font-bold uppercase tracking-wider">Ingresso duplo</span>
-              <span className="w-fit rounded bg-gold px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-black">
-                Mais escolhido
-              </span>
-            </span>
-            <span className="whitespace-nowrap font-display text-xl font-black text-gold">{pricing.duplo.priceLabel}</span>
-          </a>
-        </Reveal>
       </div>
     </Section>
   );

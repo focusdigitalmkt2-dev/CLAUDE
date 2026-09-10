@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { event, pricing, sections } from "@/lib/config";
+import { event, sections } from "@/lib/config";
 
 /**
  * Barra fixa no rodapé em telas pequenas.
@@ -16,7 +16,7 @@ export function StickyCTA() {
 
   useEffect(() => {
     const hero = document.getElementById(sections.hero);
-    const offer = document.getElementById(sections.pricing);
+    const offer = document.getElementById(sections.signup);
     const final = document.getElementById(sections.final);
 
     const heroObs = new IntersectionObserver(
@@ -53,11 +53,11 @@ export function StickyCTA() {
           <div className="flex items-center gap-3">
             <div className="min-w-0 flex-1">
               <p className="truncate text-[11px] font-bold uppercase tracking-wider text-gold">
-                A partir de {pricing.individual.priceLabel}
+                {event.dateLabel} · Vagas limitadas
               </p>
-              <p className="truncate text-xs text-muted">{event.dateLabel} · 2 dias intensivos</p>
+              <p className="truncate text-xs text-muted">Treinamento intensivo de 2 dias</p>
             </div>
-            <Button href={`#${sections.pricing}`} size="md" track="sticky_cta" className="shrink-0">
+            <Button href={`#${sections.signup}`} size="md" track="sticky_cta" className="shrink-0">
               Garantir vaga
             </Button>
           </div>

@@ -33,7 +33,7 @@ export function ImpactSection() {
         </Reveal>
 
         <Reveal delay={0.2} className="mt-10 flex flex-col items-center gap-3">
-          <Button href={`#${sections.pricing}`} size="xl" track="impact_cta" className="w-full sm:w-auto">
+          <Button href={`#${sections.signup}`} size="xl" track="impact_cta" className="w-full sm:w-auto">
             Quero transformar minha secretária
           </Button>
           <Microcopy />

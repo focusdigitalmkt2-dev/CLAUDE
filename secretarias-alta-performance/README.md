@@ -1,7 +1,8 @@
 # Formação de Secretárias de Alta Performance — Landing Page
 
-Landing page premium, mobile-first e focada em conversão para vender ingressos do treinamento
-intensivo de 2 dias da **Focus** voltado a clínicas, consultórios e profissionais da saúde.
+Landing page premium, mobile-first e focada em captura de leads (nome + WhatsApp) para o
+treinamento intensivo de 2 dias da **Focus Digital** voltado a clínicas, consultórios e
+profissionais da saúde.
 
 **Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion · lucide-react
 
@@ -18,8 +19,11 @@ npm run lint
 
 ## O que trocar antes de publicar
 
-1. **Links de checkout, WhatsApp e Instagram** → copie `.env.example` para `.env.local` e preencha.
-   Sem as variáveis, os botões de compra apontam para a própria seção de oferta (`#oferta`).
+1. **Webhook de leads, WhatsApp e Instagram** → copie `.env.example` para `.env.local` e preencha.
+   O formulário envia um POST JSON (`name`, `phone`, `source`, `page`, `date`) para
+   `NEXT_PUBLIC_LEAD_WEBHOOK_URL` (Zapier, Make, n8n, RD Station, Apps Script...) e, em seguida,
+   abre o WhatsApp comercial com a mensagem preenchida. Sem webhook, só o WhatsApp é usado.
+   Ajuste esse comportamento em `lead` dentro de `src/lib/config.ts`.
 2. **Razão social, CNPJ e e-mail** → `src/lib/config.ts`.
 3. **Imagens** → veja `public/images/README.md`. Todo `<ImagePlaceholder />` aceita a prop `src`;
    enquanto ela não for informada, um placeholder elegante indica o que deve ir ali.
@@ -45,15 +49,16 @@ src/
 │   ├── sections/             # Header, Hero, ProblemSection, ImpactSection, MethodSection,
 │   │                         # NumbersSection, DeliverablesSection, AudienceSection,
 │   │                         # MindsetSection, AuthoritySection, CasesSection,
-│   │                         # ComparisonSection, PricingSection, ROISection,
+│   │                         # ComparisonSection, SignupSection, ROISection,
 │   │                         # UrgencySection, FAQSection, FinalCTA, Footer, StickyCTA
 │   ├── ui/                   # Button, Section, SectionHeading, Reveal, ImagePlaceholder, ...
+│   ├── LeadForm.tsx          # formulário Nome + WhatsApp (hero e seção de inscrição)
 │   └── JsonLd.tsx            # dados estruturados (FAQ + Course)
 ├── content/
 │   ├── cases.ts              # cases (placeholders fáceis de substituir)
 │   └── faq.ts                # perguntas frequentes
 └── lib/
-    ├── config.ts             # links, preços, IDs de seção, dados da empresa
+    ├── config.ts             # links, datas, captura de leads, IDs de seção, dados da empresa
     ├── analytics.ts          # eventos para Meta Pixel / GA4 / GTM
     └── cn.ts
 ```
@@ -62,8 +67,8 @@ src/
 
 - CTA repetido em todas as seções-chave, com microcopy "Treinamento intensivo de 2 dias." e
   "Vagas limitadas.".
-- Sticky CTA no mobile (aparece após o hero, some na oferta e no CTA final).
-- Ingresso duplo destacado visualmente, com comparação de economia.
+- Formulário de captura na primeira dobra e repetido na seção de inscrição.
+- Sticky CTA no mobile (aparece após o hero, some na inscrição e no CTA final).
 - Sem contadores falsos, número falso de vagas ou depoimentos inventados.
 
 ## Acessibilidade e performance
