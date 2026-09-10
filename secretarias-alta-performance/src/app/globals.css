@@ -73,7 +73,6 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
 }
 
 ::selection {
@@ -160,4 +159,40 @@ body {
     rgba(255, 255, 255, 0.035) 0 10px,
     transparent 10px 22px
   );
+}
+
+/* =========================================================
+   ANIMAÇÕES EM CSS PURO
+   - .enter        → entrada no carregamento (hero). Use --d para atraso.
+   - .reveal       → revela ao entrar na viewport (scroll-driven).
+   - .stagger > .reveal-item → revela os filhos em sequência.
+   Sem JavaScript e sem suporte do navegador, tudo fica visível.
+   Atenção: ancestrais com overflow:hidden viram "scroll containers" e
+   quebram o view(); use overflow: clip.
+   ========================================================= */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0s);
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal,
+    .reveal-item {
+      animation: fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+    .stagger > .reveal-item:nth-child(2) { animation-range: entry 4% entry 34%; }
+    .stagger > .reveal-item:nth-child(3) { animation-range: entry 8% entry 38%; }
+    .stagger > .reveal-item:nth-child(4) { animation-range: entry 12% entry 42%; }
+    .stagger > .reveal-item:nth-child(5) { animation-range: entry 16% entry 46%; }
+    .stagger > .reveal-item:nth-child(6) { animation-range: entry 20% entry 50%; }
+    .stagger > .reveal-item:nth-child(n + 7) { animation-range: entry 24% entry 54%; }
+  }
 }

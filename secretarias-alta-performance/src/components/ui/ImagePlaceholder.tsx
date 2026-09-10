@@ -44,7 +44,7 @@ export function ImagePlaceholder({
   return (
     <div
       className={cn(
-        "relative overflow-hidden border border-line bg-graphite-2",
+        "relative overflow-clip border border-line bg-graphite-2",
         rounded,
         className,
       )}

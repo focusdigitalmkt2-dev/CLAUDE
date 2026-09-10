@@ -34,7 +34,7 @@ export function ROISection() {
         {tiers.map((t) => (
           <StaggerItem
             key={t.n}
-            className="group relative overflow-hidden rounded-3xl border border-black/10 bg-paper-2 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_50px_-25px_rgba(0,0,0,0.45)] sm:p-7"
+            className="group relative overflow-clip rounded-3xl border border-black/10 bg-paper-2 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-gold hover:shadow-[0_20px_50px_-25px_rgba(0,0,0,0.45)] sm:p-7"
           >
             <div
               aria-hidden

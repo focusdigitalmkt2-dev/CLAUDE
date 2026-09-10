@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
 import { event, sections } from "@/lib/config";
 
@@ -41,28 +41,24 @@ export function StickyCTA() {
   const show = visible && !hiddenByOffer;
 
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-black/90 px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-3 backdrop-blur-md lg:hidden"
-        >
-          <div className="flex items-center gap-3">
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-[11px] font-bold uppercase tracking-wider text-gold">
-                {event.dateLabel} · Vagas limitadas
-              </p>
-              <p className="truncate text-xs text-muted">Treinamento intensivo de 2 dias</p>
-            </div>
-            <Button href={`#${sections.signup}`} size="md" track="sticky_cta" className="shrink-0">
-              Garantir vaga
-            </Button>
-          </div>
-        </motion.div>
+    <div
+      aria-hidden={!show}
+      className={cn(
+        "fixed inset-x-0 bottom-0 z-40 border-t border-line bg-black/90 px-4 pb-[max(env(safe-area-inset-bottom),12px)] pt-3 backdrop-blur-md transition-all duration-300 ease-out lg:hidden",
+        show ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-full opacity-0",
       )}
-    </AnimatePresence>
+    >
+      <div className="flex items-center gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-[11px] font-bold uppercase tracking-wider text-gold">
+            {event.dateLabel} · Vagas limitadas
+          </p>
+          <p className="truncate text-xs text-muted">Treinamento intensivo de 2 dias</p>
+        </div>
+        <Button href={`#${sections.signup}`} size="md" track="sticky_cta" className="shrink-0">
+          Garantir vaga
+        </Button>
+      </div>
+    </div>
   );
 }

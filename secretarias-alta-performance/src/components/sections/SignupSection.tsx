@@ -18,7 +18,7 @@ const included = [
 
 export function SignupSection() {
   return (
-    <Section id={sections.signup} tone="black" ariaLabelledby="signup-title" className="overflow-hidden">
+    <Section id={sections.signup} tone="black" ariaLabelledby="signup-title" className="overflow-clip">
       <div aria-hidden className="absolute inset-0 bg-glow-gold" />
       <div
         aria-hidden

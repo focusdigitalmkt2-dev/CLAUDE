@@ -28,9 +28,10 @@ export function Logo({ className, dark = false }: { className?: string; dark?: b
       <Image
         src={site.logoSrc}
         alt={site.company}
-        width={615}
-        height={374}
+        width={210}
+        height={128}
         priority
+        unoptimized
         className={cn("h-12 w-auto sm:h-14", className)}
       />
     );

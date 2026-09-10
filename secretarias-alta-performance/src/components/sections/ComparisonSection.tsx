@@ -63,7 +63,7 @@ export function ComparisonSection() {
           </Reveal>
 
           {/* DEPOIS */}
-          <Reveal delay={0.1} className="border-gradient-gold relative overflow-hidden rounded-3xl bg-black p-6 shadow-gold sm:p-8">
+          <Reveal delay={0.1} className="border-gradient-gold relative overflow-clip rounded-3xl bg-black p-6 shadow-gold sm:p-8">
             <div aria-hidden className="absolute -right-10 -top-10 size-40 rounded-full bg-gold/20 blur-3xl" />
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-gold">Depois</p>
             <h3 className="mt-2 font-display text-2xl font-black uppercase leading-none sm:text-3xl">

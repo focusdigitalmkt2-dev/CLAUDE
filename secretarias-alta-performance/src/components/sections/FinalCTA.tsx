@@ -8,7 +8,7 @@ import { sections } from "@/lib/config";
 
 export function FinalCTA() {
   return (
-    <Section id={sections.final} tone="gold" ariaLabelledby="final-title" className="overflow-hidden">
+    <Section id={sections.final} tone="gold" ariaLabelledby="final-title" className="overflow-clip">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(#000_1px,transparent_1px)] [background-size:22px_22px]"

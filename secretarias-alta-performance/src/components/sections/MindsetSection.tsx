@@ -14,7 +14,7 @@ const beats = [
 
 export function MindsetSection() {
   return (
-    <Section tone="black" ariaLabelledby="mindset-title" className="overflow-hidden">
+    <Section tone="black" ariaLabelledby="mindset-title" className="overflow-clip">
       <div
         aria-hidden
         className="absolute -left-40 top-0 size-[560px] rounded-full bg-gold/10 blur-[150px]"

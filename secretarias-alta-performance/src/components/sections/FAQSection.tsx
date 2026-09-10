@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -12,7 +11,6 @@ import { cn } from "@/lib/cn";
 
 export function FAQSection() {
   const [open, setOpen] = useState<number | null>(0);
-  const reduce = useReducedMotion();
 
   return (
     <Section id={sections.faq} tone="graphite" ariaLabelledby="faq-title">
@@ -72,24 +70,22 @@ export function FAQSection() {
                       </span>
                     </button>
                   </h3>
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        id={panelId}
-                        role="region"
-                        aria-labelledby={btnId}
-                        initial={reduce ? false : { height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={reduce ? undefined : { height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="px-5 pb-6 text-[15px] leading-relaxed text-muted sm:px-7 sm:pl-[3.25rem] sm:text-base text-pretty">
-                          {item.a}
-                        </p>
-                      </motion.div>
+                  <div
+                    id={panelId}
+                    role="region"
+                    aria-labelledby={btnId}
+                    aria-hidden={!isOpen}
+                    className={cn(
+                      "grid transition-[grid-template-rows] duration-300 ease-out",
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                     )}
-                  </AnimatePresence>
+                  >
+                    <div className="overflow-clip">
+                      <p className="px-5 pb-6 text-[15px] leading-relaxed text-muted sm:px-7 sm:text-base text-pretty">
+                        {item.a}
+                      </p>
+                    </div>
+                  </div>
                 </li>
               );
             })}

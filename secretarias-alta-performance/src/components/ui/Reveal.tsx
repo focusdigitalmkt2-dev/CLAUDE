@@ -1,8 +1,12 @@
-"use client";
-
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { cn } from "@/lib/cn";
 import type { ReactNode } from "react";
 
+/**
+ * Animações de revelação em CSS puro (scroll-driven animations).
+ * O conteúdo é visível por padrão: nada depende de JavaScript para aparecer.
+ * Navegadores sem suporte a `animation-timeline` simplesmente não animam.
+ * As props `delay`, `y` e `once` são mantidas por compatibilidade e ignoradas.
+ */
 interface RevealProps {
   children: ReactNode;
   className?: string;
@@ -12,40 +16,9 @@ interface RevealProps {
   as?: "div" | "li" | "span" | "article";
 }
 
-/** Anima a entrada do bloco quando ele entra na viewport. */
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-  y = 24,
-  once = true,
-  as = "div",
-}: RevealProps) {
-  const reduce = useReducedMotion();
-  const Comp = (motion as unknown as Record<string, typeof motion.div>)[as] ?? motion.div;
-
-  return (
-    <Comp
-      className={className}
-      initial={reduce ? false : { opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, margin: "-80px 0px -60px 0px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
-    >
-      {children}
-    </Comp>
-  );
+export function Reveal({ children, className, as: Tag = "div" }: RevealProps) {
+  return <Tag className={cn("reveal", className)}>{children}</Tag>;
 }
-
-const containerVariants: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-};
 
 interface StaggerProps {
   children: ReactNode;
@@ -53,36 +26,19 @@ interface StaggerProps {
   as?: "div" | "ul" | "ol";
 }
 
-/** Container que anima os filhos <StaggerItem> em sequência. */
-export function Stagger({ children, className, as = "div" }: StaggerProps) {
-  const reduce = useReducedMotion();
-  const Comp = as === "ul" ? motion.ul : as === "ol" ? motion.ol : motion.div;
-  return (
-    <Comp
-      className={className}
-      variants={containerVariants}
-      initial={reduce ? "show" : "hidden"}
-      whileInView="show"
-      viewport={{ once: true, margin: "-60px 0px -40px 0px" }}
-    >
-      {children}
-    </Comp>
-  );
+/** Container cujos filhos <StaggerItem> revelam em sequência. */
+export function Stagger({ children, className, as: Tag = "div" }: StaggerProps) {
+  return <Tag className={cn("stagger", className)}>{children}</Tag>;
 }
 
 export function StaggerItem({
   children,
   className,
-  as = "div",
+  as: Tag = "div",
 }: {
   children: ReactNode;
   className?: string;
   as?: "div" | "li" | "article";
 }) {
-  const Comp = as === "li" ? motion.li : as === "article" ? motion.article : motion.div;
-  return (
-    <Comp className={className} variants={itemVariants}>
-      {children}
-    </Comp>
-  );
+  return <Tag className={cn("reveal-item", className)}>{children}</Tag>;
 }

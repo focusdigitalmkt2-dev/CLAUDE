@@ -86,7 +86,7 @@ export function MethodSection() {
               <StaggerItem
                 as="article"
                 key={p.n}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-graphite p-6 transition-all duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-card sm:p-7"
+                className="group relative flex flex-col overflow-clip rounded-2xl border border-line bg-graphite p-6 transition-all duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-card sm:p-7"
               >
                 <div
                   aria-hidden

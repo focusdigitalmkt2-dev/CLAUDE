@@ -65,7 +65,7 @@ export function CasesSection() {
   }, []);
 
   return (
-    <Section id={sections.cases} tone="black" ariaLabelledby="cases-title" className="overflow-hidden">
+    <Section id={sections.cases} tone="black" ariaLabelledby="cases-title" className="overflow-clip">
       <div aria-hidden className="absolute inset-0 bg-glow-gold" />
       <div className="relative">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -115,7 +115,7 @@ export function CasesSection() {
             return (
               <li
                 key={c.id}
-                className="group relative w-[84%] shrink-0 snap-start overflow-hidden rounded-3xl border border-line bg-graphite transition-colors duration-300 hover:border-gold/50 sm:w-[60%] lg:w-[calc((100%-2rem)/3)]"
+                className="group relative w-[84%] shrink-0 snap-start overflow-clip rounded-3xl border border-line bg-graphite transition-colors duration-300 hover:border-gold/50 sm:w-[60%] lg:w-[calc((100%-2rem)/3)]"
               >
                 {/* Mídia */}
                 {c.quote ? (

@@ -13,7 +13,7 @@ const stats = [
 
 export function NumbersSection() {
   return (
-    <Section id={sections.numbers} tone="gold" ariaLabelledby="numbers-title" className="overflow-hidden">
+    <Section id={sections.numbers} tone="gold" ariaLabelledby="numbers-title" className="overflow-clip">
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.07] [background-image:radial-gradient(#000_1px,transparent_1px)] [background-size:22px_22px]"
@@ -32,7 +32,7 @@ export function NumbersSection() {
           {stats.map((s) => (
             <StaggerItem
               key={s.label}
-              className="relative overflow-hidden rounded-3xl bg-black p-7 text-paper shadow-card sm:p-8"
+              className="relative overflow-clip rounded-3xl bg-black p-7 text-paper shadow-card sm:p-8"
             >
               <span
                 aria-hidden

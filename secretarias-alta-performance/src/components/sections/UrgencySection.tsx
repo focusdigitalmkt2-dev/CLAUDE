@@ -8,7 +8,7 @@ import { sections } from "@/lib/config";
 
 export function UrgencySection() {
   return (
-    <Section tone="black" ariaLabelledby="urgency-title" className="overflow-hidden">
+    <Section tone="black" ariaLabelledby="urgency-title" className="overflow-clip">
       <div aria-hidden className="absolute inset-0 bg-grid opacity-40" />
       <div
         aria-hidden

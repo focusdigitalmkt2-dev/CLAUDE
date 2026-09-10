@@ -13,7 +13,7 @@ export function AuthoritySection() {
         {/* Número + imagem */}
         <div className="relative order-2 lg:order-1">
           <Reveal>
-            <div className="relative overflow-hidden rounded-3xl bg-black p-8 text-paper shadow-card sm:p-10">
+            <div className="relative overflow-clip rounded-3xl bg-black p-8 text-paper shadow-card sm:p-10">
               <div aria-hidden className="absolute inset-0 bg-grid opacity-40" />
               <div aria-hidden className="absolute -right-10 -top-10 size-48 rounded-full bg-gold/20 blur-3xl" />
               <div className="relative">
