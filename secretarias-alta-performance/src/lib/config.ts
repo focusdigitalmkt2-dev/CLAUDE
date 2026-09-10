@@ -11,13 +11,19 @@ const env = (key: string, fallback: string) =>
 export const site = {
   name: "Formação de Secretárias de Alta Performance",
   shortName: "Secretárias de Alta Performance",
-  company: "Focus",
+  company: "Focus Digital",
   companyLegalName: "Focus Digital Marketing LTDA", // TODO: razão social oficial
   cnpj: "00.000.000/0001-00", // TODO: CNPJ oficial
   url: env("NEXT_PUBLIC_SITE_URL", "https://secretariasdealtaperformance.com.br"),
   description:
     "Treinamento intensivo de 2 dias para transformar a secretária da sua clínica em uma vendedora de alta performance, aumentar agendamentos e lotar sua agenda.",
   locale: "pt_BR",
+  /**
+   * LOGO OFICIAL: coloque o arquivo em /public/images/logo.png (ou .svg) e
+   * informe o caminho aqui. Enquanto for `undefined`, o logo vetorial
+   * embutido em src/components/ui/Logo.tsx é usado.
+   */
+  logoSrc: undefined as string | undefined,
 } as const;
 
 export const links = {
