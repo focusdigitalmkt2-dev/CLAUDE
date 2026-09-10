@@ -43,6 +43,12 @@ jobs:
           node-version: 22
       - name: Vincular projeto na Vercel
         run: npx vercel@latest link --yes --project "$VERCEL_PROJECT" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+      - name: Liberar acesso público (desativa Vercel Authentication)
+        run: |
+          curl -sS -X PATCH "https://api.vercel.com/v9/projects/$VERCEL_PROJECT?slug=$VERCEL_SCOPE" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+            -d '{"ssoProtection":null,"passwordProtection":null}' \
+            | python3 -c "import sys,json; d=json.load(sys.stdin); print('ssoProtection:', d.get('ssoProtection'), '| erro:', d.get('error'))"
       - name: Deploy de produção
         id: deploy
         run: |
@@ -55,6 +61,10 @@ jobs:
         run: |
           url="${{ steps.deploy.outputs.url }}"
           for d in $SHORT_DOMAINS; do
+            # registra como domínio de produção do projeto (ignora se já existir)
+            curl -sS -X POST "https://api.vercel.com/v10/projects/$VERCEL_PROJECT/domains?slug=$VERCEL_SCOPE" \
+              -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
+              -d "{\"name\":\"$d\"}" | head -c 300; echo
             if npx vercel@latest alias set "$url" "$d" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"; then
               echo "domain=https://$d" >> "$GITHUB_OUTPUT"
               echo "Domínio curto: https://$d" >> "$GITHUB_STEP_SUMMARY"
