@@ -1,3 +1,9 @@
+> **Projetos neste repositório**
+>
+> - `index.html` — landing page da Longevuz Uberaba (este README).
+> - [`secretarias-alta-performance/`](./secretarias-alta-performance/README.md) — landing page
+>   Next.js da **Formação de Secretárias de Alta Performance** (Focus).
+
 # Longevuz Uberaba — Landing Page de Alta Conversão
 
 Landing page (LP) personalizada para captação de clientes da **Longevuz Uberaba**, baseada na
