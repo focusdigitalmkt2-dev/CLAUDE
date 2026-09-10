@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Crown, ShieldCheck, Sparkles } from "lucide-react";
+import { Check, Crown } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -29,7 +29,7 @@ export function PricingSection() {
                 Escolha como você quer <span className="text-gold-gradient">participar</span>
               </>
             }
-            subtitle={`Treinamento intensivo de 2 dias, ${event.dateLabel}. Vagas limitadas.`}
+            subtitle={`${event.dateLabel} · Vagas limitadas.`}
           />
         </Reveal>
 
@@ -48,7 +48,6 @@ export function PricingSection() {
                   {individual.priceLabel}
                 </p>
               </div>
-              <p className="mt-2 text-xs text-muted-2">1 participante</p>
 
               <ul className="mt-7 space-y-3">
                 {individual.features.map((f) => (
@@ -99,7 +98,6 @@ export function PricingSection() {
                     {duplo.priceLabel}
                   </p>
                 </div>
-                <p className="mt-2 text-xs text-muted-2">2 participantes</p>
 
                 {/* Comparação */}
                 <div className="mt-6 grid grid-cols-3 gap-2 rounded-2xl border border-line bg-graphite p-3 text-center">
@@ -148,13 +146,6 @@ export function PricingSection() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.15}>
-          <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-semibold uppercase tracking-wider text-muted-2">
-            <li className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-gold" aria-hidden />Pagamento seguro</li>
-            <li className="inline-flex items-center gap-2"><Sparkles className="size-4 text-gold" aria-hidden />Material de implementação incluso</li>
-            <li className="inline-flex items-center gap-2"><Crown className="size-4 text-gold" aria-hidden />Método completo</li>
-          </ul>
-        </Reveal>
       </div>
     </Section>
   );

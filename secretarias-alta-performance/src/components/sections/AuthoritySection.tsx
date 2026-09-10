@@ -1,17 +1,10 @@
 "use client";
 
-import { Building2, LineChart, Workflow } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
+import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { sections } from "@/lib/config";
-
-const proofs = [
-  { icon: Building2, title: "Operação real", text: "Método construído dentro da rotina de clínicas, não em teoria." },
-  { icon: LineChart, title: "Marketing + comercial", text: "Acompanhamos do anúncio ao agendamento, onde a conversão acontece." },
-  { icon: Workflow, title: "Processos aplicáveis", text: "Estratégias testadas e ajustadas em diferentes especialidades." },
-];
 
 export function AuthoritySection() {
   return (
@@ -30,9 +23,6 @@ export function AuthoritySection() {
                 </p>
                 <p className="font-display text-xl font-extrabold uppercase tracking-wide sm:text-2xl">
                   Clínicas impactadas
-                </p>
-                <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
-                  Experiência aplicada em mais de 200 clínicas e negócios da área da saúde.
                 </p>
               </div>
             </div>
@@ -66,34 +56,16 @@ export function AuthoritySection() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-6 space-y-4 text-base leading-relaxed text-black/70 sm:text-lg">
+          <Reveal delay={0.1} className="mt-6 max-w-xl space-y-4 text-base leading-relaxed text-black/70 sm:text-lg">
             <p className="text-pretty">
-              A Focus acompanha a operação, marketing e crescimento de mais de 200 clínicas e
-              negócios da área da saúde.
+              A Focus acompanha marketing, operação e crescimento de mais de 200 clínicas e
+              negócios da saúde.
             </p>
             <p className="text-pretty">
-              Ao longo dessa experiência, desenvolvemos e aplicamos estratégias comerciais que
-              ajudaram clínicas a aumentarem seus agendamentos, melhorarem seus processos e
-              alcançarem novos patamares de faturamento.
+              Desse dia a dia nasceram as estratégias que ajudaram clínicas a{" "}
+              <strong className="text-black">agendar mais e faturar mais.</strong>
             </p>
           </Reveal>
-
-          <Stagger className="mt-8 grid gap-3 sm:grid-cols-3">
-            {proofs.map((p) => {
-              const Icon = p.icon;
-              return (
-                <StaggerItem key={p.title} className="rounded-2xl border border-black/10 bg-paper-2 p-5">
-                  <span className="flex size-10 items-center justify-center rounded-xl bg-black text-gold">
-                    <Icon className="size-5" aria-hidden />
-                  </span>
-                  <p className="mt-4 font-display text-sm font-extrabold uppercase tracking-wide text-black">
-                    {p.title}
-                  </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-black/65">{p.text}</p>
-                </StaggerItem>
-              );
-            })}
-          </Stagger>
         </div>
       </div>
     </Section>

@@ -32,15 +32,10 @@ export function MindsetSection() {
             </h2>
           </Reveal>
 
-          <Reveal delay={0.1} className="mt-8 max-w-xl space-y-4 text-base leading-relaxed text-muted sm:text-lg">
-            <p className="text-pretty">Muitas secretárias já estão acostumadas com a rotina da clínica.</p>
+          <Reveal delay={0.1} className="mt-8 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
             <p className="text-pretty">
-              Por isso, orientações do próprio dono muitas vezes não produzem a mudança
-              necessária.
-            </p>
-            <p className="text-pretty">
-              O treinamento traz uma visão externa, novos processos, técnicas comerciais e uma
-              mudança de mentalidade capaz de modificar a forma como ela enxerga cada conversa.
+              Orientação do próprio dono raramente muda a rotina. Uma visão externa, com técnica e
+              processo, muda a forma como ela enxerga cada conversa.
             </p>
           </Reveal>
 

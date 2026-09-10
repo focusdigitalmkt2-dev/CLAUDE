@@ -23,9 +23,9 @@ const items: Array<{ label: string; icon: LucideIcon }> = [
   { label: "Scripts e direcionamentos", icon: MessageSquareQuote },
   { label: "Processo de follow-up", icon: RotateCcw },
   { label: "Rotina comercial para secretária", icon: CalendarRange },
-  { label: "Passo a passo para aplicar imediatamente", icon: Footprints },
-  { label: "Plano para aumentar o número de agendamentos", icon: TrendingUp },
-  { label: "Estratégias que podem começar a ser utilizadas no mesmo dia", icon: Rocket },
+  { label: "Passo a passo de implementação", icon: Footprints },
+  { label: "Plano para aumentar os agendamentos", icon: TrendingUp },
+  { label: "Estratégias para usar no mesmo dia", icon: Rocket },
 ];
 
 export function DeliverablesSection() {
@@ -50,8 +50,7 @@ export function DeliverablesSection() {
 
           <Reveal delay={0.1} className="mt-8 rounded-2xl border-l-4 border-gold bg-paper-2 p-5 sm:p-6">
             <p className="font-display text-lg font-bold leading-snug text-black sm:text-xl text-pretty">
-              A intenção é que sua equipe consiga sair do treinamento e começar a aplicar o método
-              imediatamente dentro da clínica.
+              Sua equipe sai do treinamento e aplica o método na clínica no dia seguinte.
             </p>
           </Reveal>
 
@@ -71,7 +70,7 @@ export function DeliverablesSection() {
         </div>
 
         <Stagger as="ul" className="grid gap-3 sm:grid-cols-2">
-          {items.map((it, i) => {
+          {items.map((it) => {
             const Icon = it.icon;
             return (
               <StaggerItem
@@ -82,12 +81,7 @@ export function DeliverablesSection() {
                 <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-black text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-black">
                   <Icon className="size-5" aria-hidden />
                 </span>
-                <div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-black/40">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="mt-0.5 font-semibold leading-snug text-black text-pretty">{it.label}</p>
-                </div>
+                <p className="self-center font-semibold leading-snug text-black text-pretty">{it.label}</p>
               </StaggerItem>
             );
           })}

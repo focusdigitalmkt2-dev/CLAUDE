@@ -13,8 +13,7 @@ export function Footer() {
           <div>
             <Logo />
             <p className="mt-4 max-w-sm leading-relaxed text-muted-2">
-              {site.name}. Treinamento intensivo de 2 dias para clínicas, consultórios e
-              profissionais da saúde.
+              Treinamento intensivo de 2 dias para clínicas e profissionais da saúde.
             </p>
             <p className="mt-4 text-xs text-muted-2">
               {site.companyLegalName}

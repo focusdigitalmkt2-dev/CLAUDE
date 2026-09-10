@@ -6,9 +6,9 @@ import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { event, sections } from "@/lib/config";
 
 const stats = [
-  { value: "8 a 15", label: "agendamentos por dia", sub: "meta diária de agenda" },
-  { value: "+40%", label: "de potencial de crescimento no faturamento", sub: "meta de resultado" },
-  { value: "2 dias", label: "de treinamento intensivo", sub: `${event.dateLabel} · ${event.format}` },
+  { value: "8 a 15", label: "agendamentos por dia" },
+  { value: "+40%", label: "de potencial de faturamento" },
+  { value: "2 dias", label: `intensivos · ${event.dateLabel}` },
 ];
 
 export function NumbersSection() {
@@ -38,8 +38,7 @@ export function NumbersSection() {
                 aria-hidden
                 className="absolute -right-6 -top-6 size-24 rounded-full bg-gold/15 blur-2xl"
               />
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-gold">{s.sub}</p>
-              <p className="mt-3 font-display text-[clamp(3rem,9vw,4.75rem)] font-black uppercase leading-none tracking-tight text-gold-gradient">
+              <p className="font-display text-[clamp(3rem,9vw,4.75rem)] font-black uppercase leading-none tracking-tight text-gold-gradient">
                 {s.value}
               </p>
               <p className="mt-3 font-display text-base font-extrabold uppercase leading-tight tracking-wide sm:text-lg">

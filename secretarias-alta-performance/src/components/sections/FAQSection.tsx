@@ -28,7 +28,7 @@ export function FAQSection() {
                 Perguntas <span className="text-gold-gradient">frequentes</span>
               </>
             }
-            subtitle="Ainda ficou alguma dúvida? Fale com nossa equipe no WhatsApp."
+            subtitle="Ficou alguma dúvida? Fale com a equipe."
           />
           <a
             href={whatsappUrl()}
@@ -58,9 +58,6 @@ export function FAQSection() {
                       className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:text-gold sm:px-7"
                     >
                       <span className="font-display text-base font-bold leading-snug sm:text-lg">
-                        <span className="mr-3 text-xs font-black tabular-nums text-gold/70">
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
                         {item.q}
                       </span>
                       <span

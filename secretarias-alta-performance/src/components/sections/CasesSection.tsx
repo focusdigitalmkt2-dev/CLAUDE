@@ -79,7 +79,7 @@ export function CasesSection() {
                   Resultados construídos <span className="text-gold-gradient">na prática.</span>
                 </>
               }
-              subtitle="Prints, agendas, conversas, indicadores e depoimentos de clínicas que aplicaram o método."
+              subtitle="Agendas, conversas e indicadores de clínicas que aplicaram o método."
             />
           </Reveal>
 

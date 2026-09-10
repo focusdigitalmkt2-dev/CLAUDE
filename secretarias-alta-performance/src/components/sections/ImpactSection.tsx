@@ -24,17 +24,12 @@ export function ImpactSection() {
           </h2>
         </Reveal>
 
-        <Reveal delay={0.1} className="mx-auto mt-10 max-w-3xl space-y-5 text-lg leading-relaxed text-muted sm:text-xl">
+        <Reveal delay={0.1} className="mx-auto mt-10 max-w-2xl space-y-4 text-lg leading-relaxed text-muted sm:text-xl">
           <p className="text-pretty">
-            Sua secretária precisa entender que ela não está apenas atendendo mensagens.
+            Sua secretária não responde mensagens.{" "}
+            <strong className="text-paper">Ela vende consultas, procedimentos e transformação.</strong>
           </p>
-          <p className="font-semibold text-paper text-pretty">
-            Ela está vendendo consultas, procedimentos e oportunidades de transformação.
-          </p>
-          <p className="text-pretty">
-            Se ela — ou você — não se comporta como uma vendedora da sua consulta e dos seus
-            serviços, muitos pacientes continuarão escolhendo a concorrência.
-          </p>
+          <p className="text-pretty">Se ela não vende, o paciente escolhe a concorrência.</p>
         </Reveal>
 
         <Reveal delay={0.2} className="mt-10 flex flex-col items-center gap-3">

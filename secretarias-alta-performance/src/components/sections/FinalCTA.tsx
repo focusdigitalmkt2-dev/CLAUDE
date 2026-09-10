@@ -34,8 +34,7 @@ export function FinalCTA() {
 
         <Reveal delay={0.1}>
           <p className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-black/75 sm:text-lg text-pretty">
-            Transforme sua secretária em uma profissional de alta performance e construa uma
-            operação preparada para gerar mais agendamentos todos os dias.
+            Uma secretária de alta performance e uma operação pronta para agendar mais todos os dias.
           </p>
         </Reveal>
 

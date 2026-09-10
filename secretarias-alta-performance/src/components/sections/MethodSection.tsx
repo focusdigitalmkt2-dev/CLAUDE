@@ -12,8 +12,6 @@ import {
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
-import { Button } from "@/components/ui/Button";
-import { Microcopy } from "@/components/ui/Microcopy";
 import { sections } from "@/lib/config";
 
 interface Pillar {
@@ -27,37 +25,37 @@ const pillars: Pillar[] = [
   {
     n: "01",
     title: "Mentalidade comercial",
-    text: "Sua secretária precisa deixar de enxergar o atendimento apenas como uma função administrativa e entender seu impacto direto no faturamento.",
+    text: "O atendimento deixa de ser administrativo e passa a ser faturamento.",
     icon: Brain,
   },
   {
     n: "02",
     title: "Conversão de leads",
-    text: "Como conduzir conversas para aumentar as chances de transformar interessados em pacientes agendados.",
+    text: "Conduzir a conversa do primeiro contato até o agendamento.",
     icon: Filter,
   },
   {
     n: "03",
     title: "Agendamento",
-    text: "Métodos para gerar mais agendamentos todos os dias e reduzir oportunidades desperdiçadas.",
+    text: "Mais agendamentos por dia, menos oportunidades desperdiçadas.",
     icon: CalendarPlus,
   },
   {
     n: "04",
     title: "Follow-up",
-    text: "Como recuperar pessoas que pediram informações, demonstraram interesse e ainda não marcaram.",
+    text: "Recuperar quem perguntou, se interessou e ainda não marcou.",
     icon: RotateCcw,
   },
   {
     n: "05",
     title: "Atendimento de alta performance",
-    text: "Postura, comunicação, velocidade, organização e comportamento necessários para uma operação comercial eficiente.",
+    text: "Postura, velocidade e comunicação de uma operação comercial.",
     icon: Zap,
   },
   {
     n: "06",
     title: "Rotina e processos",
-    text: "Checklists e processos para que o método continue sendo aplicado depois do treinamento.",
+    text: "Checklists para o método continuar vivo depois do treinamento.",
     icon: ListChecks,
   },
 ];
@@ -77,7 +75,7 @@ export function MethodSection() {
                 <span className="text-gold-gradient">Alta Performance</span>
               </>
             }
-            subtitle="Em 2 dias, vamos trabalhar atendimento, vendas, comportamento, mentalidade e processos para transformar o atendimento da sua clínica."
+            subtitle="2 dias de atendimento, vendas, mentalidade e processos."
           />
         </Reveal>
 
@@ -113,12 +111,6 @@ export function MethodSection() {
           })}
         </Stagger>
 
-        <Reveal delay={0.1} className="mt-12 flex flex-col items-center gap-3">
-          <Button href={`#${sections.pricing}`} size="xl" track="method_cta" className="w-full sm:w-auto">
-            Quero lotar minha agenda
-          </Button>
-          <Microcopy />
-        </Reveal>
       </div>
     </Section>
   );

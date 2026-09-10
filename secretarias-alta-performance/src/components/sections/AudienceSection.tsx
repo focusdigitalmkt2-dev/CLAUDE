@@ -6,18 +6,15 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/Button";
-import { Microcopy } from "@/components/ui/Microcopy";
 import { sections } from "@/lib/config";
 
 const items = [
-  "Você possui uma secretária, mas sente que ela poderia converter muito mais.",
-  "Sua clínica recebe leads, mas poucos viram agendamentos.",
-  "Sua secretária apenas responde mensagens e não conduz a venda.",
-  "Você quer aumentar o número de pacientes sem depender somente de mais investimento em anúncios.",
-  "Você percebe falta de motivação, postura comercial ou iniciativa no atendimento.",
-  "Você entende que sua secretária precisa ser treinada e motivada por alguém de fora.",
-  "Você quer criar uma cultura comercial mais forte dentro da clínica.",
-  "Você quer aumentar o faturamento através de uma agenda mais cheia.",
+  "Sua secretária poderia converter muito mais.",
+  "Chegam leads, mas poucos viram agendamentos.",
+  "Ela responde mensagens, mas não conduz a venda.",
+  "Você quer mais pacientes sem depender só de anúncios.",
+  "Falta postura comercial e iniciativa no atendimento.",
+  "Você quer uma cultura comercial forte e agenda cheia.",
 ];
 
 export function AudienceSection() {
@@ -80,15 +77,13 @@ export function AudienceSection() {
                 Esse treinamento também é para você.
               </p>
               <p className="mt-3 text-[15px] leading-relaxed text-muted text-pretty">
-                Se você mesmo realiza seus atendimentos, responde pacientes ou ainda está
-                estruturando sua clínica, poderá aprender o método e aplicar diretamente no seu
-                atendimento para aumentar seus agendamentos.
+                Se você mesmo atende seus pacientes, aprende o método e aplica direto no seu
+                atendimento.
               </p>
               <div className="mt-6 flex flex-col gap-3">
                 <Button href={`#${sections.pricing}`} size="lg" fullWidth track="audience_cta">
                   Quero lotar minha agenda
                 </Button>
-                <Microcopy />
               </div>
             </Reveal>
           </div>
