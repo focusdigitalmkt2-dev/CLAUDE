@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { Button } from "@/components/ui/Button";
 import { Microcopy } from "@/components/ui/Microcopy";
-import { pricing, sections } from "@/lib/config";
+import { event, pricing, sections } from "@/lib/config";
 import { trackCheckout } from "@/lib/analytics";
 
 export function PricingSection() {
@@ -29,7 +29,7 @@ export function PricingSection() {
                 Escolha como você quer <span className="text-gold-gradient">participar</span>
               </>
             }
-            subtitle="Treinamento intensivo de 2 dias. Vagas limitadas."
+            subtitle={`Treinamento intensivo de 2 dias, ${event.dateLabel}. Vagas limitadas.`}
           />
         </Reveal>
 

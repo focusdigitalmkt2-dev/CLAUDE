@@ -1,5 +1,5 @@
 import { faq } from "@/content/faq";
-import { pricing, site } from "@/lib/config";
+import { event, pricing, site } from "@/lib/config";
 
 /** Dados estruturados (SEO): FAQ + Evento/Curso. */
 export function JsonLd() {
@@ -41,6 +41,8 @@ export function JsonLd() {
       "@type": "CourseInstance",
       courseMode: "Onsite",
       courseWorkload: "P2D",
+      startDate: event.startDate,
+      endDate: event.endDate,
     },
   };
 

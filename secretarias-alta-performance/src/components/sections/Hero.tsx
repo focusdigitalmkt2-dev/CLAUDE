@@ -1,11 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { CalendarCheck, MessageCircle, Phone, TrendingUp, Users } from "lucide-react";
+import { CalendarCheck, CalendarDays, MessageCircle, Phone, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Eyebrow } from "@/components/ui/SectionHeading";
-import { sections } from "@/lib/config";
+import { event, sections } from "@/lib/config";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -38,8 +38,13 @@ export function Hero() {
       <div className="container-x relative grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
         {/* Coluna de texto */}
         <div className="flex flex-col items-start gap-6 sm:gap-7">
-          <motion.div {...fade(0)}>
+          <motion.div {...fade(0)} className="flex flex-wrap items-center gap-2.5">
             <Eyebrow>Formação de Secretárias de Alta Performance</Eyebrow>
+            {/* DATAS DO TREINAMENTO — edite em src/lib/config.ts (event.dateLabel) */}
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold px-3.5 py-1.5 font-display text-[11px] font-black uppercase tracking-[0.18em] text-black shadow-gold sm:text-xs">
+              <CalendarDays className="size-3.5" aria-hidden />
+              {event.dateLabel}
+            </span>
           </motion.div>
 
           <motion.h1
@@ -98,6 +103,7 @@ export function Hero() {
             </Button>
             <p className="text-xs font-medium text-muted sm:text-[13px]">
               Treinamento intensivo de 2 dias.{" "}
+              <span className="font-bold text-gold">{event.dateLabel}.</span>{" "}
               <span className="text-muted-2">Vagas limitadas.</span>
             </p>
           </motion.div>

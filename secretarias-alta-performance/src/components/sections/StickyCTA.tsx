@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { pricing, sections } from "@/lib/config";
+import { event, pricing, sections } from "@/lib/config";
 
 /**
  * Barra fixa no rodapé em telas pequenas.
@@ -55,7 +55,7 @@ export function StickyCTA() {
               <p className="truncate text-[11px] font-bold uppercase tracking-wider text-gold">
                 A partir de {pricing.individual.priceLabel}
               </p>
-              <p className="truncate text-xs text-muted">Treinamento intensivo de 2 dias.</p>
+              <p className="truncate text-xs text-muted">{event.dateLabel} · 2 dias intensivos</p>
             </div>
             <Button href={`#${sections.pricing}`} size="md" track="sticky_cta" className="shrink-0">
               Garantir vaga

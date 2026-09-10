@@ -83,6 +83,16 @@ export const pricing = {
   },
 } as const;
 
+/** Datas do treinamento (edite aqui e o site inteiro atualiza) */
+export const event = {
+  dateLabel: "1 e 2 de Outubro",
+  dateShort: "01 e 02 OUT",
+  /** Usadas nos dados estruturados (SEO) */
+  startDate: "2026-10-01",
+  endDate: "2026-10-02",
+  format: "Presencial",
+} as const;
+
 /** IDs das seções (usados em âncoras, header e sticky CTA) */
 export const sections = {
   hero: "inicio",

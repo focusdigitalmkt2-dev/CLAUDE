@@ -3,12 +3,12 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
-import { sections } from "@/lib/config";
+import { event, sections } from "@/lib/config";
 
 const stats = [
   { value: "8 a 15", label: "agendamentos por dia", sub: "meta diária de agenda" },
   { value: "+40%", label: "de potencial de crescimento no faturamento", sub: "meta de resultado" },
-  { value: "2 dias", label: "de treinamento intensivo", sub: "formato presencial" },
+  { value: "2 dias", label: "de treinamento intensivo", sub: `${event.dateLabel} · ${event.format}` },
 ];
 
 export function NumbersSection() {
