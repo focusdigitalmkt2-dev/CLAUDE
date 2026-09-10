@@ -1,0 +1,48 @@
+# Deploy automático na Vercel a cada push na branch da landing page.
+# Requer o secret VERCEL_TOKEN no repositório:
+#   Settings → Secrets and variables → Actions → New repository secret
+# O projeto é criado/vinculado automaticamente no time da Focus na Vercel.
+name: Deploy landing page (Vercel)
+
+on:
+  push:
+    branches: [claude/landing-page-secretarias-s4yy4w]
+    paths: ["secretarias-alta-performance/**", ".github/workflows/deploy-vercel.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel
+  cancel-in-progress: true
+
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_SCOPE: focusdigitalmkt2-5069s-projects
+  VERCEL_PROJECT: secretarias-alta-performance
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: secretarias-alta-performance
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verificar secret VERCEL_TOKEN
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::Secret VERCEL_TOKEN não configurado no repositório."; exit 1
+          fi
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Vincular projeto na Vercel
+        run: npx vercel@latest link --yes --project "$VERCEL_PROJECT" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"
+      - name: Deploy de produção
+        id: deploy
+        run: |
+          url=$(npx vercel@latest deploy --prod --yes --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "## Deploy Vercel" >> "$GITHUB_STEP_SUMMARY"
+          echo "$url" >> "$GITHUB_STEP_SUMMARY"
+      - name: URL
+        run: echo "Publicado em ${{ steps.deploy.outputs.url }}"
