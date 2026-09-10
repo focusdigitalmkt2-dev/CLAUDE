@@ -6,7 +6,6 @@ export { MethodSection } from "./MethodSection";
 export { NumbersSection } from "./NumbersSection";
 export { DeliverablesSection } from "./DeliverablesSection";
 export { AudienceSection } from "./AudienceSection";
-export { MindsetSection } from "./MindsetSection";
 export { AuthoritySection } from "./AuthoritySection";
 export { CasesSection } from "./CasesSection";
 export { ComparisonSection } from "./ComparisonSection";

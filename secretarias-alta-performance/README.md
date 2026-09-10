@@ -48,7 +48,7 @@ src/
 ├── components/
 │   ├── sections/             # Header, Hero, ProblemSection, ImpactSection, MethodSection,
 │   │                         # NumbersSection, DeliverablesSection, AudienceSection,
-│   │                         # MindsetSection, AuthoritySection, CasesSection,
+│   │                         # AuthoritySection, CasesSection,
 │   │                         # ComparisonSection, SignupSection, ROISection,
 │   │                         # UrgencySection, FAQSection, FinalCTA, Footer, StickyCTA
 │   ├── ui/                   # Button, Section, SectionHeading, Reveal, ImagePlaceholder, ...
