@@ -18,6 +18,8 @@ env:
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   VERCEL_SCOPE: focusdigitalmkt2-5069s-projects
   VERCEL_PROJECT: secretarias-alta-performance
+  # Domínio curto (alias) apontado para a produção. Candidatos em ordem de preferência.
+  SHORT_DOMAINS: "secretarias-focus.vercel.app secretariasfocus.vercel.app focus-secretarias.vercel.app"
 
 jobs:
   deploy:
@@ -48,5 +50,20 @@ jobs:
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "## Deploy Vercel" >> "$GITHUB_STEP_SUMMARY"
           echo "$url" >> "$GITHUB_STEP_SUMMARY"
+      - name: Domínio curto
+        id: alias
+        run: |
+          url="${{ steps.deploy.outputs.url }}"
+          for d in $SHORT_DOMAINS; do
+            if npx vercel@latest alias set "$url" "$d" --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN"; then
+              echo "domain=https://$d" >> "$GITHUB_OUTPUT"
+              echo "Domínio curto: https://$d" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "::warning::$d indisponível, tentando o próximo"
+          done
+          echo "::error::Nenhum domínio curto disponível"; exit 1
       - name: URL
-        run: echo "Publicado em ${{ steps.deploy.outputs.url }}"
+        run: |
+          echo "Publicado em ${{ steps.deploy.outputs.url }}"
+          echo "Domínio curto: ${{ steps.alias.outputs.domain }}"
