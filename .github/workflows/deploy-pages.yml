@@ -1,6 +1,7 @@
-# Publica a landing page "Secretárias de Alta Performance" no GitHub Pages
-# (branch gh-pages) a cada push na branch abaixo.
-# URL: https://focusdigitalmkt2-dev.github.io/CLAUDE/
+# Publica no GitHub Pages (branch gh-pages) a cada push na branch abaixo:
+#   /             → landing page Longevuz (index.html da branch longevuz)
+#   /secretarias/ → landing page Secretárias de Alta Performance (Next.js)
+# URL: https://focusdigitalmkt2-dev.github.io/CLAUDE/secretarias/
 name: Deploy landing page (GitHub Pages)
 
 on:
@@ -24,6 +25,12 @@ jobs:
         working-directory: secretarias-alta-performance
     steps:
       - uses: actions/checkout@v4
+      - name: Manter a landing page Longevuz na raiz do site
+        working-directory: .
+        run: |
+          mkdir -p site
+          git fetch --depth=1 origin claude/longevuz-uberaba-landing-page-m3r585
+          git show FETCH_HEAD:index.html > site/index.html
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -33,16 +40,18 @@ jobs:
       - run: npm run build
         env:
           STATIC_EXPORT: "1"
-          NEXT_PUBLIC_BASE_PATH: /CLAUDE
-          NEXT_PUBLIC_SITE_URL: https://focusdigitalmkt2-dev.github.io/CLAUDE
+          NEXT_PUBLIC_BASE_PATH: /CLAUDE/secretarias
+          NEXT_PUBLIC_SITE_URL: https://focusdigitalmkt2-dev.github.io/CLAUDE/secretarias
           NEXT_PUBLIC_WHATSAPP: ${{ vars.NEXT_PUBLIC_WHATSAPP }}
           NEXT_PUBLIC_INSTAGRAM: ${{ vars.NEXT_PUBLIC_INSTAGRAM }}
           NEXT_PUBLIC_LEAD_WEBHOOK_URL: ${{ vars.NEXT_PUBLIC_LEAD_WEBHOOK_URL }}
-      - run: touch out/.nojekyll
+      - run: |
+          mv out ../site/secretarias
+          touch ../site/.nojekyll
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./secretarias-alta-performance/out
+          publish_dir: ./site
           publish_branch: gh-pages
           force_orphan: true
           commit_message: "deploy: landing page secretárias (${{ github.sha }})"
