@@ -5,11 +5,14 @@ import type { NextConfig } from "next";
  * útil para hospedar em qualquer servidor sem Node.js.
  */
 const isStaticExport = process.env.STATIC_EXPORT === "1";
+/** Subcaminho quando o site é servido fora da raiz (ex.: GitHub Pages → "/CLAUDE") */
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   ...(isStaticExport ? { output: "export" as const } : {}),
+  ...(basePath ? { basePath } : {}),
   images: {
     formats: ["image/avif", "image/webp"],
     unoptimized: isStaticExport,

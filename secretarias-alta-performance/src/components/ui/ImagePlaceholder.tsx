@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ImageIcon } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { asset } from "@/lib/config";
 import type { ReactNode } from "react";
 
 interface ImagePlaceholderProps {
@@ -52,7 +53,7 @@ export function ImagePlaceholder({
       {src ? (
         <>
           <Image
-            src={src}
+            src={asset(src)}
             alt={alt}
             fill
             priority={priority}

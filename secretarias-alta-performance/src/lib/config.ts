@@ -8,6 +8,12 @@
 const env = (key: string, fallback: string) =>
   (process.env[key] && process.env[key]!.trim()) || fallback;
 
+/** Subcaminho quando o site é servido fora da raiz (ex.: GitHub Pages). */
+export const basePath = env("NEXT_PUBLIC_BASE_PATH", "");
+
+/** Prefixa arquivos de /public com o basePath (next/image não faz isso sozinho). */
+export const asset = (path: string) => (path.startsWith("/") ? `${basePath}${path}` : path);
+
 export const site = {
   name: "Formação de Secretárias de Alta Performance",
   shortName: "Secretárias de Alta Performance",
@@ -23,7 +29,7 @@ export const site = {
    * informe o caminho aqui. Enquanto for `undefined`, o logo vetorial
    * embutido em src/components/ui/Logo.tsx é usado.
    */
-  logoSrc: "/images/logo.png" as string | undefined,
+  logoSrc: asset("/images/logo.png") as string | undefined,
 } as const;
 
 export const links = {

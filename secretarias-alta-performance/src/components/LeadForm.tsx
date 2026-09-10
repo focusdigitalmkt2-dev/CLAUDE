@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { ArrowRight, CalendarDays, CheckCircle2, Loader2, MessageCircle, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { event, lead, leadWhatsappUrl, links } from "@/lib/config";
@@ -203,9 +204,9 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
             <ShieldCheck className="mt-0.5 size-3.5 shrink-0 text-gold" aria-hidden />
             <span>
               Seus dados estão seguros. Ao enviar, você concorda com a{" "}
-              <a href={links.privacy} className="underline hover:text-gold">
+              <Link href={links.privacy} className="underline hover:text-gold">
                 Política de Privacidade
-              </a>
+              </Link>
               .
             </span>
           </p>
