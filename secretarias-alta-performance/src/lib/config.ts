@@ -23,7 +23,7 @@ export const site = {
    * informe o caminho aqui. Enquanto for `undefined`, o logo vetorial
    * embutido em src/components/ui/Logo.tsx é usado.
    */
-  logoSrc: undefined as string | undefined,
+  logoSrc: "/images/logo.png" as string | undefined,
 } as const;
 
 export const links = {
