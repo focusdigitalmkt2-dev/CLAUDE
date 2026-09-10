@@ -22,6 +22,8 @@ interface ImagePlaceholderProps {
   rounded?: string;
   icon?: ReactNode;
   overlay?: boolean;
+  /** "cover" (padrão) preenche o quadro; "contain" mostra a imagem inteira */
+  fit?: "cover" | "contain";
 }
 
 /**
@@ -40,6 +42,7 @@ export function ImagePlaceholder({
   rounded = "rounded-2xl",
   icon,
   overlay = true,
+  fit = "cover",
 }: ImagePlaceholderProps) {
   return (
     <div
@@ -58,7 +61,7 @@ export function ImagePlaceholder({
             fill
             priority={priority}
             sizes={sizes}
-            className="object-cover"
+            className={fit === "contain" ? "object-contain p-2" : "object-cover"}
           />
           {overlay && (
             <div

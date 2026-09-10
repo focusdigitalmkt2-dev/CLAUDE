@@ -18,7 +18,8 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { Button } from "@/components/ui/Button";
 import { Microcopy } from "@/components/ui/Microcopy";
-import { cases, type CaseType } from "@/content/cases";
+import { cases, videoTestimonials, type CaseType } from "@/content/cases";
+import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
 import { sections } from "@/lib/config";
 import { cn } from "@/lib/cn";
 
@@ -79,7 +80,7 @@ export function CasesSection() {
                   Resultados construídos <span className="text-gold-gradient">na prática.</span>
                 </>
               }
-              subtitle="Agendas, conversas e indicadores de clínicas que aplicaram o método."
+              subtitle="Depoimentos, agendas e indicadores de clínicas que aplicaram o método."
             />
           </Reveal>
 
@@ -103,11 +104,20 @@ export function CasesSection() {
           </Reveal>
         </div>
 
-        {/* Carrossel (scroll-snap nativo, acessível e leve) */}
+        {/* Depoimentos em vídeo */}
+        {videoTestimonials.length > 0 && (
+          <Reveal className="mt-10 grid gap-4 sm:grid-cols-2">
+            {videoTestimonials.map((v) => (
+              <YouTubeEmbed key={v.id} id={v.id} title={v.title} />
+            ))}
+          </Reveal>
+        )}
+
+        {/* Carrossel de prints (scroll-snap nativo, acessível e leve) */}
         <ul
           ref={trackRef}
           aria-label="Cases de clínicas"
-          className="mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:-mx-8 sm:px-8 lg:-mx-10 lg:px-10 [&::-webkit-scrollbar]:hidden"
+          className="mt-6 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] sm:-mx-8 sm:px-8 lg:-mx-10 lg:px-10 [&::-webkit-scrollbar]:hidden"
         >
           {cases.map((c) => {
             const meta = typeMeta[c.type];
@@ -132,9 +142,11 @@ export function CasesSection() {
                     alt={c.imageAlt ?? c.title}
                     label={c.title}
                     hint={`Espaço para ${meta.label.toLowerCase()}: print, resultado ou depoimento`}
-                    aspect="4/3"
+                    aspect="4/5"
                     rounded="rounded-none"
-                    className="border-0"
+                    className="border-0 bg-graphite-2"
+                    fit="contain"
+                    overlay={false}
                     icon={<Icon className="size-6" aria-hidden />}
                     sizes="(min-width: 1024px) 33vw, 80vw"
                   />
