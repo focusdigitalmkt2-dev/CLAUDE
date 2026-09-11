@@ -25,6 +25,17 @@ export function JsonLd() {
       courseWorkload: "P2D",
       startDate: event.startDate,
       endDate: event.endDate,
+      location: {
+        "@type": "Place",
+        name: event.addressHint,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: event.address,
+          addressLocality: event.city,
+          addressRegion: event.state,
+          addressCountry: "BR",
+        },
+      },
     },
   };
 

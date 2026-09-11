@@ -75,6 +75,12 @@ export const event = {
   startDate: "2026-10-01",
   endDate: "2026-10-02",
   format: "Presencial",
+  /** Local do treinamento */
+  address: "Rua Padre Carapuceiro, 752",
+  addressHint: "Em frente ao Shopping Recife",
+  city: "Recife",
+  state: "PE",
+  mapsUrl: "https://www.google.com/maps/search/?api=1&query=Rua+Padre+Carapuceiro%2C+752%2C+Recife+-+PE",
 } as const;
 
 /** IDs das seções (usados em âncoras, header e sticky CTA) */

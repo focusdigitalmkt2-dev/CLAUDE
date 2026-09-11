@@ -196,3 +196,24 @@ body {
     .stagger > .reveal-item:nth-child(n + 7) { animation-range: entry 24% entry 54%; }
   }
 }
+
+/* Pino de localização: quique suave + anel pulsante */
+@keyframes pin-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+@keyframes ring-pulse {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pin-bounce { animation: pin-bounce 1.8s ease-in-out infinite; }
+  .ring-pulse::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    border: 2px solid var(--color-gold);
+    animation: ring-pulse 1.8s ease-out infinite;
+  }
+}

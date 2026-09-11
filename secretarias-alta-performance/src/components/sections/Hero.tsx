@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { CalendarCheck, CalendarDays } from "lucide-react";
 import { LeadForm } from "@/components/LeadForm";
 import { Eyebrow } from "@/components/ui/SectionHeading";
+import { LocationBadge } from "@/components/ui/LocationBadge";
 import { event, sections } from "@/lib/config";
 
 /** Entrada em CSS (.enter) com atraso via --d. Nada fica oculto sem JavaScript. */
@@ -25,11 +26,14 @@ export function Hero() {
         {/* Topo centralizado: eyebrow + data */}
         <div className="enter flex flex-col items-center gap-3 text-center" style={enter(0)}>
           <Eyebrow>Formação de Secretárias de Alta Performance</Eyebrow>
-          {/* DATAS DO TREINAMENTO — edite em src/lib/config.ts (event.dateLabel) */}
-          <span className="inline-flex items-center gap-2 rounded-full bg-gold px-5 py-2 font-display text-sm font-black uppercase tracking-[0.18em] text-black shadow-gold sm:text-base">
-            <CalendarDays className="size-4" aria-hidden />
-            {event.dateLabel}
-          </span>
+          {/* DATA + LOCAL — edite em src/lib/config.ts (event) */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <span className="inline-flex h-12 items-center gap-2 rounded-full bg-gold px-5 font-display text-sm font-black uppercase tracking-[0.18em] text-black shadow-gold sm:text-base">
+              <CalendarDays className="size-4" aria-hidden />
+              {event.dateLabel}
+            </span>
+            <LocationBadge />
+          </div>
         </div>
 
         {/*

@@ -6,6 +6,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { LeadForm } from "@/components/LeadForm";
 import { event, sections } from "@/lib/config";
+import { LocationBadge } from "@/components/ui/LocationBadge";
 
 const included = [
   "2 dias de treinamento intensivo",
@@ -39,6 +40,7 @@ export function SignupSection() {
               }
               subtitle="Treinamento intensivo de 2 dias. Vagas limitadas."
             />
+            <LocationBadge className="mt-5" />
           </Reveal>
 
           <Stagger as="ul" className="mt-8 grid gap-3 sm:grid-cols-2">
