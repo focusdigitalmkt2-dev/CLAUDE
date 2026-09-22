@@ -19,6 +19,8 @@ interface YTPlayer {
   getDuration(): number;
   getPlayerState(): number;
   destroy(): void;
+  unloadModule(name: string): void;
+  setOption(module: string, option: string, value: unknown): void;
 }
 interface YTNamespace {
   Player: new (
@@ -40,6 +42,18 @@ declare global {
   interface Window {
     YT?: YTNamespace;
     onYouTubeIframeAPIReady?: () => void;
+  }
+}
+
+/** Desliga a legenda automática do YouTube (o vídeo já tem legenda embutida). */
+function disableCaptions(p: YTPlayer) {
+  try {
+    p.unloadModule("captions");
+    p.unloadModule("cc");
+    p.setOption("captions", "track", {});
+    p.setOption("cc", "track", {});
+  } catch {
+    /* ignore */
   }
 }
 
@@ -119,6 +133,7 @@ export function VslSection() {
           disablekb: opts.native ? 0 : 1,
           fs: opts.native ? 1 : 0,
           iv_load_policy: 3,
+          cc_load_policy: 0,
           start: opts.start ?? 0,
           origin: window.location.origin,
         },
@@ -126,6 +141,7 @@ export function VslSection() {
           onReady: (e) => {
             playerRef.current = e.target;
             setReady(true);
+            disableCaptions(e.target);
             if (opts.muted) e.target.mute();
             else {
               e.target.unMute();
@@ -142,7 +158,10 @@ export function VslSection() {
             const isPlaying = st === YT.PlayerState.PLAYING;
             playingRef.current = isPlaying;
             setPlaying(isPlaying);
-            if (isPlaying) setAutoplayBlocked(false);
+            if (isPlaying) {
+              setAutoplayBlocked(false);
+              disableCaptions(e.target); // o módulo de legendas pode recarregar ao tocar
+            }
             if (isPlaying || st === YT.PlayerState.BUFFERING) startedRef.current = true;
             if (st === YT.PlayerState.ENDED) unlockPage();
           },
