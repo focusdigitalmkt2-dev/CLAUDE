@@ -116,7 +116,7 @@ export function VslSection() {
             const st = e.data;
             const isPlaying = st === YT.PlayerState.PLAYING;
             setPlaying(isPlaying);
-            if (isPlaying) startedRef.current = true;
+            if (isPlaying || st === YT.PlayerState.BUFFERING) startedRef.current = true;
             if (st === YT.PlayerState.ENDED) unlockPage();
           },
           onError: () => setFailed(true),
@@ -156,12 +156,12 @@ export function VslSection() {
   // Se o player não iniciar (bloqueio de rede, erro), não prende a página
   useEffect(() => {
     const id = window.setTimeout(() => {
-      if (!startedRef.current) unlockPage();
+      if (!startedRef.current) unlockPage(false); // só nesta visita, não persiste
     }, vsl.fallbackSeconds * 1000);
     return () => window.clearTimeout(id);
   }, []);
   useEffect(() => {
-    if (failed) unlockPage();
+    if (failed) unlockPage(false);
   }, [failed]);
 
   const enableSound = useCallback(() => {
