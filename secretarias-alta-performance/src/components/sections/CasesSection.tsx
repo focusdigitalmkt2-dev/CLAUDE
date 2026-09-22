@@ -105,11 +105,22 @@ export function CasesSection() {
         </div>
 
         {/* Depoimentos em vídeo */}
-        {videoTestimonials.length > 0 && (
+        {videoTestimonials.some((v) => !v.vertical) && (
           <Reveal className="mt-10 grid gap-4 sm:grid-cols-2">
-            {videoTestimonials.map((v) => (
-              <YouTubeEmbed key={v.id} id={v.id} title={v.title} />
-            ))}
+            {videoTestimonials
+              .filter((v) => !v.vertical)
+              .map((v) => (
+                <YouTubeEmbed key={v.id} id={v.id} title={v.title} />
+              ))}
+          </Reveal>
+        )}
+        {videoTestimonials.some((v) => v.vertical) && (
+          <Reveal className="mt-4 grid grid-cols-2 gap-4 sm:mx-auto sm:max-w-2xl">
+            {videoTestimonials
+              .filter((v) => v.vertical)
+              .map((v) => (
+                <YouTubeEmbed key={v.id} id={v.id} title={v.title} vertical />
+              ))}
           </Reveal>
         )}
 

@@ -9,19 +9,22 @@ interface YouTubeEmbedProps {
   id: string;
   title: string;
   className?: string;
+  /** Shorts / vídeos verticais (9:16) */
+  vertical?: boolean;
 }
 
 /**
  * Embed leve do YouTube: mostra só a thumbnail e carrega o player ao clicar.
  * Evita baixar ~500 KB do player do YouTube no carregamento da página.
  */
-export function YouTubeEmbed({ id, title, className }: YouTubeEmbedProps) {
+export function YouTubeEmbed({ id, title, className, vertical = false }: YouTubeEmbedProps) {
   const [playing, setPlaying] = useState(false);
 
   return (
     <div
       className={cn(
-        "relative aspect-video w-full overflow-clip rounded-2xl border border-line bg-graphite-2",
+        "relative w-full overflow-clip rounded-2xl border border-line bg-graphite-2",
+        vertical ? "aspect-[9/16]" : "aspect-video",
         className,
       )}
     >
@@ -42,7 +45,11 @@ export function YouTubeEmbed({ id, title, className }: YouTubeEmbedProps) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+            src={`https://i.ytimg.com/vi/${id}/${vertical ? "oar2" : "hqdefault"}.jpg`}
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (!img.src.endsWith("/hqdefault.jpg")) img.src = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+            }}
             alt=""
             loading="lazy"
             decoding="async"

@@ -81,8 +81,13 @@ export const cases: CaseItem[] = [
   },
 ];
 
-/** Depoimentos em vídeo (YouTube). Use o ID que vem depois de watch?v= */
-export const videoTestimonials = [
+/**
+ * Depoimentos em vídeo (YouTube). Use o ID que vem depois de watch?v= ou shorts/.
+ * vertical: true para Shorts (9:16).
+ */
+export const videoTestimonials: { id: string; title: string; vertical?: boolean }[] = [
   { id: "G2YEI90oKt4", title: "Depoimento de cliente Focus" },
   { id: "BJLF5ct7Gv8", title: "Depoimento de cliente Focus" },
+  { id: "UjjVEd07IzY", title: "Depoimento de cliente Focus", vertical: true },
+  { id: "j-ayxqHOxMo", title: "Depoimento de cliente Focus", vertical: true },
 ];
