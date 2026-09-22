@@ -143,7 +143,9 @@ export function VslSection() {
       const dur = p.getDuration() || 0;
       setTime({ cur, dur });
       setProgress(dur > 0 ? Math.min(100, (cur / dur) * 100) : 0);
-      if (cur >= vsl.unlockAtSeconds) {
+      const byTime = vsl.unlockAtSeconds > 0 && cur >= vsl.unlockAtSeconds;
+      const byEnd = dur > 0 && cur >= dur - 1; // segurança caso o evento ENDED não dispare
+      if (byTime || byEnd) {
         unlockPage();
         trackCTA("vsl_unlock");
       }
@@ -182,12 +184,9 @@ export function VslSection() {
   }, [muted, playing, enableSound]);
 
   return (
-    <section id="vsl" aria-label="Vídeo de apresentação" className="relative bg-black pb-14 sm:pb-20">
+    <section id="vsl" aria-label="Vídeo de apresentação" className="enter relative scroll-mt-20 bg-black pb-12 sm:pb-16" style={{ "--d": "0.16s" } as React.CSSProperties}>
       <div className="container-x">
         <div className="mx-auto max-w-4xl">
-          <p className="mb-3 text-center text-[11px] font-bold uppercase tracking-[0.22em] text-gold">
-            Assista antes de garantir sua vaga
-          </p>
 
           <div className="border-gradient-gold relative overflow-clip rounded-2xl bg-graphite-2 shadow-card">
             {/* Player */}
@@ -267,8 +266,8 @@ export function VslSection() {
           </div>
 
           {!unlocked && (
-            <p className="mt-4 text-center text-xs text-muted-2">
-              Continue assistindo para liberar todas as informações do treinamento.
+            <p className="mt-4 text-center text-sm font-semibold text-muted">
+              Assista até o final para liberar sua inscrição e todas as informações do treinamento.
             </p>
           )}
         </div>

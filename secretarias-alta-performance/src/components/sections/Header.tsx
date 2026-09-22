@@ -21,7 +21,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const unlocked = useVslUnlocked();
-  const ctaHref = unlocked ? `#${sections.signup}` : "#hero-form";
+  const ctaHref = unlocked ? `#${sections.signup}` : "#vsl";
+  const ctaLabel = unlocked ? "Quero lotar minha agenda" : "Assistir ao vídeo";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -68,7 +69,7 @@ export function Header() {
 
         <div className="hidden lg:block">
           <Button href={ctaHref} size="md" track="header_cta">
-            Quero lotar minha agenda
+            {ctaLabel}
           </Button>
         </div>
 
@@ -114,7 +115,7 @@ export function Header() {
               track="mobile_menu_cta"
               onClick={() => setOpen(false)}
             >
-              Quero lotar minha agenda
+              {ctaLabel}
             </Button>
             <p className="mt-3 text-center text-xs text-muted">Treinamento intensivo de 2 dias.</p>
           </div>

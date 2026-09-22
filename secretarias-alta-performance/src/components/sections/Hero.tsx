@@ -1,8 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { CalendarCheck, CalendarDays } from "lucide-react";
-import { LeadForm } from "@/components/LeadForm";
+import { CalendarDays } from "lucide-react";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { LocationBadge } from "@/components/ui/LocationBadge";
 import { event, sections } from "@/lib/config";
@@ -15,7 +14,7 @@ export function Hero() {
     <section
       id={sections.hero}
       aria-labelledby="hero-title"
-      className="relative overflow-clip bg-black pt-24 pb-14 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-28"
+      className="relative overflow-clip bg-black pt-24 pb-8 sm:pt-32 sm:pb-10"
     >
       <div aria-hidden className="absolute inset-0 bg-grid opacity-60" />
       <div aria-hidden className="absolute inset-0 bg-glow-gold" />
@@ -36,60 +35,20 @@ export function Hero() {
           </div>
         </div>
 
-        {/*
-          Grade: no celular a ordem é título → formulário → meta.
-          No desktop: título e meta à esquerda, formulário à direita.
-        */}
-        <div className="mt-8 grid gap-8 lg:mt-12 lg:grid-cols-[1.05fr_0.95fr] lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-6">
-          <h1
-            id="hero-title"
-            className="enter font-display text-[clamp(1.9rem,6vw,3.6rem)] font-black uppercase leading-[0.98] tracking-tight text-balance lg:col-start-1 lg:row-start-1"
-            style={enter(0.08)}
-          >
-            Transforme sua secretária em uma{" "}
-            <span className="text-gold-gradient">vendedora</span> e comece a{" "}
-            <span className="sm:underline sm:decoration-gold sm:decoration-[7px] sm:underline-offset-[8px]">
-              lotar sua agenda
-            </span>
-          </h1>
-
-          {/* Formulário de captura — visível na primeira tela */}
-          <div className="enter relative mx-auto w-full max-w-md lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none lg:self-center" style={enter(0.16)}>
-            <div aria-hidden className="absolute -inset-3 rounded-[28px] bg-gold/10 blur-2xl" />
-            <div id="hero-form" className="scroll-mt-24">
-              <LeadForm source="hero" className="relative" />
-            </div>
-          </div>
-
-          {/* Subtítulo + META */}
-          <div className="enter flex flex-col gap-5 lg:col-start-1 lg:row-start-2" style={enter(0.24)}>
-            <p className="max-w-lg text-base leading-relaxed text-muted sm:text-[17px] text-pretty">
-              2 dias intensivos para transformar o atendimento da sua clínica e converter
-              oportunidades em novos pacientes.
-            </p>
-            <div className="border-gradient-gold w-full max-w-lg rounded-2xl bg-graphite-2/80 p-5 sm:p-6">
-              <div className="flex items-center gap-4">
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gold text-black">
-                  <CalendarCheck className="size-6" aria-hidden />
-                </span>
-                <div className="min-w-0">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-gold">Meta</p>
-                  <p className="font-display text-2xl font-black uppercase leading-tight sm:text-3xl">
-                    De 8 a 15 agendamentos por dia
-                  </p>
-                </div>
-              </div>
-              <p className="mt-4 text-sm leading-relaxed text-muted text-pretty">
-                Até <strong className="text-paper">+40% de faturamento</strong> com o método que já
-                levou clínicas a recordes de vendas.
-              </p>
-            </div>
-            <p className="text-xs font-medium text-muted sm:text-[13px]">
-              Treinamento intensivo de 2 dias ·{" "}
-              <span className="font-bold text-gold">{event.dateLabel}</span> · Vagas limitadas.
-            </p>
-          </div>
-        </div>
+        <h1
+          id="hero-title"
+          className="enter mx-auto mt-6 max-w-4xl text-center font-display text-[clamp(1.75rem,5.4vw,3.4rem)] font-black uppercase leading-[0.98] tracking-tight text-balance"
+          style={enter(0.08)}
+        >
+          Transforme sua secretária em uma{" "}
+          <span className="text-gold-gradient">vendedora</span> e comece a{" "}
+          <span className="sm:underline sm:decoration-gold sm:decoration-[7px] sm:underline-offset-[8px]">
+            lotar sua agenda
+          </span>
+        </h1>
+        <p className="enter mx-auto mt-4 max-w-xl text-center text-sm leading-relaxed text-muted sm:text-base text-pretty" style={enter(0.12)}>
+          Assista ao vídeo e descubra como o método já ajudou clínicas a baterem recordes de agendamentos.
+        </p>
       </div>
     </section>
   );

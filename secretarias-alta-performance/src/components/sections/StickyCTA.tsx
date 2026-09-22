@@ -40,7 +40,7 @@ export function StickyCTA() {
     };
   }, []);
 
-  const show = visible && !hiddenByOffer;
+  const show = unlocked && visible && !hiddenByOffer;
 
   return (
     <div
@@ -57,7 +57,7 @@ export function StickyCTA() {
           </p>
           <p className="truncate text-xs text-muted">Treinamento intensivo de 2 dias</p>
         </div>
-        <Button href={unlocked ? `#${sections.signup}` : "#hero-form"} size="md" track="sticky_cta" className="shrink-0">
+        <Button href={`#${sections.signup}`} size="md" track="sticky_cta" className="shrink-0">
           Garantir vaga
         </Button>
       </div>
