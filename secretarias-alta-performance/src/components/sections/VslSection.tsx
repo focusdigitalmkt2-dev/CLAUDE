@@ -73,7 +73,6 @@ const fmt = (s: number) => {
  * própria e libera o restante da página após `vsl.unlockAtSeconds`.
  */
 export function VslSection() {
-  const mountRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -81,41 +80,69 @@ export function VslSection() {
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState({ cur: 0, dur: 0 });
   const [failed, setFailed] = useState(false);
+  /** Controles nativos do YouTube: fallback quando o play customizado não funciona no aparelho */
+  const [nativeControls, setNativeControls] = useState(false);
+  const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const unlocked = useVslUnlocked();
   const startedRef = useRef(false);
+  const playingRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Cria o player
-  useEffect(() => {
-    let cancelled = false;
-    let player: YTPlayer | null = null;
+  // Cria (ou recria) o player
+  const createPlayer = useCallback((opts: { native: boolean; muted: boolean; start?: number }) => {
+    const container = containerRef.current;
+    if (!container) return;
+    try {
+      playerRef.current?.destroy();
+    } catch {
+      /* ignore */
+    }
+    playerRef.current = null;
+    // o YouTube substitui a div pelo iframe; criamos uma nova a cada vez
+    container.innerHTML = "";
+    const mount = document.createElement("div");
+    mount.className = "absolute inset-0 size-full";
+    container.appendChild(mount);
+
     loadYouTubeApi().then((YT) => {
-      if (cancelled || !mountRef.current) return;
-      player = new YT.Player(mountRef.current, {
+      if (!containerRef.current || !mount.isConnected) return;
+      new YT.Player(mount, {
         videoId: vsl.youtubeId,
         host: "https://www.youtube-nocookie.com",
         playerVars: {
           autoplay: 1,
-          mute: 1,
-          controls: 0,
+          mute: opts.muted ? 1 : 0,
+          controls: opts.native ? 1 : 0,
           rel: 0,
           modestbranding: 1,
           playsinline: 1,
-          disablekb: 1,
-          fs: 0,
+          disablekb: opts.native ? 0 : 1,
+          fs: opts.native ? 1 : 0,
           iv_load_policy: 3,
+          start: opts.start ?? 0,
           origin: window.location.origin,
         },
         events: {
           onReady: (e) => {
             playerRef.current = e.target;
             setReady(true);
-            e.target.mute();
+            if (opts.muted) e.target.mute();
+            else {
+              e.target.unMute();
+              e.target.setVolume(100);
+            }
             e.target.playVideo();
+            // autoplay bloqueado? mostra "toque para assistir"
+            window.setTimeout(() => {
+              if (!playingRef.current) setAutoplayBlocked(true);
+            }, 2500);
           },
           onStateChange: (e) => {
             const st = e.data;
             const isPlaying = st === YT.PlayerState.PLAYING;
+            playingRef.current = isPlaying;
             setPlaying(isPlaying);
+            if (isPlaying) setAutoplayBlocked(false);
             if (isPlaying || st === YT.PlayerState.BUFFERING) startedRef.current = true;
             if (st === YT.PlayerState.ENDED) unlockPage();
           },
@@ -123,16 +150,19 @@ export function VslSection() {
         },
       });
     });
+  }, []);
+
+  useEffect(() => {
+    createPlayer({ native: false, muted: true });
     return () => {
-      cancelled = true;
       try {
-        player?.destroy();
+        playerRef.current?.destroy();
       } catch {
         /* ignore */
       }
       playerRef.current = null;
     };
-  }, []);
+  }, [createPlayer]);
 
   // Progresso + liberação por tempo
   useEffect(() => {
@@ -167,21 +197,38 @@ export function VslSection() {
   const enableSound = useCallback(() => {
     const p = playerRef.current;
     if (!p) return;
+    // 1) play dentro do gesto do usuário; 2) som; 3) reinicia se já tinha avançado mudo
+    p.playVideo();
     p.unMute();
     p.setVolume(100);
-    if (vsl.restartOnUnmute) p.seekTo(0, true);
-    p.playVideo();
+    if (vsl.restartOnUnmute && (p.getCurrentTime?.() || 0) > 1) p.seekTo(0, true);
     setMuted(false);
     trackCTA("vsl_unmute");
-  }, []);
+    // Se o aparelho não aceitou o play customizado, troca para controles nativos com som
+    window.setTimeout(() => {
+      if (!playingRef.current) {
+        setNativeControls(true);
+        createPlayer({ native: true, muted: false });
+        trackCTA("vsl_native_fallback");
+      }
+    }, 1500);
+  }, [createPlayer]);
 
   const togglePlay = useCallback(() => {
     const p = playerRef.current;
     if (!p) return;
     if (muted) return enableSound();
     if (playing) p.pauseVideo();
-    else p.playVideo();
-  }, [muted, playing, enableSound]);
+    else {
+      p.playVideo();
+      window.setTimeout(() => {
+        if (!playingRef.current && !nativeControls) {
+          setNativeControls(true);
+          createPlayer({ native: true, muted: false, start: Math.floor(p.getCurrentTime?.() || 0) });
+        }
+      }, 1500);
+    }
+  }, [muted, playing, enableSound, nativeControls, createPlayer]);
 
   return (
     <section id="vsl" aria-label="Vídeo de apresentação" className="enter relative scroll-mt-20 bg-black pb-12 sm:pb-16" style={{ "--d": "0.1s" } as React.CSSProperties}>
@@ -191,31 +238,33 @@ export function VslSection() {
           <div className="border-gradient-gold relative overflow-clip rounded-2xl bg-graphite-2 shadow-card">
             {/* Player */}
             <div className="relative aspect-video w-full bg-black">
-              <div ref={mountRef} className="absolute inset-0 size-full" />
+              <div ref={containerRef} className="absolute inset-0 size-full [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:size-full" />
 
               {/* Camada de interação: primeiro toque libera o som; depois play/pause */}
-              <button
-                type="button"
-                onClick={togglePlay}
-                aria-label={muted ? "Ativar o som do vídeo" : playing ? "Pausar" : "Reproduzir"}
-                className="absolute inset-0 flex items-center justify-center bg-transparent"
-              >
-                {muted && ready && !failed && (
-                  <span className="flex flex-col items-center gap-3">
-                    <span className="ring-pulse relative flex size-20 items-center justify-center rounded-full bg-gold text-black shadow-gold sm:size-24">
-                      <VolumeX className="size-9 sm:size-10" aria-hidden />
+              {!nativeControls && (
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  aria-label={muted ? "Ativar o som do vídeo" : playing ? "Pausar" : "Reproduzir"}
+                  className="absolute inset-0 flex items-center justify-center bg-transparent"
+                >
+                  {muted && ready && !failed && (
+                    <span className="flex flex-col items-center gap-3">
+                      <span className="ring-pulse relative flex size-20 items-center justify-center rounded-full bg-gold text-black shadow-gold sm:size-24">
+                        {autoplayBlocked ? <Play className="ml-1 size-9 fill-current sm:size-10" aria-hidden /> : <VolumeX className="size-9 sm:size-10" aria-hidden />}
+                      </span>
+                      <span className="rounded-full bg-black/80 px-4 py-2 font-display text-sm font-extrabold uppercase tracking-wide text-paper backdrop-blur sm:text-base">
+                        {autoplayBlocked ? "Toque para assistir" : "Toque para ativar o som"}
+                      </span>
                     </span>
-                    <span className="rounded-full bg-black/80 px-4 py-2 font-display text-sm font-extrabold uppercase tracking-wide text-paper backdrop-blur sm:text-base">
-                      Toque para ativar o som
+                  )}
+                  {!muted && !playing && (
+                    <span className="flex size-20 items-center justify-center rounded-full bg-gold/90 text-black">
+                      <Play className="ml-1 size-9 fill-current" aria-hidden />
                     </span>
-                  </span>
-                )}
-                {!muted && !playing && (
-                  <span className="flex size-20 items-center justify-center rounded-full bg-gold/90 text-black">
-                    <Play className="ml-1 size-9 fill-current" aria-hidden />
-                  </span>
-                )}
-              </button>
+                  )}
+                </button>
+              )}
             </div>
 
             {/* Barra de progresso / temporizador */}
@@ -224,7 +273,7 @@ export function VslSection() {
                 type="button"
                 onClick={togglePlay}
                 aria-label={playing ? "Pausar" : "Reproduzir"}
-                className="flex size-9 shrink-0 items-center justify-center rounded-full bg-gold text-black"
+                className={cn("flex size-9 shrink-0 items-center justify-center rounded-full bg-gold text-black", nativeControls && "hidden")}
               >
                 {playing ? <Pause className="size-4 fill-current" aria-hidden /> : <Play className="ml-0.5 size-4 fill-current" aria-hidden />}
               </button>
@@ -258,6 +307,7 @@ export function VslSection() {
                 className={cn(
                   "flex size-9 shrink-0 items-center justify-center rounded-full border",
                   muted ? "border-gold text-gold" : "border-line-strong text-paper",
+                  nativeControls && "hidden",
                 )}
               >
                 {muted ? <VolumeX className="size-4" aria-hidden /> : <Volume2 className="size-4" aria-hidden />}
