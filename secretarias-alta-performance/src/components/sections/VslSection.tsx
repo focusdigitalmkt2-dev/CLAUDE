@@ -184,7 +184,7 @@ export function VslSection() {
   }, [muted, playing, enableSound]);
 
   return (
-    <section id="vsl" aria-label="Vídeo de apresentação" className="enter relative scroll-mt-20 bg-black pb-12 sm:pb-16" style={{ "--d": "0.16s" } as React.CSSProperties}>
+    <section id="vsl" aria-label="Vídeo de apresentação" className="enter relative scroll-mt-20 bg-black pb-12 sm:pb-16" style={{ "--d": "0.1s" } as React.CSSProperties}>
       <div className="container-x">
         <div className="mx-auto max-w-4xl">
 

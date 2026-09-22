@@ -1,6 +1,8 @@
 "use client";
 
-import { CalendarCheck } from "lucide-react";
+import { CalendarCheck, CalendarDays } from "lucide-react";
+import { Eyebrow } from "@/components/ui/SectionHeading";
+import { LocationBadge } from "@/components/ui/LocationBadge";
 import { LeadForm } from "@/components/LeadForm";
 import { event } from "@/lib/config";
 
@@ -9,7 +11,20 @@ export function HeroSignup() {
   return (
     <section id="hero-form" aria-labelledby="hero-signup-title" className="relative scroll-mt-24 overflow-clip bg-black pb-16 sm:pb-24">
       <div aria-hidden className="absolute inset-0 bg-glow-gold" />
-      <div className="container-x relative grid items-center gap-8 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
+      <div className="container-x relative">
+        {/* Eyebrow + data + local, centralizados */}
+        <div className="flex flex-col items-center gap-3 pt-8 text-center sm:pt-10">
+          <Eyebrow>Formação de Secretárias de Alta Performance</Eyebrow>
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <span className="inline-flex h-12 items-center gap-2 rounded-full bg-gold px-5 font-display text-sm font-black uppercase tracking-[0.18em] text-black shadow-gold sm:text-base">
+              <CalendarDays className="size-4" aria-hidden />
+              {event.dateLabel}
+            </span>
+            <LocationBadge />
+          </div>
+        </div>
+
+        <div className="mt-10 grid items-center gap-8 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
         <div className="flex flex-col gap-5">
           <h2 id="hero-signup-title" className="font-display text-[clamp(1.75rem,4.6vw,2.8rem)] font-black uppercase leading-[1.02] tracking-tight text-balance">
             Agora é sua vez: <span className="text-gold-gradient">garanta sua vaga</span>
@@ -40,6 +55,7 @@ export function HeroSignup() {
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <div aria-hidden className="absolute -inset-3 rounded-[28px] bg-gold/10 blur-2xl" />
           <LeadForm source="hero" className="relative" />
+        </div>
         </div>
       </div>
     </section>

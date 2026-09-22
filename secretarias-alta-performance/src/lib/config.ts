@@ -91,7 +91,7 @@ export const event = {
  */
 export const vsl = {
   youtubeId: "0RyKkb6d7Xs",
-  unlockAtSeconds: 0,
+  unlockAtSeconds: 210,
   fallbackSeconds: 25,
   restartOnUnmute: true,
 } as const;
