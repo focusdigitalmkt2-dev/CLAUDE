@@ -267,7 +267,7 @@ export function VslSection() {
 
           {!unlocked && (
             <p className="mt-4 text-center text-sm font-semibold text-muted">
-              Assista até o final para liberar sua inscrição e todas as informações do treinamento.
+              Continue assistindo para liberar sua inscrição e todas as informações do treinamento.
             </p>
           )}
         </div>
