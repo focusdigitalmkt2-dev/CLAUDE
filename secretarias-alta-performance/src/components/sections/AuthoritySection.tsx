@@ -3,7 +3,6 @@
 import { Section } from "@/components/ui/Section";
 import { Eyebrow } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { sections } from "@/lib/config";
 
 export function AuthoritySection() {
@@ -26,20 +25,6 @@ export function AuthoritySection() {
                 </p>
               </div>
             </div>
-          </Reveal>
-
-          {/*
-            IMAGEM — equipe Focus / palestrantes / bastidores
-            Sugestão: /public/images/speakers/equipe-focus.jpg (16:10)
-          */}
-          <Reveal delay={0.1} className="mt-4">
-            <ImagePlaceholder
-              alt="Equipe Focus em atendimento a clínicas"
-              label="Equipe Focus"
-              hint="Foto da equipe, palestrantes ou bastidores"
-              aspect="16/10"
-              className="bg-black"
-            />
           </Reveal>
         </div>
 
