@@ -16,3 +16,4 @@ export { FAQSection } from "./FAQSection";
 export { FinalCTA } from "./FinalCTA";
 export { Footer } from "./Footer";
 export { StickyCTA } from "./StickyCTA";
+export { VslSection } from "./VslSection";

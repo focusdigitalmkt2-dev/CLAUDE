@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/Button";
 import { event, sections } from "@/lib/config";
+import { useVslUnlocked } from "@/lib/vslStore";
 
 /**
  * Barra fixa no rodapé em telas pequenas.
@@ -13,6 +14,7 @@ import { event, sections } from "@/lib/config";
 export function StickyCTA() {
   const [visible, setVisible] = useState(false);
   const [hiddenByOffer, setHiddenByOffer] = useState(false);
+  const unlocked = useVslUnlocked();
 
   useEffect(() => {
     const hero = document.getElementById(sections.hero);
@@ -55,7 +57,7 @@ export function StickyCTA() {
           </p>
           <p className="truncate text-xs text-muted">Treinamento intensivo de 2 dias</p>
         </div>
-        <Button href={`#${sections.signup}`} size="md" track="sticky_cta" className="shrink-0">
+        <Button href={unlocked ? `#${sections.signup}` : "#hero-form"} size="md" track="sticky_cta" className="shrink-0">
           Garantir vaga
         </Button>
       </div>

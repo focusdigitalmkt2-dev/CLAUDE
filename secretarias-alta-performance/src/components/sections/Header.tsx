@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/cn";
 import { sections } from "@/lib/config";
+import { useVslUnlocked } from "@/lib/vslStore";
 
 const nav = [
   { label: "O problema", href: `#${sections.problem}` },
@@ -19,6 +20,8 @@ const nav = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const unlocked = useVslUnlocked();
+  const ctaHref = unlocked ? `#${sections.signup}` : "#hero-form";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -48,7 +51,7 @@ export function Header() {
           <Logo />
         </Link>
 
-        <nav aria-label="Navegação principal" className="hidden lg:block">
+        <nav aria-label="Navegação principal" className={cn("hidden", unlocked && "lg:block")}>
           <ul className="flex items-center gap-7">
             {nav.map((item) => (
               <li key={item.href}>
@@ -64,7 +67,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:block">
-          <Button href={`#${sections.signup}`} size="md" track="header_cta">
+          <Button href={ctaHref} size="md" track="header_cta">
             Quero lotar minha agenda
           </Button>
         </div>
@@ -91,7 +94,7 @@ export function Header() {
       >
         <nav aria-label="Navegação mobile" className="container-x flex h-full flex-col py-8">
           <ul className="flex flex-col divide-y divide-line">
-            {nav.map((item) => (
+            {(unlocked ? nav : []).map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}
@@ -105,7 +108,7 @@ export function Header() {
           </ul>
           <div className="mt-auto pt-8">
             <Button
-              href={`#${sections.signup}`}
+              href={ctaHref}
               size="xl"
               fullWidth
               track="mobile_menu_cta"

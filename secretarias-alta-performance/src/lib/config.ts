@@ -83,6 +83,19 @@ export const event = {
   mapsUrl: "https://www.google.com/maps/search/?api=1&query=Rua+Padre+Carapuceiro%2C+752%2C+Recife+-+PE",
 } as const;
 
+/**
+ * VSL (vídeo de vendas) logo abaixo da captura.
+ * - youtubeId: ID do vídeo (o que vem depois de youtu.be/ ou watch?v=)
+ * - unlockAtSeconds: tempo de vídeo para liberar o restante da página (3,5 min = 210 s)
+ * - fallbackSeconds: se o player não iniciar em X segundos (bloqueio, erro), libera a página
+ */
+export const vsl = {
+  youtubeId: "0RyKkb6d7Xs",
+  unlockAtSeconds: 210,
+  fallbackSeconds: 25,
+  restartOnUnmute: true,
+} as const;
+
 /** IDs das seções (usados em âncoras, header e sticky CTA) */
 export const sections = {
   hero: "inicio",
