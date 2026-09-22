@@ -57,7 +57,8 @@ export function AudienceSection() {
             */}
             <Reveal>
               <ImagePlaceholder
-                alt="Secretária atendendo paciente na recepção da clínica"
+                src="/images/clinic/secretaria-atendimento.jpg"
+                alt="Equipe de secretárias atendendo pacientes pelo celular e computador"
                 label="Secretária atendendo"
                 hint="Foto de atendimento na recepção ou equipe da clínica"
                 aspect="4/3"
