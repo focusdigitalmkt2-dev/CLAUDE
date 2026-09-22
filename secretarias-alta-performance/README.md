@@ -47,7 +47,7 @@ src/
 │   ├── politica-de-privacidade/  termos-de-uso/
 ├── components/
 │   ├── sections/             # Header, Hero, ProblemSection, ImpactSection, MethodSection,
-│   │                         # NumbersSection, DeliverablesSection, AudienceSection,
+│   │                         # NumbersSection, AudienceSection,
 │   │                         # AuthoritySection, CasesSection,
 │   │                         # ComparisonSection, SignupSection, ROISection,
 │   │                         # UrgencySection, FAQSection, FinalCTA, Footer, StickyCTA

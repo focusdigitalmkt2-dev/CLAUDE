@@ -4,7 +4,6 @@ export { ProblemSection } from "./ProblemSection";
 export { ImpactSection } from "./ImpactSection";
 export { MethodSection } from "./MethodSection";
 export { NumbersSection } from "./NumbersSection";
-export { DeliverablesSection } from "./DeliverablesSection";
 export { AudienceSection } from "./AudienceSection";
 export { AuthoritySection } from "./AuthoritySection";
 export { CasesSection } from "./CasesSection";

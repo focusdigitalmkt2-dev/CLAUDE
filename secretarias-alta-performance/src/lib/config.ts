@@ -102,7 +102,6 @@ export const sections = {
   problem: "problema",
   method: "metodo",
   numbers: "meta",
-  deliverables: "entregaveis",
   audience: "para-quem",
   authority: "autoridade",
   cases: "cases",
