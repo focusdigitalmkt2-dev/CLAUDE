@@ -29,15 +29,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Lighthouse (celular, rede 4G simulada)
+      - name: Lighthouse (celular, 3 amostras, simulado e observado)
         run: |
-          npx -y lighthouse "${{ github.event.inputs.url }}" --quiet --chrome-flags="--headless --no-sandbox" --only-categories=performance --form-factor=mobile --screenEmulation.mobile --output=json --output-path=./lh.json || true
+          for n in 1 2 3; do
+            npx -y lighthouse "${{ github.event.inputs.url }}" --quiet --chrome-flags="--headless --no-sandbox" --only-categories=performance --form-factor=mobile --screenEmulation.mobile --output=json --output-path=./lh$n.json || true
+          done
           node -e '
-            const r=require("./lh.json"); const a=r.audits;
-            const ms=(k)=>Math.round(a[k].numericValue);
-            console.log("Performance score:", Math.round(r.categories.performance.score*100));
-            console.log("TTFB:", ms("server-response-time"), "ms | FCP:", ms("first-contentful-paint"), "ms | LCP:", ms("largest-contentful-paint"), "ms | TBT:", ms("total-blocking-time"), "ms | Speed Index:", ms("speed-index"), "ms");
-            const items=(a["network-requests"].details.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,15);
-            console.log("Maiores transferências:"); for (const it of items) console.log(" ", Math.round((it.transferSize||0)/1024)+"KB", Math.round(it.endTime-it.startTime)+"ms", it.url.slice(0,110));
-            const lcp=a["largest-contentful-paint-element"]; if (lcp && lcp.details && lcp.details.items && lcp.details.items[0]) console.log("LCP element:", JSON.stringify(lcp.details.items[0].items?.[0]?.node?.snippet||lcp.details.items[0]).slice(0,200));
+            for (const n of [1,2,3]) {
+              const r=require("./lh"+n+".json"); const a=r.audits; const ms=(k)=>Math.round(a[k].numericValue);
+              const obs=(a.metrics.details.items||[])[0]||{};
+              console.log("--- amostra", n, "| score", Math.round(r.categories.performance.score*100));
+              console.log("simulado: FCP", ms("first-contentful-paint"), "| LCP", ms("largest-contentful-paint"), "| TBT", ms("total-blocking-time"), "| SI", ms("speed-index"));
+              console.log("observado: FCP", obs.observedFirstContentfulPaint, "| LCP", obs.observedLargestContentfulPaint, "| load", obs.observedLoad, "| DCL", obs.observedDomContentLoaded);
+              const lcp=a["largest-contentful-paint-element"]?.details?.items?.[0]?.items?.[0]?.node;
+              if (lcp) console.log("LCP element:", (lcp.snippet||"").slice(0,120));
+              const rb=a["render-blocking-resources"]?.details?.items||[]; if (rb.length) console.log("render-blocking:", rb.map(i=>i.url.slice(0,90)+" "+Math.round(i.wastedMs)+"ms").join(" ; "));
+            }
+            const r=require("./lh1.json"); const items=(r.audits["network-requests"].details.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,12);
+            console.log("Maiores transferências:"); for (const it of items) console.log(" ", Math.round((it.transferSize||0)/1024)+"KB", it.url.slice(0,100));
           '
