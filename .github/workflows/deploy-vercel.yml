@@ -98,17 +98,27 @@ jobs:
             echo "VSL_MP4_URL não definido: o site usa o MP4 externo (se houver) ou o YouTube."; exit 0
           fi
           url="$VSL_MP4_URL"
-          if echo "$url" | grep -q "drive.google.com"; then
-            fid=$(echo "$url" | grep -oE '/d/[^/?]+|id=[^&]+' | head -1 | sed -E 's#^/d/##; s#^id=##')
-            url="https://drive.usercontent.google.com/download?id=$fid&export=download&confirm=t"
-          fi
           echo "Baixando a VSL..."
-          if ! curl -sSL --retry 3 --max-time 900 "$url" -o /tmp/vsl-src; then
+          rm -f /tmp/vsl-src
+          if echo "$url" | grep -q "drive.google.com"; then
+            # arquivos grandes no Drive exigem a confirmação "não foi possível verificar vírus";
+            # o gdown trata isso. Plano B: link direto com confirm=t.
+            fid=$(echo "$url" | grep -oE '/d/[^/?]+|id=[^&]+' | head -1 | sed -E 's#^/d/##; s#^id=##')
+            pip install -q --disable-pip-version-check gdown >/dev/null 2>&1 || true
+            gdown --quiet --fuzzy "https://drive.google.com/uc?id=$fid" -O /tmp/vsl-src \
+              || curl -sSL --retry 3 --max-time 900 "https://drive.usercontent.google.com/download?id=$fid&export=download&confirm=t" -o /tmp/vsl-src \
+              || true
+          else
+            curl -sSL --retry 3 --max-time 900 "$url" -o /tmp/vsl-src || true
+          fi
+          if [ ! -s /tmp/vsl-src ]; then
             echo "::warning::Não foi possível baixar a VSL; o site usa o YouTube."; exit 0
           fi
+          echo "Baixado: $(du -h /tmp/vsl-src | cut -f1) | tipo: $(file -b /tmp/vsl-src | cut -c1-80)"
           dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/vsl-src 2>/dev/null | cut -d. -f1)
           if [ -z "$dur" ] || [ "$dur" -le 0 ]; then
-            echo "::warning::O link não entregou um vídeo válido (é um link direto/público?); o site usa o YouTube."; exit 0
+            echo "Início do conteúdo recebido:"; head -c 400 /tmp/vsl-src | tr -d '\0' | head -20; echo
+            echo "::warning::O link não entregou um vídeo válido (é um link público?); o site usa o YouTube."; exit 0
           fi
           # bitrate para o arquivo caber em ~85 MB, no máximo 1400 kbps (720p)
           vb=$(( 680000 / dur )); if [ "$vb" -gt 1400 ]; then vb=1400; fi
