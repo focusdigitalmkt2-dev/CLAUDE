@@ -115,10 +115,13 @@ jobs:
             echo "::warning::Não foi possível baixar a VSL; o site usa o YouTube."; exit 0
           fi
           echo "Baixado: $(du -h /tmp/vsl-src | cut -f1) | tipo: $(file -b /tmp/vsl-src | cut -c1-80)"
-          dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/vsl-src 2>/dev/null | cut -d. -f1)
-          if [ -z "$dur" ] || [ "$dur" -le 0 ]; then
-            echo "Início do conteúdo recebido:"; head -c 400 /tmp/vsl-src | tr -d '\0' | head -20; echo
-            echo "::warning::O link não entregou um vídeo válido (é um link público?); o site usa o YouTube."; exit 0
+          dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/vsl-src 2>/tmp/ffprobe.err | cut -d. -f1 || true)
+          case "$dur" in ''|N/A|*[!0-9]*) dur=0;; esac
+          if [ "$dur" -le 0 ]; then
+            echo "ffprobe: $(head -c 600 /tmp/ffprobe.err)"
+            echo "índice (moov) no fim do arquivo: $(tail -c 4000000 /tmp/vsl-src | grep -c moov || true) | no início: $(head -c 4000000 /tmp/vsl-src | grep -c moov || true)"
+            echo "Início do conteúdo recebido:"; head -c 200 /tmp/vsl-src | tr -d '\0' | strings -n 3 | head -8; echo
+            echo "::warning::O arquivo não é um vídeo válido/completo; o site usa o YouTube."; exit 0
           fi
           # bitrate para o arquivo caber em ~85 MB, no máximo 1400 kbps (720p)
           vb=$(( 680000 / dur )); if [ "$vb" -gt 1400 ]; then vb=1400; fi
