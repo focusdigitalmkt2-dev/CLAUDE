@@ -89,6 +89,14 @@ jobs:
           if [ -n "$DIRECT_URL" ]; then
             echo "VSL_BUILD_ENV=--build-env NEXT_PUBLIC_VSL_MP4=$DIRECT_URL" >> "$GITHUB_ENV"
           fi
+      # Cache dos vídeos convertidos: evita baixar e converter de novo a cada deploy
+      # (mude VSL_ENCODE_VERSION quando alterar os parâmetros de conversão).
+      - name: Cache da VSL convertida
+        id: vslcache
+        uses: actions/cache@v4
+        with:
+          path: secretarias-alta-performance/public/video
+          key: vsl-${{ vars.VSL_ENCODE_VERSION || 'v3' }}-${{ hashFiles('.github/workflows/deploy-vercel.yml') }}-${{ secrets.VSL_MP4_URL || vars.VSL_MP4_URL || 'drive-1T4U9ON_--kVlOHVbmqVaRGvxHKJgVE0C' }}
       - name: VSL em MP4 (opcional)
         env:
           # Link do Google Drive da VSL ("qualquer pessoa com o link"). Pode ser trocado por secret/variável.
@@ -98,6 +106,13 @@ jobs:
             echo "VSL_MP4_URL não definido: o site usa o MP4 externo (se houver) ou o YouTube."; exit 0
           fi
           url="$VSL_MP4_URL"
+          if [ "${{ steps.vslcache.outputs.cache-hit }}" = "true" ] && [ -s public/video/vsl.mp4 ]; then
+            echo "Vídeos já convertidos (cache): $(du -sh public/video | cut -f1)"
+            build_env="--build-env NEXT_PUBLIC_VSL_MP4=/video/vsl.mp4"
+            [ -f public/video/hls/master.m3u8 ] && build_env="$build_env --build-env NEXT_PUBLIC_VSL_HLS=/video/hls/master.m3u8"
+            echo "VSL_BUILD_ENV=$build_env" >> "$GITHUB_ENV"
+            exit 0
+          fi
           # o runner do GitHub não traz ffmpeg; instala (apt) ou usa o binário estático
           if ! command -v ffmpeg >/dev/null 2>&1; then
             echo "Instalando ffmpeg..."

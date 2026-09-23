@@ -57,7 +57,11 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const canHls = Boolean(vsl.hlsUrl) && v.canPlayType("application/vnd.apple.mpegurl") !== "";
+    // HLS só no Safari/iPhone/iPad (onde é nativo e resolve o buffer); Android e
+    // computador seguem no MP4, que já funciona bem neles.
+    const ua = navigator.userAgent;
+    const isApple = /iPhone|iPad|iPod/.test(ua) || (/Safari/.test(ua) && !/Chrome|Chromium|CriOS|Android|Edg/.test(ua));
+    const canHls = isApple && Boolean(vsl.hlsUrl) && v.canPlayType("application/vnd.apple.mpegurl") !== "";
     const src = canHls ? vsl.hlsUrl : vsl.mp4Url;
     dbg(`fonte: ${canHls ? "HLS" : "MP4"} ${src}`);
     v.src = src;
