@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
+import { useId, useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, CheckCircle2, Loader2, MessageCircle, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/cn";
@@ -37,6 +37,10 @@ type Status = "idle" | "sending" | "success" | "error";
 export function LeadForm({ source, className, title = "Garanta sua vaga", compact = false }: LeadFormProps) {
   const uid = useId();
   const router = useRouter();
+  // pré-carrega a página de obrigado para a troca ser instantânea
+  useEffect(() => {
+    if (lead.thankYouPath) router.prefetch(lead.thankYouPath);
+  }, [router]);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -72,17 +76,19 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
     };
 
     if (lead.webhookUrl) {
+      // Em segundo plano, sem esperar a resposta (o Apps Script demora alguns segundos).
+      // keepalive garante que o envio termina mesmo com a troca de página.
+      // text/plain + no-cors: sem preflight, funciona com Google Apps Script, n8n, Make, Zapier
       try {
-        // text/plain + no-cors: sem preflight, funciona com Google Apps Script, n8n, Make, Zapier
-        await fetch(lead.webhookUrl, {
+        void fetch(lead.webhookUrl, {
           method: "POST",
           mode: "no-cors",
           headers: { "Content-Type": "text/plain;charset=UTF-8" },
           body: JSON.stringify(payload),
           keepalive: true,
-        });
+        }).catch(() => {});
       } catch {
-        /* segue para o WhatsApp mesmo se o webhook falhar */
+        /* segue mesmo se o webhook falhar */
       }
     }
 
