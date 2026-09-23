@@ -29,9 +29,11 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   const maxPlayedRef = useRef(0);
   const snapRef = useRef(false); // seek feito por nós: ignora o próximo "seeking"
   const [debug, setDebug] = useState(false);
-  const [log, setLog] = useState<string[]>([]);
-  const dbg = (msg: string) =>
-    setLog((l) => [`${new Date().toLocaleTimeString("pt-BR")} ${msg}`, ...l].slice(0, 14));
+  const debugRef = useRef(false);
+  // registro de eventos só no console do navegador, e só com ?debug=1 (nada aparece na tela)
+  const dbg = (msg: string) => {
+    if (debugRef.current) console.info(`[vsl] ${new Date().toLocaleTimeString("pt-BR")} ${msg}`);
+  };
 
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -45,6 +47,7 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   useEffect(() => {
     try {
       if (new URLSearchParams(window.location.search).get("debug") === "1") {
+        debugRef.current = true;
         setDebug(true);
         dbg(`UA ${navigator.userAgent.slice(0, 90)}`);
       }
@@ -202,12 +205,6 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
         onSeeked={(e) => dbg(`seeked → ${e.currentTarget.currentTime.toFixed(1)}`)}
         className="absolute inset-0 size-full cursor-pointer object-cover"
       />
-
-      {debug && (
-        <pre className="pointer-events-none absolute inset-x-0 bottom-0 z-30 max-h-[60%] overflow-hidden bg-black/80 p-2 text-[10px] leading-tight text-lime-300">
-          {log.join("\n")}
-        </pre>
-      )}
 
       {showOverlay && (
         <button
