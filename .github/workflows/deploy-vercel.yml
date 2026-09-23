@@ -98,16 +98,26 @@ jobs:
             echo "VSL_MP4_URL não definido: o site usa o MP4 externo (se houver) ou o YouTube."; exit 0
           fi
           url="$VSL_MP4_URL"
+          # o runner do GitHub não traz ffmpeg; instala (apt) ou usa o binário estático
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            echo "Instalando ffmpeg..."
+            (sudo apt-get update -qq >/dev/null 2>&1 && sudo apt-get install -y -qq ffmpeg >/dev/null 2>&1) || {
+              curl -sSL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /tmp/ff.tar.xz
+              mkdir -p /tmp/ff && tar -xJf /tmp/ff.tar.xz -C /tmp/ff --strip-components=1
+              sudo cp /tmp/ff/ffmpeg /tmp/ff/ffprobe /usr/local/bin/
+            }
+          fi
+          ffmpeg -version | head -1
           echo "Baixando a VSL..."
           rm -f /tmp/vsl-src
           if echo "$url" | grep -q "drive.google.com"; then
-            # arquivos grandes no Drive exigem a confirmação "não foi possível verificar vírus";
-            # o gdown trata isso. Plano B: link direto com confirm=t.
+            # arquivos grandes no Drive: link direto com confirm=t; plano B: gdown
             fid=$(echo "$url" | grep -oE '/d/[^/?]+|id=[^&]+' | head -1 | sed -E 's#^/d/##; s#^id=##')
-            pip install -q --disable-pip-version-check gdown >/dev/null 2>&1 || true
-            gdown --quiet --fuzzy "https://drive.google.com/uc?id=$fid" -O /tmp/vsl-src \
-              || curl -sSL --retry 3 --max-time 900 "https://drive.usercontent.google.com/download?id=$fid&export=download&confirm=t" -o /tmp/vsl-src \
-              || true
+            curl -sSL --retry 3 --max-time 900 "https://drive.usercontent.google.com/download?id=$fid&export=download&confirm=t" -o /tmp/vsl-src || true
+            if [ ! -s /tmp/vsl-src ] || [ "$(stat -c %s /tmp/vsl-src)" -lt 1000000 ]; then
+              pip install -q --disable-pip-version-check gdown >/dev/null 2>&1 || true
+              gdown --quiet "https://drive.google.com/uc?id=$fid" -O /tmp/vsl-src || true
+            fi
           else
             curl -sSL --retry 3 --max-time 900 "$url" -o /tmp/vsl-src || true
           fi
@@ -128,7 +138,7 @@ jobs:
           mkdir -p public/video
           echo "Origem: $(du -h /tmp/vsl-src | cut -f1), ${dur}s → convertendo para 720p a ${vb} kbps (pode levar alguns minutos)"
           ffmpeg -v error -stats -y -i /tmp/vsl-src -vf "scale='min(1280,iw)':-2" -r 30 \
-            -c:v libx264 -preset medium -b:v ${vb}k -maxrate $((vb*3/2))k -bufsize $((vb*3))k \
+            -c:v libx264 -preset fast -threads 0 -b:v ${vb}k -maxrate $((vb*3/2))k -bufsize $((vb*3))k \
             -profile:v high -pix_fmt yuv420p -movflags +faststart \
             -c:a aac -b:a 96k -ac 2 public/video/vsl.mp4
           ls -la public/video/vsl.mp4
