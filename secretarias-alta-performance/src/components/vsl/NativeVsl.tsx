@@ -15,9 +15,23 @@ import { useVslGate } from "./useVslGate";
  * - sem controles nativos: não dá para pular a parte que libera a página;
  * - barra de progresso, temporizador e liberação por tempo iguais ao player do YouTube.
  */
+const bufEnd = (v: HTMLVideoElement) => {
+  try {
+    const b = v.buffered;
+    return b.length ? b.end(b.length - 1).toFixed(1) : "0";
+  } catch {
+    return "?";
+  }
+};
+
 export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const maxPlayedRef = useRef(0);
+  const snapRef = useRef(false); // seek feito por nós: ignora o próximo "seeking"
+  const [debug, setDebug] = useState(false);
+  const [log, setLog] = useState<string[]>([]);
+  const dbg = (msg: string) =>
+    setLog((l) => [`${new Date().toLocaleTimeString("pt-BR")} ${msg}`, ...l].slice(0, 14));
 
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
@@ -27,6 +41,17 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   const { report, markStarted, finish } = gate;
 
   const unavailable = onUnavailable ?? finish;
+
+  useEffect(() => {
+    try {
+      if (new URLSearchParams(window.location.search).get("debug") === "1") {
+        setDebug(true);
+        dbg(`UA ${navigator.userAgent.slice(0, 90)}`);
+      }
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   // Tenta o autoplay sem som. Se o arquivo já falhou antes da hidratação
   // (o evento "error" disparou antes de o React escutar), detecta aqui.
@@ -61,11 +86,16 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
     if (!v) return;
     v.muted = false;
     v.volume = 1;
-    if (vsl.restartOnUnmute && v.currentTime > 1) v.currentTime = 0;
-    maxPlayedRef.current = 0;
     setMuted(false);
     setAutoplayBlocked(false);
-    v.play().catch(() => {});
+    // iOS: play() precisa vir primeiro, ainda dentro do toque; o seek vem depois
+    const p = v.play();
+    if (vsl.restartOnUnmute && v.currentTime > 1) {
+      maxPlayedRef.current = 0;
+      snapRef.current = true;
+      v.currentTime = 0;
+    }
+    if (p && typeof p.catch === "function") p.catch(() => {});
     trackVideoUnmute();
   };
 
@@ -133,10 +163,17 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
           setAutoplayBlocked(false);
           markStarted();
         }}
-        onPause={() => setPlaying(false)}
+        onPause={() => {
+          setPlaying(false);
+          dbg("pause");
+        }}
         onEnded={() => finish()}
         // MP4 ausente/corrompido (ex.: ainda não enviado para a hospedagem): cai para o YouTube
-        onError={() => unavailable()}
+        onError={(e) => {
+          const err = e.currentTarget.error;
+          dbg(`ERRO code=${err?.code ?? "?"} ${err?.message ?? ""}`);
+          if (!debug) unavailable();
+        }}
         onTimeUpdate={(e) => {
           const v = e.currentTarget;
           if (v.currentTime > maxPlayedRef.current) maxPlayedRef.current = v.currentTime;
@@ -145,10 +182,30 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
         onSeeking={(e) => {
           // não deixa pular para frente: a página só libera assistindo
           const v = e.currentTarget;
-          if (v.currentTime > maxPlayedRef.current + 1) v.currentTime = maxPlayedRef.current;
+          if (snapRef.current) {
+            snapRef.current = false;
+            return;
+          }
+          if (v.currentTime > maxPlayedRef.current + 3) {
+            snapRef.current = true;
+            v.currentTime = maxPlayedRef.current;
+          }
         }}
+        onLoadedMetadata={(e) => dbg(`metadata ${Math.round(e.currentTarget.duration)}s ${e.currentTarget.videoWidth}x${e.currentTarget.videoHeight}`)}
+        onCanPlay={() => dbg("canplay")}
+        onPlaying={() => dbg("playing")}
+        onWaiting={(e) => dbg(`waiting (buffer) t=${e.currentTarget.currentTime.toFixed(1)} buf=${bufEnd(e.currentTarget)}`)}
+        onStalled={(e) => dbg(`stalled t=${e.currentTarget.currentTime.toFixed(1)} net=${e.currentTarget.networkState}`)}
+        onSuspend={() => dbg("suspend")}
+        onSeeked={(e) => dbg(`seeked → ${e.currentTarget.currentTime.toFixed(1)}`)}
         className="absolute inset-0 size-full cursor-pointer object-cover"
       />
+
+      {debug && (
+        <pre className="pointer-events-none absolute inset-x-0 bottom-0 z-30 max-h-[60%] overflow-hidden bg-black/80 p-2 text-[10px] leading-tight text-lime-300">
+          {log.join("\n")}
+        </pre>
+      )}
 
       {showOverlay && (
         <button

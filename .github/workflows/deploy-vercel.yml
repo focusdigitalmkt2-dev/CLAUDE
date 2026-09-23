@@ -137,10 +137,14 @@ jobs:
           vb=$(( 680000 / dur )); if [ "$vb" -gt 1400 ]; then vb=1400; fi
           mkdir -p public/video
           echo "Origem: $(du -h /tmp/vsl-src | cut -f1), ${dur}s → convertendo para 720p a ${vb} kbps (pode levar alguns minutos)"
-          ffmpeg -v error -stats -y -i /tmp/vsl-src -vf "scale='min(1280,iw)':-2" -r 30 \
+          # Perfil/nível fixos e keyframe a cada 2 s: decodificação estável no iPhone e
+          # retomada rápida ao carregar em partes. Lado maior limitado a 1280 px.
+          ffmpeg -v error -stats -y -i /tmp/vsl-src \
+            -vf "scale='if(gt(iw,ih),min(1280,iw),-2)':'if(gt(iw,ih),-2,min(1280,ih))',format=yuv420p" -r 30 \
             -c:v libx264 -preset fast -threads 0 -b:v ${vb}k -maxrate $((vb*3/2))k -bufsize $((vb*3))k \
-            -profile:v high -pix_fmt yuv420p -movflags +faststart \
-            -c:a aac -b:a 96k -ac 2 public/video/vsl.mp4
+            -profile:v main -level 4.0 -g 60 -keyint_min 60 -sc_threshold 0 -x264-params "bframes=2:ref=3" \
+            -movflags +faststart \
+            -c:a aac -b:a 96k -ar 44100 -ac 2 public/video/vsl.mp4
           ls -la public/video/vsl.mp4
           echo "VSL: ${dur}s, vídeo ${vb} kbps → $(du -h public/video/vsl.mp4 | cut -f1)"
           echo "VSL_BUILD_ENV=--build-env NEXT_PUBLIC_VSL_MP4=/video/vsl.mp4" >> "$GITHUB_ENV"
