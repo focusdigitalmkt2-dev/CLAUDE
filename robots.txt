@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://secretariasdealtaperformance.com.br/sitemap.xml
