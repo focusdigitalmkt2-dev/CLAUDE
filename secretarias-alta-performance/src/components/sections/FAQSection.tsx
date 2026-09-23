@@ -7,6 +7,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { faq } from "@/content/faq";
 import { sections, whatsappUrl } from "@/lib/config";
+import { trackContact } from "@/lib/analytics";
 import { cn } from "@/lib/cn";
 
 export function FAQSection() {
@@ -29,7 +30,7 @@ export function FAQSection() {
             subtitle="Ficou alguma dúvida? Fale com a equipe."
           />
           <a
-            href={whatsappUrl()}
+            href={whatsappUrl()} onClick={() => trackContact({ source: "faq" })}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-xl border border-line-strong px-5 text-sm font-bold uppercase tracking-wide text-paper transition-colors hover:border-gold hover:text-gold"

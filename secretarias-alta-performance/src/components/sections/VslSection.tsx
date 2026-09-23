@@ -5,7 +5,7 @@ import { Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { vsl } from "@/lib/config";
 import { unlockPage, useVslUnlocked } from "@/lib/vslStore";
-import { trackCTA } from "@/lib/analytics";
+import { trackVideoStart, trackVideoUnlock, trackVideoUnmute } from "@/lib/analytics";
 
 /* ---------- Tipos mínimos da IFrame API do YouTube ---------- */
 interface YTPlayer {
@@ -93,6 +93,7 @@ export function VslSection() {
   const startedRef = useRef(false);
   const mutedRef = useRef(true);
   const nativeRef = useRef(false);
+  const unlockedRef = useRef(false);
 
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -165,6 +166,7 @@ export function VslSection() {
             if (isPlaying) {
               setAutoplayBlocked(false);
               disableCaptions(e.target);
+              if (!startedRef.current) trackVideoStart();
             }
             if (isPlaying || st === YT.PlayerState.BUFFERING) startedRef.current = true;
             if (st === YT.PlayerState.ENDED) unlockPage();
@@ -196,13 +198,13 @@ export function VslSection() {
     p.setVolume(100);
     if (vsl.restartOnUnmute && (p.getCurrentTime?.() || 0) > 1) p.seekTo(0, true);
     setMutedState(false);
-    trackCTA("vsl_unmute");
+    trackVideoUnmute();
     // Plano B: se não estiver tocando em 2 s, troca para os controles nativos do YouTube
     window.setTimeout(() => {
       if (!playingRef.current && !nativeRef.current) {
         setNativeControls(true);
         createPlayer({ native: true, muted: false, start: Math.floor(p.getCurrentTime?.() || 0) });
-        trackCTA("vsl_native_fallback");
+
       }
     }, 2000);
   }, [createPlayer]);
@@ -236,9 +238,10 @@ export function VslSection() {
       setProgress(dur > 0 ? Math.min(100, (cur / dur) * 100) : 0);
       const byTime = vsl.unlockAtSeconds > 0 && cur >= vsl.unlockAtSeconds;
       const byEnd = dur > 0 && cur >= dur - 1;
-      if (byTime || byEnd) {
+      if ((byTime || byEnd) && !unlockedRef.current) {
+        unlockedRef.current = true;
         unlockPage();
-        trackCTA("vsl_unlock");
+        trackVideoUnlock();
       }
     }, 250);
     return () => window.clearInterval(id);

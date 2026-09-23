@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { site } from "@/lib/config";
+import { Tracking } from "@/components/Tracking";
 import "./globals.css";
 
 /**
@@ -73,11 +74,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://i.ytimg.com" />
         <link rel="preconnect" href="https://s.ytimg.com" />
         <link rel="dns-prefetch" href="https://www.google.com" />
-        {/*
-          RASTREAMENTO
-          Cole aqui os scripts do Meta Pixel / Google Tag / GTM.
-          Os eventos de CTA e Lead já são disparados por src/lib/analytics.ts.
-        */}
       </head>
       <body className="min-h-dvh antialiased">
         <a
@@ -87,6 +83,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Pular para o conteúdo
         </a>
         {children}
+        {/* Meta Pixel / GA4 / GTM — IDs em src/lib/config.ts (tracking) ou variáveis de ambiente */}
+        <Tracking />
       </body>
     </html>
   );

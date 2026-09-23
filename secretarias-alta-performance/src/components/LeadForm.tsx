@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, CheckCircle2, Loader2, MessageCircle, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { event, lead, leadWhatsappUrl, links } from "@/lib/config";
-import { trackLead } from "@/lib/analytics";
+import { trackContact, trackLead } from "@/lib/analytics";
 
 interface LeadFormProps {
   /** Identifica a origem do lead nos sistemas (ex.: "hero", "inscricao") */
@@ -79,6 +79,7 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
     setStatus("success");
 
     if (lead.redirectToWhatsApp) {
+      trackContact({ source });
       window.open(leadWhatsappUrl(payload.name, phone), "_blank", "noopener,noreferrer");
     }
   }
@@ -101,6 +102,7 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
           href={leadWhatsappUrl(name.trim(), phone)}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackContact({ source: `${source}_success` })}
           className="mt-2 inline-flex min-h-12 items-center gap-2 rounded-xl bg-gold px-6 font-display text-sm font-extrabold uppercase tracking-wide text-black transition-transform hover:-translate-y-0.5"
         >
           <MessageCircle className="size-4" aria-hidden />

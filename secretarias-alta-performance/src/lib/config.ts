@@ -96,6 +96,19 @@ export const vsl = {
   restartOnUnmute: true,
 } as const;
 
+/**
+ * RASTREAMENTO
+ * IDs podem vir das variáveis de ambiente (Vercel) ou ser fixados aqui.
+ * - metaPixelId: ID numérico do Pixel/Conjunto de dados da Meta
+ * - ga4Id: ID de medição do Google Analytics 4 (G-XXXX), opcional
+ * - gtmId: ID do Google Tag Manager (GTM-XXXX), opcional
+ */
+export const tracking = {
+  metaPixelId: env("NEXT_PUBLIC_META_PIXEL_ID", ""),
+  ga4Id: env("NEXT_PUBLIC_GA4_ID", ""),
+  gtmId: env("NEXT_PUBLIC_GTM_ID", ""),
+} as const;
+
 /** IDs das seções (usados em âncoras, header e sticky CTA) */
 export const sections = {
   hero: "inicio",

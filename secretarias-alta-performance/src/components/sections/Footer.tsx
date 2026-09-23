@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { Instagram, Mail, MessageCircle } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { links, site, whatsappUrl } from "@/lib/config";
+import { trackContact } from "@/lib/analytics";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -36,7 +39,7 @@ export function Footer() {
             <p className="font-display text-xs font-black uppercase tracking-[0.2em] text-paper">Contato</p>
             <ul className="mt-4 space-y-2.5">
               <li>
-                <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-gold">
+                <a href={whatsappUrl()} onClick={() => trackContact({ source: "footer" })} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:text-gold">
                   <MessageCircle className="size-4 text-gold" aria-hidden />WhatsApp
                 </a>
               </li>
