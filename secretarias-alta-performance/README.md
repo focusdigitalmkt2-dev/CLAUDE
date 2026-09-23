@@ -66,7 +66,8 @@ npm run lint
 
 1. **Webhook de leads, WhatsApp e Instagram** → copie `.env.example` para `.env.local` e preencha.
    O formulário envia um POST JSON (`name`, `phone`, `source`, `page`, `date`) para
-   `NEXT_PUBLIC_LEAD_WEBHOOK_URL` (Zapier, Make, n8n, RD Station, Apps Script...) e, em seguida,
+   `NEXT_PUBLIC_LEAD_WEBHOOK_URL` (Google Sheets via Apps Script — código pronto em
+   `docs/planilha-leads-apps-script.js` —, Zapier, Make, n8n, RD Station...) e, em seguida,
    abre o WhatsApp comercial com a mensagem preenchida. Sem webhook, só o WhatsApp é usado.
    Ajuste esse comportamento em `lead` dentro de `src/lib/config.ts`.
 2. **Razão social, CNPJ e e-mail** → `src/lib/config.ts`.

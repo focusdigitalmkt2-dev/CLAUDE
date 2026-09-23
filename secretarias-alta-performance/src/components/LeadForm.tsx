@@ -53,6 +53,12 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
     setError(null);
     setStatus("sending");
 
+    // parâmetros de campanha (utm_*, fbclid) da URL, para saber de onde veio o lead
+    const q = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : null;
+    const utm = Object.fromEntries(
+      ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"].map((k) => [k, q?.get(k) ?? ""]),
+    );
+
     const payload = {
       name: name.trim(),
       phone: `+55${digits}`,
@@ -60,13 +66,16 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
       page: typeof window !== "undefined" ? window.location.href : "",
       date: new Date().toISOString(),
       event: event.dateLabel,
+      ...utm,
     };
 
     if (lead.webhookUrl) {
       try {
+        // text/plain + no-cors: sem preflight, funciona com Google Apps Script, n8n, Make, Zapier
         await fetch(lead.webhookUrl, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=UTF-8" },
           body: JSON.stringify(payload),
           keepalive: true,
         });
