@@ -14,6 +14,6 @@ jobs:
           echo "Webhook: $u"
           echo "== GET"; curl -sSL --max-time 40 "$u" -w "\nHTTP %{http_code}\n"
           echo "== POST (lead de teste)"
-          curl -sSL --max-time 40 -X POST -H "Content-Type: text/plain;charset=UTF-8" \
+          curl -sSL --max-time 40 -H "Content-Type: text/plain;charset=UTF-8" \
             --data "{\"name\":\"TESTE (pode apagar)\",\"phone\":\"+5581999990000\",\"source\":\"teste\",\"page\":\"https://secretarias-focus.vercel.app/?utm_source=teste\",\"date\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"utm_source\":\"teste\",\"utm_campaign\":\"teste-config\"}" \
             "$u" -w "\nHTTP %{http_code}\n"
