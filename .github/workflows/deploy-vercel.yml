@@ -56,7 +56,10 @@ jobs:
             || curl -sSf "https://i.ytimg.com/vi/$id/sddefault.jpg" -o /tmp/poster.jpg || true
           if [ -s /tmp/poster.jpg ]; then
             # reduz para 960px de largura e qualidade 72: ~40 KB em vez de ~100 KB
-            convert /tmp/poster.jpg -resize 960x -strip -quality 72 public/images/vsl-poster.jpg || cp /tmp/poster.jpg public/images/vsl-poster.jpg
+            # (o runner não tem ImageMagick; usa o sharp instalado numa pasta temporária)
+            npm install --prefix /tmp/sharp --no-save --silent sharp@0.34 >/dev/null 2>&1 || true
+            SHARP_PATH=/tmp/sharp/node_modules/sharp node scripts/compress-poster.mjs /tmp/poster.jpg public/images/vsl-poster.jpg \
+              || cp /tmp/poster.jpg public/images/vsl-poster.jpg
           fi
           ls -la public/images/vsl-poster.jpg || echo "capa não baixada; o site usa a do YouTube"
       - name: Deploy de produção
