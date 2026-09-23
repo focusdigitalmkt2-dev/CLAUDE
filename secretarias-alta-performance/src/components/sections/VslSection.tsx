@@ -94,6 +94,7 @@ export function VslSection() {
   const mutedRef = useRef(true);
   const nativeRef = useRef(false);
   const unlockedRef = useRef(false);
+  const readyRef = useRef(false);
 
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
@@ -146,6 +147,7 @@ export function VslSection() {
         events: {
           onReady: (e) => {
             playerRef.current = e.target;
+            readyRef.current = true;
             setReady(true);
             disableCaptions(e.target);
             if (opts.muted) e.target.mute();
@@ -247,15 +249,16 @@ export function VslSection() {
     return () => window.clearInterval(id);
   }, []);
 
-  // Se o player não iniciar (bloqueio de rede, erro), não prende a página
+  // Proteção apenas para falha real: o player do YouTube não carregou
+  // (rede bloqueada) ou deu erro. Autoplay bloqueado NÃO libera: exige o toque.
   useEffect(() => {
     const id = window.setTimeout(() => {
-      if (!startedRef.current) unlockPage(false);
+      if (!readyRef.current) unlockPage();
     }, vsl.fallbackSeconds * 1000);
     return () => window.clearTimeout(id);
   }, []);
   useEffect(() => {
-    if (failed) unlockPage(false);
+    if (failed) unlockPage();
   }, [failed]);
 
   const togglePlay = () => {
@@ -292,7 +295,7 @@ export function VslSection() {
               {!playing && !nativeControls && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={`https://i.ytimg.com/vi/${vsl.youtubeId}/maxresdefault.jpg`}
+                  src={`https://i.ytimg.com/vi/${vsl.youtubeId}/sddefault.jpg`}
                   alt=""
                   aria-hidden
                   fetchPriority="high"

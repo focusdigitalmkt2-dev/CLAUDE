@@ -87,12 +87,13 @@ export const event = {
  * VSL (vídeo de vendas) logo abaixo da captura.
  * - youtubeId: ID do vídeo (o que vem depois de youtu.be/ ou watch?v=)
  * - unlockAtSeconds: tempo de vídeo para liberar a página. 0 = só quando o vídeo termina.
- * - fallbackSeconds: se o player não iniciar em X segundos (bloqueio, erro), libera a página
+ * - fallbackSeconds: se o player do YouTube não carregar em X segundos (rede bloqueada/erro),
+ *   libera a página. Autoplay bloqueado não conta: a pessoa precisa tocar no vídeo.
  */
 export const vsl = {
   youtubeId: "0RyKkb6d7Xs",
   unlockAtSeconds: 210,
-  fallbackSeconds: 25,
+  fallbackSeconds: 40,
   restartOnUnmute: true,
 } as const;
 
