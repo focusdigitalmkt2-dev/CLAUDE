@@ -7,16 +7,15 @@ import {
   AudienceSection,
   AuthoritySection,
   SignupSection,
-  FAQSection,
   FinalCTA,
 } from "@/components/sections";
 
 /**
  * Seções liberadas após a VSL. A VSL já apresenta problema, impacto, comparação,
  * ROI e urgência, então a página fica só com o essencial:
- * captura → método → cases → para quem é → autoridade → inscrição → FAQ → CTA final.
+ * captura → método → cases → para quem é → autoridade → inscrição → CTA final.
  * (ProblemSection, ImpactSection, NumbersSection, ComparisonSection, ROISection e
- * UrgencySection continuam no código, caso queira reativar alguma.)
+ * UrgencySection e FAQSection continuam no código, caso queira reativar alguma.)
  */
 export function RestOfPage() {
   return (
@@ -27,7 +26,6 @@ export function RestOfPage() {
       <AudienceSection />
       <AuthoritySection />
       <SignupSection />
-      <FAQSection />
       <FinalCTA />
     </>
   );

@@ -13,7 +13,6 @@ const nav = [
   { label: "Método", href: `#${sections.method}` },
   { label: "Cases", href: `#${sections.cases}` },
   { label: "Inscrição", href: `#${sections.signup}` },
-  { label: "FAQ", href: `#${sections.faq}` },
 ];
 
 export function Header() {
