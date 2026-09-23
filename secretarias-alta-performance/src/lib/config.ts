@@ -75,7 +75,11 @@ export const whatsappUrl = () =>
  *   mensagem já preenchida com os dados do lead.
  */
 export const lead = {
-  webhookUrl: env("NEXT_PUBLIC_LEAD_WEBHOOK_URL", ""),
+  webhookUrl: env(
+    "NEXT_PUBLIC_LEAD_WEBHOOK_URL",
+    // Planilha de leads (Google Sheets via Apps Script) — código em docs/planilha-leads-apps-script.js
+    "https://script.google.com/macros/s/AKfycbz0D-9mvwTABmVwR2BPRVAIPhomnDzh7FDEc5czMOSr06izozhZmk__ZOTO6q1MIMOZ/exec",
+  ),
   redirectToWhatsApp: true,
   successTitle: "Recebemos seus dados!",
   successText:

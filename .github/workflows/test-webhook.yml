@@ -1,0 +1,19 @@
+# Envia um lead de TESTE para o webhook da planilha e mostra a resposta.
+name: Testar webhook de leads
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          u=$(grep -oE 'https://script.google.com/macros/s/[^"]+' secretarias-alta-performance/src/lib/config.ts | head -1)
+          echo "Webhook: $u"
+          echo "== GET"; curl -sSL --max-time 40 "$u" -w "\nHTTP %{http_code}\n"
+          echo "== POST (lead de teste)"
+          curl -sSL --max-time 40 -X POST -H "Content-Type: text/plain;charset=UTF-8" \
+            --data "{\"name\":\"TESTE (pode apagar)\",\"phone\":\"+5581999990000\",\"source\":\"teste\",\"page\":\"https://secretarias-focus.vercel.app/?utm_source=teste\",\"date\":\"$(date -u +%Y-%m-%dT%H:%M:%SZ)\",\"utm_source\":\"teste\",\"utm_campaign\":\"teste-config\"}" \
+            "$u" -w "\nHTTP %{http_code}\n"
