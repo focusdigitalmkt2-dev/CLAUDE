@@ -26,23 +26,35 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   const gate = useVslGate();
   const { report, markStarted, finish } = gate;
 
-  // Tenta o autoplay sem som
+  const unavailable = onUnavailable ?? finish;
+
+  // Tenta o autoplay sem som. Se o arquivo já falhou antes da hidratação
+  // (o evento "error" disparou antes de o React escutar), detecta aqui.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+      unavailable();
+      return;
+    }
     v.muted = true;
     const p = v.play();
-    if (p && typeof p.catch === "function") p.catch(() => setAutoplayBlocked(true));
-  }, []);
+    if (p && typeof p.catch === "function") {
+      p.catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === "NotSupportedError") unavailable();
+        else setAutoplayBlocked(true);
+      });
+    }
+  }, [unavailable]);
 
-  // Proteção: arquivo não carregou em X segundos → troca para o YouTube (ou libera a página)
+  // Proteção: sem metadados do arquivo em 15 s → troca para o YouTube (ou libera a página)
   useEffect(() => {
     const id = window.setTimeout(() => {
       const v = videoRef.current;
-      if (!v || v.readyState === 0) (onUnavailable ?? finish)();
-    }, vsl.fallbackSeconds * 1000);
+      if (!v || v.readyState === 0) unavailable();
+    }, 15000);
     return () => window.clearTimeout(id);
-  }, [finish, onUnavailable]);
+  }, [unavailable]);
 
   const soundOn = () => {
     const v = videoRef.current;
@@ -124,7 +136,7 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
         onPause={() => setPlaying(false)}
         onEnded={() => finish()}
         // MP4 ausente/corrompido (ex.: ainda não enviado para a hospedagem): cai para o YouTube
-        onError={() => (onUnavailable ?? finish)()}
+        onError={() => unavailable()}
         onTimeUpdate={(e) => {
           const v = e.currentTarget;
           if (v.currentTime > maxPlayedRef.current) maxPlayedRef.current = v.currentTime;
