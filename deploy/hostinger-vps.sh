@@ -34,8 +34,10 @@ case "$DOMAIN" in www.*) DOMAIN="${DOMAIN#www.}";; esac
 export DEBIAN_FRONTEND=noninteractive
 
 say "Instalando utilitários"
-apt-get update -qq
-apt-get install -y -qq curl unzip ca-certificates debian-keyring debian-archive-keyring apt-transport-https gnupg >/dev/null
+# Repositórios de terceiros quebrados (ex.: postgresql) não podem travar a instalação.
+apt-get update -qq 2>/dev/null || echo "(aviso: algum repositório do apt está com problema; seguindo mesmo assim)"
+apt-get install -y -qq curl unzip ca-certificates gnupg >/dev/null 2>&1 || true
+for bin in curl unzip; do command -v "$bin" >/dev/null 2>&1 || die "não consegui instalar '$bin'. Rode: apt-get install -y $bin"; done
 
 # ---------------------------------------------------------------- Caddy
 if ! command -v caddy >/dev/null 2>&1; then
@@ -45,10 +47,43 @@ if ! command -v caddy >/dev/null 2>&1; then
     die "as portas 80/443 já estão em uso por: $busy. Me mande esta mensagem que eu ajusto a instalação para conviver com esse serviço."
   fi
   say "Instalando o Caddy (servidor web com HTTPS automático)"
-  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-  curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list
-  apt-get update -qq
-  apt-get install -y -qq caddy >/dev/null
+  installed=0
+  if curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg 2>/dev/null \
+     && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list; then
+    # atualiza SÓ a lista do Caddy, ignorando os outros repositórios
+    apt-get update -qq -o Dir::Etc::sourcelist="sources.list.d/caddy-stable.list" \
+      -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" >/dev/null 2>&1 || true
+    apt-get install -y -qq caddy >/dev/null 2>&1 && installed=1
+  fi
+  if [ "$installed" != 1 ]; then
+    echo "apt não conseguiu instalar o Caddy; baixando o binário oficial"
+    curl -fsSL "https://caddyserver.com/api/download?os=linux&arch=amd64" -o /usr/local/bin/caddy
+    chmod +x /usr/local/bin/caddy
+    id -u caddy >/dev/null 2>&1 || useradd --system --home /var/lib/caddy --create-home --shell /usr/sbin/nologin caddy
+    mkdir -p /etc/caddy /var/lib/caddy /var/log/caddy
+    chown -R caddy:caddy /var/lib/caddy /var/log/caddy
+    cat > /etc/systemd/system/caddy.service <<'CSVC'
+[Unit]
+Description=Caddy
+After=network.target network-online.target
+Requires=network-online.target
+[Service]
+Type=notify
+User=caddy
+Group=caddy
+ExecStart=/usr/local/bin/caddy run --environ --config /etc/caddy/Caddyfile
+ExecReload=/usr/local/bin/caddy reload --config /etc/caddy/Caddyfile --force
+TimeoutStopSec=5s
+LimitNOFILE=1048576
+PrivateTmp=true
+ProtectSystem=full
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+[Install]
+WantedBy=multi-user.target
+CSVC
+    systemctl daemon-reload
+  fi
+  command -v caddy >/dev/null 2>&1 || die "Caddy não foi instalado."
 fi
 
 # ---------------------------------------------------------------- Atualizador
