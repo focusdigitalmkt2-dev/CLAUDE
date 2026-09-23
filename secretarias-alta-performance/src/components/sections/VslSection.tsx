@@ -27,7 +27,6 @@ interface YTNamespace {
     el: HTMLElement,
     opts: {
       videoId: string;
-      host?: string;
       playerVars?: Record<string, string | number>;
       events?: {
         onReady?: (e: { target: YTPlayer }) => void;
@@ -83,26 +82,34 @@ const fmt = (s: number) => {
 };
 
 /**
- * VSL: autoplay sem som, libera o áudio no primeiro toque, barra de progresso
- * própria e libera o restante da página após `vsl.unlockAtSeconds`.
+ * VSL: capa imediata, autoplay sem som, som liberado no toque DENTRO do player
+ * (é o toque no player que dá ao YouTube a permissão de tocar com áudio no celular),
+ * barra de progresso própria e liberação do restante da página por tempo de vídeo.
  */
 export function VslSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
+  const playingRef = useRef(false);
+  const startedRef = useRef(false);
+  const mutedRef = useRef(true);
+  const nativeRef = useRef(false);
+
   const [ready, setReady] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
   const [progress, setProgress] = useState(0);
   const [time, setTime] = useState({ cur: 0, dur: 0 });
   const [failed, setFailed] = useState(false);
-  /** Controles nativos do YouTube: fallback quando o play customizado não funciona no aparelho */
   const [nativeControls, setNativeControls] = useState(false);
   const [autoplayBlocked, setAutoplayBlocked] = useState(false);
   const unlocked = useVslUnlocked();
-  const startedRef = useRef(false);
-  const playingRef = useRef(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Cria (ou recria) o player
+  const setMutedState = (v: boolean) => {
+    mutedRef.current = v;
+    setMuted(v);
+  };
+
+  /** Cria (ou recria) o player. */
   const createPlayer = useCallback((opts: { native: boolean; muted: boolean; start?: number }) => {
     const container = containerRef.current;
     if (!container) return;
@@ -112,17 +119,15 @@ export function VslSection() {
       /* ignore */
     }
     playerRef.current = null;
-    // o YouTube substitui a div pelo iframe; criamos uma nova a cada vez
+    nativeRef.current = opts.native;
     container.innerHTML = "";
     const mount = document.createElement("div");
-    mount.className = "absolute inset-0 size-full";
     container.appendChild(mount);
 
     loadYouTubeApi().then((YT) => {
-      if (!containerRef.current || !mount.isConnected) return;
+      if (!mount.isConnected) return;
       new YT.Player(mount, {
         videoId: vsl.youtubeId,
-        host: "https://www.youtube-nocookie.com",
         playerVars: {
           autoplay: 1,
           mute: opts.muted ? 1 : 0,
@@ -148,7 +153,6 @@ export function VslSection() {
               e.target.setVolume(100);
             }
             e.target.playVideo();
-            // autoplay bloqueado? mostra "toque para assistir"
             window.setTimeout(() => {
               if (!playingRef.current) setAutoplayBlocked(true);
             }, 2500);
@@ -160,7 +164,7 @@ export function VslSection() {
             setPlaying(isPlaying);
             if (isPlaying) {
               setAutoplayBlocked(false);
-              disableCaptions(e.target); // o módulo de legendas pode recarregar ao tocar
+              disableCaptions(e.target);
             }
             if (isPlaying || st === YT.PlayerState.BUFFERING) startedRef.current = true;
             if (st === YT.PlayerState.ENDED) unlockPage();
@@ -183,6 +187,44 @@ export function VslSection() {
     };
   }, [createPlayer]);
 
+  /** Liga o som (chamado logo após um toque dentro do player). */
+  const enableSound = useCallback(() => {
+    const p = playerRef.current;
+    if (!p || !mutedRef.current) return;
+    p.playVideo();
+    p.unMute();
+    p.setVolume(100);
+    if (vsl.restartOnUnmute && (p.getCurrentTime?.() || 0) > 1) p.seekTo(0, true);
+    setMutedState(false);
+    trackCTA("vsl_unmute");
+    // Plano B: se não estiver tocando em 2 s, troca para os controles nativos do YouTube
+    window.setTimeout(() => {
+      if (!playingRef.current && !nativeRef.current) {
+        setNativeControls(true);
+        createPlayer({ native: true, muted: false, start: Math.floor(p.getCurrentTime?.() || 0) });
+        trackCTA("vsl_native_fallback");
+      }
+    }, 2000);
+  }, [createPlayer]);
+
+  /**
+   * Detecta o toque dentro do iframe do YouTube: quando o usuário toca no player,
+   * o foco da janela vai para o iframe e a janela dispara "blur".
+   */
+  useEffect(() => {
+    const onBlur = () => {
+      window.setTimeout(() => {
+        const ifr = containerRef.current?.querySelector("iframe");
+        if (!ifr || document.activeElement !== ifr) return;
+        if (mutedRef.current && !nativeRef.current) enableSound();
+        // devolve o foco à página para detectar o próximo toque
+        window.setTimeout(() => window.focus(), 100);
+      }, 0);
+    };
+    window.addEventListener("blur", onBlur);
+    return () => window.removeEventListener("blur", onBlur);
+  }, [enableSound]);
+
   // Progresso + liberação por tempo
   useEffect(() => {
     const id = window.setInterval(() => {
@@ -193,7 +235,7 @@ export function VslSection() {
       setTime({ cur, dur });
       setProgress(dur > 0 ? Math.min(100, (cur / dur) * 100) : 0);
       const byTime = vsl.unlockAtSeconds > 0 && cur >= vsl.unlockAtSeconds;
-      const byEnd = dur > 0 && cur >= dur - 1; // segurança caso o evento ENDED não dispare
+      const byEnd = dur > 0 && cur >= dur - 1;
       if (byTime || byEnd) {
         unlockPage();
         trackCTA("vsl_unlock");
@@ -205,7 +247,7 @@ export function VslSection() {
   // Se o player não iniciar (bloqueio de rede, erro), não prende a página
   useEffect(() => {
     const id = window.setTimeout(() => {
-      if (!startedRef.current) unlockPage(false); // só nesta visita, não persiste
+      if (!startedRef.current) unlockPage(false);
     }, vsl.fallbackSeconds * 1000);
     return () => window.clearTimeout(id);
   }, []);
@@ -213,76 +255,71 @@ export function VslSection() {
     if (failed) unlockPage(false);
   }, [failed]);
 
-  const enableSound = useCallback(() => {
+  const togglePlay = () => {
     const p = playerRef.current;
     if (!p) return;
-    // 1) play dentro do gesto do usuário; 2) som; 3) reinicia se já tinha avançado mudo
-    p.playVideo();
-    p.unMute();
-    p.setVolume(100);
-    if (vsl.restartOnUnmute && (p.getCurrentTime?.() || 0) > 1) p.seekTo(0, true);
-    setMuted(false);
-    trackCTA("vsl_unmute");
-    // Se o aparelho não aceitou o play customizado, troca para controles nativos com som
-    window.setTimeout(() => {
-      if (!playingRef.current) {
-        setNativeControls(true);
-        createPlayer({ native: true, muted: false });
-        trackCTA("vsl_native_fallback");
-      }
-    }, 1500);
-  }, [createPlayer]);
-
-  const togglePlay = useCallback(() => {
-    const p = playerRef.current;
-    if (!p) return;
-    if (muted) return enableSound();
     if (playing) p.pauseVideo();
-    else {
+    else p.playVideo();
+  };
+
+  const toggleMute = () => {
+    const p = playerRef.current;
+    if (!p) return;
+    if (mutedRef.current) {
+      p.unMute();
+      p.setVolume(100);
       p.playVideo();
-      window.setTimeout(() => {
-        if (!playingRef.current && !nativeControls) {
-          setNativeControls(true);
-          createPlayer({ native: true, muted: false, start: Math.floor(p.getCurrentTime?.() || 0) });
-        }
-      }, 1500);
+      setMutedState(false);
+    } else {
+      p.mute();
+      setMutedState(true);
     }
-  }, [muted, playing, enableSound, nativeControls, createPlayer]);
+  };
+
+  const showHint = !nativeControls && !failed && (muted || autoplayBlocked);
 
   return (
     <section id="vsl" aria-label="Vídeo de apresentação" className="enter relative scroll-mt-20 bg-black pb-12 sm:pb-16" style={{ "--d": "0.1s" } as React.CSSProperties}>
       <div className="container-x">
         <div className="mx-auto max-w-4xl">
-
           <div className="border-gradient-gold relative overflow-clip rounded-2xl bg-graphite-2 shadow-card">
             {/* Player */}
             <div className="relative aspect-video w-full bg-black">
-              <div ref={containerRef} className="absolute inset-0 size-full [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:size-full" />
+              {/* Capa imediata: aparece antes de o YouTube carregar */}
+              {!playing && !nativeControls && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={`https://i.ytimg.com/vi/${vsl.youtubeId}/maxresdefault.jpg`}
+                  alt=""
+                  aria-hidden
+                  fetchPriority="high"
+                  decoding="async"
+                  className="pointer-events-none absolute inset-0 size-full object-cover"
+                />
+              )}
 
-              {/* Camada de interação: primeiro toque libera o som; depois play/pause */}
-              {!nativeControls && (
-                <button
-                  type="button"
-                  onClick={togglePlay}
-                  aria-label={muted ? "Ativar o som do vídeo" : playing ? "Pausar" : "Reproduzir"}
-                  className="absolute inset-0 flex items-center justify-center bg-transparent"
-                >
-                  {muted && ready && !failed && (
-                    <span className="flex flex-col items-center gap-3">
-                      <span className="ring-pulse relative flex size-20 items-center justify-center rounded-full bg-gold text-black shadow-gold sm:size-24">
-                        {autoplayBlocked ? <Play className="ml-1 size-9 fill-current sm:size-10" aria-hidden /> : <VolumeX className="size-9 sm:size-10" aria-hidden />}
-                      </span>
-                      <span className="rounded-full bg-black/80 px-4 py-2 font-display text-sm font-extrabold uppercase tracking-wide text-paper backdrop-blur sm:text-base">
-                        {autoplayBlocked ? "Toque para assistir" : "Toque para ativar o som"}
-                      </span>
+              {/* iframe do YouTube — recebe os toques diretamente */}
+              <div
+                ref={containerRef}
+                className="absolute inset-0 size-full [&_iframe]:absolute [&_iframe]:inset-0 [&_iframe]:size-full"
+              />
+
+              {/* Dica visual (não bloqueia o toque, que vai para o player) */}
+              {showHint && (
+                <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                  <span className="flex flex-col items-center gap-3">
+                    <span className="ring-pulse relative flex size-20 items-center justify-center rounded-full bg-gold text-black shadow-gold sm:size-24">
+                      {autoplayBlocked || !ready ? (
+                        <Play className="ml-1 size-9 fill-current sm:size-10" />
+                      ) : (
+                        <VolumeX className="size-9 sm:size-10" />
+                      )}
                     </span>
-                  )}
-                  {!muted && !playing && (
-                    <span className="flex size-20 items-center justify-center rounded-full bg-gold/90 text-black">
-                      <Play className="ml-1 size-9 fill-current" aria-hidden />
+                    <span className="rounded-full bg-black/80 px-4 py-2 font-display text-sm font-extrabold uppercase tracking-wide text-paper backdrop-blur sm:text-base">
+                      {autoplayBlocked || !ready ? "Toque para assistir" : "Toque no vídeo para ativar o som"}
                     </span>
-                  )}
-                </button>
+                  </span>
+                </div>
               )}
             </div>
 
@@ -313,15 +350,7 @@ export function VslSection() {
               </span>
               <button
                 type="button"
-                onClick={() => {
-                  const p = playerRef.current;
-                  if (!p) return;
-                  if (muted) enableSound();
-                  else {
-                    p.mute();
-                    setMuted(true);
-                  }
-                }}
+                onClick={toggleMute}
                 aria-label={muted ? "Ativar som" : "Silenciar"}
                 className={cn(
                   "flex size-9 shrink-0 items-center justify-center rounded-full border",

@@ -68,6 +68,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
+        {/* Pré-conexão com o YouTube: o player da VSL carrega mais rápido */}
+        <link rel="preconnect" href="https://www.youtube.com" />
+        <link rel="preconnect" href="https://i.ytimg.com" />
+        <link rel="preconnect" href="https://s.ytimg.com" />
+        <link rel="dns-prefetch" href="https://www.google.com" />
         {/*
           RASTREAMENTO
           Cole aqui os scripts do Meta Pixel / Google Tag / GTM.
