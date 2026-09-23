@@ -24,6 +24,10 @@ jobs:
           echo "== VSL MP4"
           curl -sSI "${URL%/}/video/vsl.mp4" | grep -iE "^(HTTP|content-type|content-length|accept-ranges|cache-control|x-vercel-cache)" || echo "sem /video/vsl.mp4 (site usa YouTube)"
           curl -sS -o /dev/null -r 0-1048575 -w "primeiro 1 MB do vídeo: %{time_total}s (HTTP %{http_code})\n" "${URL%/}/video/vsl.mp4" || true
+          echo "== VSL HLS"
+          curl -sSI "${URL%/}/video/hls/master.m3u8" | grep -iE "^(HTTP|content-type|cache-control)" || echo "sem HLS"
+          curl -sS "${URL%/}/video/hls/master.m3u8" | head -8 || true
+          curl -sS -o /dev/null -w "1º segmento 720p: %{time_total}s %{size_download}B (HTTP %{http_code})\n" "${URL%/}/video/hls/720p/seg_0000.m4s" || true
           echo "== ASSETS"
           curl -sS "$URL" | grep -oE '(src|href)="[^"]+\.(js|css|woff2|png|jpg)[^"]*"' | sed 's/^[a-z]*=//' | tr -d '"' | sort -u | head -30 | while read a; do
             case "$a" in http*) u="$a";; *) u="${URL%/}$a";; esac

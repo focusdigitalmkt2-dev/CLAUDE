@@ -53,15 +53,14 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
     }
   }, []);
 
-  // Tenta o autoplay sem som. Se o arquivo já falhou antes da hidratação
-  // (o evento "error" disparou antes de o React escutar), detecta aqui.
+  // Escolhe a fonte (HLS no Safari/iPhone, MP4 nos demais) e tenta o autoplay sem som.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (v.error || v.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
-      unavailable();
-      return;
-    }
+    const canHls = Boolean(vsl.hlsUrl) && v.canPlayType("application/vnd.apple.mpegurl") !== "";
+    const src = canHls ? vsl.hlsUrl : vsl.mp4Url;
+    dbg(`fonte: ${canHls ? "HLS" : "MP4"} ${src}`);
+    v.src = src;
     v.muted = true;
     const p = v.play();
     if (p && typeof p.catch === "function") {
@@ -149,7 +148,6 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
     >
       <video
         ref={videoRef}
-        src={vsl.mp4Url}
         poster={vsl.posterSrc}
         playsInline
         muted

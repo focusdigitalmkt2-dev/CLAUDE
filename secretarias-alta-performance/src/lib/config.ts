@@ -17,6 +17,7 @@ const PUBLIC_ENV = {
   NEXT_PUBLIC_INSTAGRAM: process.env.NEXT_PUBLIC_INSTAGRAM,
   NEXT_PUBLIC_LEAD_WEBHOOK_URL: process.env.NEXT_PUBLIC_LEAD_WEBHOOK_URL,
   NEXT_PUBLIC_VSL_MP4: process.env.NEXT_PUBLIC_VSL_MP4,
+  NEXT_PUBLIC_VSL_HLS: process.env.NEXT_PUBLIC_VSL_HLS,
   NEXT_PUBLIC_META_PIXEL_ID: process.env.NEXT_PUBLIC_META_PIXEL_ID,
   NEXT_PUBLIC_GA4_ID: process.env.NEXT_PUBLIC_GA4_ID,
   NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID,
@@ -119,6 +120,12 @@ export const vsl = {
    * No deploy da Vercel basta definir VSL_MP4_URL (ver .github/workflows/deploy-vercel.yml).
    */
   mp4Url: env("NEXT_PUBLIC_VSL_MP4", ""),
+  /**
+   * Versão HLS (playlist .m3u8 com várias qualidades). Usada automaticamente no
+   * Safari/iPhone, que escolhe a qualidade conforme a rede e não trava por buffer.
+   * Gerada no deploy junto com o MP4.
+   */
+  hlsUrl: env("NEXT_PUBLIC_VSL_HLS", ""),
   posterSrc: asset("/images/vsl-poster.jpg"),
   unlockAtSeconds: 210,
   fallbackSeconds: 40,

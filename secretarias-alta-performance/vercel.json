@@ -1,0 +1,26 @@
+{
+  "headers": [
+    {
+      "source": "/video/hls/(.*)\\.m3u8",
+      "headers": [
+        { "key": "Content-Type", "value": "application/vnd.apple.mpegurl" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    },
+    {
+      "source": "/video/hls/(.*)\\.m4s",
+      "headers": [
+        { "key": "Content-Type", "value": "video/iso.segment" },
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/video/hls/(.*)\\.mp4",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/video/vsl.mp4",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+    }
+  ]
+}
