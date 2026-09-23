@@ -16,8 +16,11 @@ não carrega o player do YouTube (~850 KB) e toca com som no primeiro toque, inc
 navegador interno do Instagram/Facebook. Basta criar no GitHub (Settings → Secrets and
 variables → Actions) a variável `VSL_MP4_URL` com um link direto do arquivo ou um link
 compartilhado do Google Drive ("qualquer pessoa com o link"). O deploy baixa, converte
-para 720p e publica em `/video/vsl.mp4`. Para usar um host de vídeo próprio, defina
-`NEXT_PUBLIC_VSL_MP4` na Vercel com a URL direta do MP4.
+para 720p e publica em `/video/vsl.mp4`. Para usar um MP4 já hospedado
+em outro servidor (ex.: domínio próprio na Hostinger), coloque a URL https direta em
+`vsl.mp4Url` (`src/lib/config.ts`) ou na variável `NEXT_PUBLIC_VSL_MP4`; o deploy confere se
+o servidor entrega o arquivo em partes (Accept-Ranges). Exporte o vídeo em H.264/AAC, 1280×720,
+com "fast start" (ffmpeg: `-movflags +faststart`).
 
 ## Rodando o projeto
 

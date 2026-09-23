@@ -67,12 +67,34 @@ jobs:
       # Defina a variável/secret VSL_MP4_URL no repositório (Settings → Secrets and
       # variables → Actions) com um link direto do arquivo ou um link compartilhado
       # do Google Drive ("qualquer pessoa com o link"). Sem ela, o site usa o YouTube.
+      # Alternativa: MP4 já hospedado em outro servidor (ex.: domínio próprio na Hostinger).
+      # Defina NEXT_PUBLIC_VSL_MP4 (variável do repositório) ou vsl.mp4Url em src/lib/config.ts
+      # com a URL https direta do arquivo. Nada é baixado; só conferimos se o servidor
+      # entrega o vídeo em partes (Accept-Ranges), que é o que faz ele começar na hora.
+      - name: VSL em MP4 hospedada fora (opcional)
+        env:
+          DIRECT_URL: ${{ vars.NEXT_PUBLIC_VSL_MP4 }}
+        run: |
+          url="$DIRECT_URL"
+          if [ -z "$url" ]; then
+            url=$(grep -oE 'mp4Url: env\("NEXT_PUBLIC_VSL_MP4", "[^"]*"\)' src/lib/config.ts | grep -oE '"https?://[^"]+"' | tr -d '"' || true)
+          fi
+          [ -n "$url" ] || { echo "Sem MP4 externo configurado."; exit 0; }
+          echo "MP4 externo: $url"
+          h=$(curl -sSIL --max-time 30 "$url" | tr -d '\r' | tr 'A-Z' 'a-z')
+          echo "$h" | grep -E "^(http/|content-type|content-length|accept-ranges)" || true
+          echo "$h" | grep -q "^content-type: video/" || echo "::warning::O servidor não respondeu content-type video/*: confira a URL"
+          echo "$h" | grep -q "^accept-ranges: bytes" || echo "::warning::Sem Accept-Ranges: o vídeo pode demorar para começar e não permitir avançar"
+          case "$url" in https://*) ;; *) echo "::error::A URL do MP4 precisa ser https (conteúdo misto é bloqueado)"; exit 1;; esac
+          if [ -n "$DIRECT_URL" ]; then
+            echo "VSL_BUILD_ENV=--build-env NEXT_PUBLIC_VSL_MP4=$DIRECT_URL" >> "$GITHUB_ENV"
+          fi
       - name: VSL em MP4 (opcional)
         env:
           VSL_MP4_URL: ${{ secrets.VSL_MP4_URL || vars.VSL_MP4_URL }}
         run: |
           if [ -z "$VSL_MP4_URL" ]; then
-            echo "VSL_MP4_URL não definido: o site usa o player do YouTube."; exit 0
+            echo "VSL_MP4_URL não definido: o site usa o MP4 externo (se houver) ou o YouTube."; exit 0
           fi
           url="$VSL_MP4_URL"
           if echo "$url" | grep -q "drive.google.com"; then
