@@ -54,7 +54,8 @@ export const site = {
 
 export const links = {
   /** WhatsApp comercial: DDI + DDD + número, apenas dígitos */
-  whatsapp: env("NEXT_PUBLIC_WHATSAPP", "5534999999999"),
+  // WhatsApp que recebe os leads: +55 51 9 9325-3856 (formato internacional, só dígitos)
+  whatsapp: env("NEXT_PUBLIC_WHATSAPP", "5551993253856"),
   whatsappMessage:
     "Olá! Vim pela página da Formação de Secretárias de Alta Performance e quero mais informações.",
   instagram: env("NEXT_PUBLIC_INSTAGRAM", "https://instagram.com/"),
