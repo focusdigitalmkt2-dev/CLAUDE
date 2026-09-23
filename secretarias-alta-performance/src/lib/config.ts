@@ -5,8 +5,27 @@
  * (ou nas variáveis de ambiente correspondentes — ver .env.example).
  */
 
-const env = (key: string, fallback: string) =>
-  (process.env[key] && process.env[key]!.trim()) || fallback;
+/**
+ * Variáveis públicas (NEXT_PUBLIC_*). Precisam ser referenciadas literalmente
+ * (process.env.NOME) para o Next.js embutir o valor no código do navegador;
+ * um acesso dinâmico (process.env[nome]) funcionaria só no servidor.
+ */
+const PUBLIC_ENV = {
+  NEXT_PUBLIC_BASE_PATH: process.env.NEXT_PUBLIC_BASE_PATH,
+  NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  NEXT_PUBLIC_WHATSAPP: process.env.NEXT_PUBLIC_WHATSAPP,
+  NEXT_PUBLIC_INSTAGRAM: process.env.NEXT_PUBLIC_INSTAGRAM,
+  NEXT_PUBLIC_LEAD_WEBHOOK_URL: process.env.NEXT_PUBLIC_LEAD_WEBHOOK_URL,
+  NEXT_PUBLIC_VSL_MP4: process.env.NEXT_PUBLIC_VSL_MP4,
+  NEXT_PUBLIC_META_PIXEL_ID: process.env.NEXT_PUBLIC_META_PIXEL_ID,
+  NEXT_PUBLIC_GA4_ID: process.env.NEXT_PUBLIC_GA4_ID,
+  NEXT_PUBLIC_GTM_ID: process.env.NEXT_PUBLIC_GTM_ID,
+} as const;
+
+const env = (key: keyof typeof PUBLIC_ENV, fallback: string) => {
+  const v = PUBLIC_ENV[key];
+  return (v && v.trim()) || fallback;
+};
 
 /** Subcaminho quando o site é servido fora da raiz (ex.: GitHub Pages). */
 export const basePath = env("NEXT_PUBLIC_BASE_PATH", "");

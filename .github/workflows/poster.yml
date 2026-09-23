@@ -1,0 +1,36 @@
+# Baixa a capa da VSL no YouTube, comprime (960px, ~40 KB) e salva no repositório,
+# para os builds locais e o pacote ZIP da Hostinger já saírem com a capa.
+name: Atualizar capa da VSL
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  poster:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: secretarias-alta-performance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Baixar e comprimir
+        run: |
+          id=$(grep -oE 'youtubeId: "[^"]+"' src/lib/config.ts | cut -d'"' -f2)
+          curl -sSf "https://i.ytimg.com/vi/$id/maxresdefault.jpg" -o /tmp/poster.jpg \
+            || curl -sSf "https://i.ytimg.com/vi/$id/sddefault.jpg" -o /tmp/poster.jpg
+          npm install --prefix /tmp/sharp --no-save --silent sharp@0.34 >/dev/null 2>&1
+          SHARP_PATH=/tmp/sharp/node_modules/sharp node scripts/compress-poster.mjs /tmp/poster.jpg public/images/vsl-poster.jpg
+      - name: Salvar no repositório
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/images/vsl-poster.jpg
+          git diff --cached --quiet && { echo "capa já atualizada"; exit 0; }
+          git commit -m "chore: capa da VSL [skip ci]"
+          git push

@@ -15,7 +15,7 @@ import { useVslGate } from "./useVslGate";
  * - sem controles nativos: não dá para pular a parte que libera a página;
  * - barra de progresso, temporizador e liberação por tempo iguais ao player do YouTube.
  */
-export function NativeVsl() {
+export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const maxPlayedRef = useRef(0);
 
@@ -35,14 +35,14 @@ export function NativeVsl() {
     if (p && typeof p.catch === "function") p.catch(() => setAutoplayBlocked(true));
   }, []);
 
-  // Proteção: arquivo não carregou em X segundos → libera a página
+  // Proteção: arquivo não carregou em X segundos → troca para o YouTube (ou libera a página)
   useEffect(() => {
     const id = window.setTimeout(() => {
       const v = videoRef.current;
-      if (!v || v.readyState === 0) finish();
+      if (!v || v.readyState === 0) (onUnavailable ?? finish)();
     }, vsl.fallbackSeconds * 1000);
     return () => window.clearTimeout(id);
-  }, [finish]);
+  }, [finish, onUnavailable]);
 
   const soundOn = () => {
     const v = videoRef.current;
@@ -123,7 +123,8 @@ export function NativeVsl() {
         }}
         onPause={() => setPlaying(false)}
         onEnded={() => finish()}
-        onError={() => finish()}
+        // MP4 ausente/corrompido (ex.: ainda não enviado para a hospedagem): cai para o YouTube
+        onError={() => (onUnavailable ?? finish)()}
         onTimeUpdate={(e) => {
           const v = e.currentTarget;
           if (v.currentTime > maxPlayedRef.current) maxPlayedRef.current = v.currentTime;
