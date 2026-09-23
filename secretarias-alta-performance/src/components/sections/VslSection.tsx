@@ -56,22 +56,34 @@ function disableCaptions(p: YTPlayer) {
   }
 }
 
+/** Espera a página terminar de carregar (para o player pesado do YouTube não atrasar o primeiro render). */
+function afterPageLoad(): Promise<void> {
+  return new Promise((resolve) => {
+    const go = () => window.setTimeout(resolve, 250);
+    if (document.readyState === "complete") go();
+    else window.addEventListener("load", go, { once: true });
+  });
+}
+
 let apiPromise: Promise<YTNamespace> | null = null;
 function loadYouTubeApi(): Promise<YTNamespace> {
   if (typeof window === "undefined") return new Promise(() => {});
   if (window.YT?.Player) return Promise.resolve(window.YT);
   if (apiPromise) return apiPromise;
-  apiPromise = new Promise((resolve) => {
-    const prev = window.onYouTubeIframeAPIReady;
-    window.onYouTubeIframeAPIReady = () => {
-      prev?.();
-      resolve(window.YT!);
-    };
-    const s = document.createElement("script");
-    s.src = "https://www.youtube.com/iframe_api";
-    s.async = true;
-    document.head.appendChild(s);
-  });
+  apiPromise = afterPageLoad().then(
+    () =>
+      new Promise<YTNamespace>((resolve) => {
+        const prev = window.onYouTubeIframeAPIReady;
+        window.onYouTubeIframeAPIReady = () => {
+          prev?.();
+          resolve(window.YT!);
+        };
+        const s = document.createElement("script");
+        s.src = "https://www.youtube.com/iframe_api";
+        s.async = true;
+        document.head.appendChild(s);
+      }),
+  );
   return apiPromise;
 }
 
@@ -295,7 +307,12 @@ export function VslSection() {
               {!playing && !nativeControls && (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={`https://i.ytimg.com/vi/${vsl.youtubeId}/sddefault.jpg`}
+                  src="/images/vsl-poster.jpg"
+                  onError={(e) => {
+                    // sem a capa local (ambiente de dev), usa a do YouTube
+                    const img = e.currentTarget;
+                    if (!img.src.includes("ytimg.com")) img.src = `https://i.ytimg.com/vi/${vsl.youtubeId}/sddefault.jpg`;
+                  }}
                   alt=""
                   aria-hidden
                   fetchPriority="high"

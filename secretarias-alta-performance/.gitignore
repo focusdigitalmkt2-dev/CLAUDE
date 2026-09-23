@@ -22,3 +22,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# capa da VSL baixada no deploy
+/public/images/vsl-poster.jpg

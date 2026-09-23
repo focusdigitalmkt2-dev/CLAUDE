@@ -49,6 +49,12 @@ jobs:
             -H "Authorization: Bearer $VERCEL_TOKEN" -H "Content-Type: application/json" \
             -d '{"ssoProtection":null,"passwordProtection":null}' \
             | python3 -c "import sys,json; d=json.load(sys.stdin); print('ssoProtection:', d.get('ssoProtection'), '| erro:', d.get('error'))"
+      - name: Capa da VSL servida pelo próprio site
+        run: |
+          id=$(grep -oE 'youtubeId: "[^"]+"' src/lib/config.ts | cut -d'"' -f2)
+          curl -sSf "https://i.ytimg.com/vi/$id/maxresdefault.jpg" -o public/images/vsl-poster.jpg \
+            || curl -sSf "https://i.ytimg.com/vi/$id/sddefault.jpg" -o public/images/vsl-poster.jpg || true
+          ls -la public/images/vsl-poster.jpg || echo "capa não baixada; o site usa a do YouTube"
       - name: Deploy de produção
         id: deploy
         run: |
