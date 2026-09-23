@@ -22,6 +22,19 @@ em outro servidor (ex.: domínio próprio na Hostinger), coloque a URL https dir
 o servidor entrega o arquivo em partes (Accept-Ranges). Exporte o vídeo em H.264/AAC, 1280×720,
 com "fast start" (ffmpeg: `-movflags +faststart`).
 
+## VPS da Hostinger (um comando)
+
+O workflow `publish-site.yml` gera o site estático e publica na branch `site-hostinger`.
+No VPS (Debian/Ubuntu), como root, um único comando instala o Caddy (HTTPS automático),
+baixa o site e cria uma tarefa que o mantém atualizado a cada 5 minutos:
+
+```
+bash <(curl -fsSL https://raw.githubusercontent.com/focusdigitalmkt2-dev/CLAUDE/claude/landing-page-secretarias-s4yy4w/deploy/hostinger-vps.sh) seudominio.com.br
+```
+
+Para a VSL em MP4, passe o link como segundo argumento ou copie o arquivo para
+`/var/www/secretarias/video/vsl.mp4`. Aponte o DNS do domínio (registro A) para o IP do VPS.
+
 ## Hospedagem na Hostinger (site inteiro)
 
 O site é exportado como HTML estático (`STATIC_EXPORT=1 npm run build` → pasta `out/`) e

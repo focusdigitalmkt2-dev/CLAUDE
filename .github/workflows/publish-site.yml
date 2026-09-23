@@ -1,0 +1,53 @@
+# Gera o site estático e publica na branch "site-hostinger" (só os arquivos prontos).
+# O VPS da Hostinger baixa essa branch e se atualiza sozinho (deploy/hostinger-vps.sh).
+name: Publicar site estático (branch site-hostinger)
+
+on:
+  push:
+    branches: [claude/landing-page-secretarias-s4yy4w]
+    paths: ["secretarias-alta-performance/**", ".github/workflows/publish-site.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-site
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: secretarias-alta-performance
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: secretarias-alta-performance/package-lock.json
+      - run: npm ci
+      - name: Build (export estático)
+        run: npm run build
+        env:
+          STATIC_EXPORT: "1"
+          # O player nativo usa /video/vsl.mp4; se o arquivo não existir no servidor, cai para o YouTube.
+          NEXT_PUBLIC_VSL_MP4: /video/vsl.mp4
+          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+          NEXT_PUBLIC_WHATSAPP: ${{ vars.NEXT_PUBLIC_WHATSAPP }}
+          NEXT_PUBLIC_INSTAGRAM: ${{ vars.NEXT_PUBLIC_INSTAGRAM }}
+          NEXT_PUBLIC_LEAD_WEBHOOK_URL: ${{ vars.NEXT_PUBLIC_LEAD_WEBHOOK_URL }}
+          NEXT_PUBLIC_META_PIXEL_ID: ${{ vars.NEXT_PUBLIC_META_PIXEL_ID }}
+      - run: |
+          rm -f out/index.txt out/*/index.txt
+          echo "${{ github.sha }}" > out/.build-sha
+          du -sh out
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./secretarias-alta-performance/out
+          publish_branch: site-hostinger
+          force_orphan: true
+          commit_message: "site: ${{ github.sha }}"
