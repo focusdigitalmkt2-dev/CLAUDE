@@ -19,7 +19,7 @@ export const site = {
   shortName: "Secretárias de Alta Performance",
   company: "Focus Digital",
   companyLegalName: "Focus Digital Marketing LTDA", // TODO: razão social oficial
-  cnpj: "00.000.000/0001-00", // TODO: CNPJ oficial
+  cnpj: "57.138.832/0001-96",
   url: env("NEXT_PUBLIC_SITE_URL", "https://secretariasdealtaperformance.com.br"),
   description:
     "Treinamento intensivo de 2 dias para transformar a secretária da sua clínica em uma vendedora de alta performance, aumentar agendamentos e lotar sua agenda.",
