@@ -11,7 +11,9 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  ...(isStaticExport ? { output: "export" as const } : {}),
+  // Export estático: uma pasta por rota (rota/index.html) para funcionar em
+  // qualquer servidor (Apache/LiteSpeed da Hostinger, Nginx, GitHub Pages).
+  ...(isStaticExport ? { output: "export" as const, trailingSlash: true } : {}),
   ...(basePath ? { basePath } : {}),
   images: {
     formats: ["image/avif", "image/webp"],

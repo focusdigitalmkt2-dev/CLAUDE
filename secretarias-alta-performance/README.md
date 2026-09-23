@@ -22,6 +22,22 @@ em outro servidor (ex.: domínio próprio na Hostinger), coloque a URL https dir
 o servidor entrega o arquivo em partes (Accept-Ranges). Exporte o vídeo em H.264/AAC, 1280×720,
 com "fast start" (ffmpeg: `-movflags +faststart`).
 
+## Hospedagem na Hostinger (site inteiro)
+
+O site é exportado como HTML estático (`STATIC_EXPORT=1 npm run build` → pasta `out/`) e
+enviado por FTP pelo workflow `.github/workflows/deploy-hostinger.yml` a cada push.
+Configure no GitHub (Settings → Secrets and variables → Actions):
+
+- Secrets: `HOSTINGER_FTP_HOST`, `HOSTINGER_FTP_USER`, `HOSTINGER_FTP_PASSWORD`
+  (hPanel → Arquivos → Contas FTP).
+- Variables: `HOSTINGER_SITE_URL` (ex.: `https://seudominio.com.br`), opcionalmente
+  `HOSTINGER_FTP_DIR` (padrão `public_html/`), `NEXT_PUBLIC_WHATSAPP`,
+  `NEXT_PUBLIC_LEAD_WEBHOOK_URL`.
+
+A VSL em MP4 vai direto pelo Gerenciador de Arquivos para `public_html/video/vsl.mp4`;
+o deploy detecta o arquivo e ativa o player nativo. O `public/.htaccess` força HTTPS,
+compressão e cache. Para subir manualmente, basta copiar o conteúdo de `out/` para `public_html`.
+
 ## Rodando o projeto
 
 ```bash

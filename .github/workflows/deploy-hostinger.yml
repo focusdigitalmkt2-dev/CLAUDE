@@ -1,0 +1,156 @@
+# Publica o site inteiro (export estático) na hospedagem da Hostinger via FTP,
+# a cada push na branch da landing page.
+#
+# Configure no GitHub → Settings → Secrets and variables → Actions:
+#   Secrets (aba "Secrets"):
+#     HOSTINGER_FTP_HOST      ex.: ftp.seudominio.com.br ou o IP mostrado no hPanel (Arquivos → Contas FTP)
+#     HOSTINGER_FTP_USER      usuário FTP (ex.: u123456789.seudominio.com.br)
+#     HOSTINGER_FTP_PASSWORD  senha FTP
+#   Variables (aba "Variables"):
+#     HOSTINGER_SITE_URL      ex.: https://seudominio.com.br  (usado em links, sitemap e Open Graph)
+#     HOSTINGER_FTP_DIR       opcional; pasta de destino (padrão: public_html/)
+#     NEXT_PUBLIC_WHATSAPP    número real, formato 55DDDNÚMERO
+#     NEXT_PUBLIC_LEAD_WEBHOOK_URL  opcional (planilha/CRM)
+#
+# VSL em MP4: envie o arquivo pelo Gerenciador de Arquivos para public_html/video/vsl.mp4.
+# O deploy detecta o arquivo e liga o player nativo sozinho (nunca apaga essa pasta).
+name: Deploy landing page (Hostinger)
+
+on:
+  push:
+    branches: [claude/landing-page-secretarias-s4yy4w]
+    paths: ["secretarias-alta-performance/**", ".github/workflows/deploy-hostinger.yml"]
+  workflow_dispatch:
+
+concurrency:
+  group: hostinger
+  cancel-in-progress: true
+
+env:
+  FTP_HOST: ${{ secrets.HOSTINGER_FTP_HOST }}
+  FTP_USER: ${{ secrets.HOSTINGER_FTP_USER }}
+  FTP_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+  FTP_DIR: ${{ vars.HOSTINGER_FTP_DIR || 'public_html/' }}
+  SITE_URL: ${{ vars.HOSTINGER_SITE_URL }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: secretarias-alta-performance
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar credenciais FTP
+        id: creds
+        run: |
+          if [ -z "$FTP_HOST" ] || [ -z "$FTP_USER" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "::notice::Secrets HOSTINGER_FTP_HOST / HOSTINGER_FTP_USER / HOSTINGER_FTP_PASSWORD ainda não configurados. Deploy na Hostinger pulado."
+            echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ -z "$SITE_URL" ]; then
+            echo "::warning::Variável HOSTINGER_SITE_URL não definida: links e sitemap usarão o domínio padrão do config."
+          fi
+          # normaliza a pasta de destino (termina com /)
+          dir="${FTP_DIR%/}/"
+          echo "dir=$dir" >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.creds.outputs.skip != 'true'
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: secretarias-alta-performance/package-lock.json
+
+      - name: Instalar dependências
+        if: steps.creds.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Capa da VSL servida pelo próprio site
+        if: steps.creds.outputs.skip != 'true'
+        run: |
+          id=$(grep -oE 'youtubeId: "[^"]+"' src/lib/config.ts | cut -d'"' -f2)
+          curl -sSf "https://i.ytimg.com/vi/$id/maxresdefault.jpg" -o /tmp/poster.jpg \
+            || curl -sSf "https://i.ytimg.com/vi/$id/sddefault.jpg" -o /tmp/poster.jpg || true
+          if [ -s /tmp/poster.jpg ]; then
+            SHARP_PATH="$PWD/node_modules/sharp" node scripts/compress-poster.mjs /tmp/poster.jpg public/images/vsl-poster.jpg \
+              || cp /tmp/poster.jpg public/images/vsl-poster.jpg
+          fi
+          ls -la public/images/vsl-poster.jpg || echo "capa não baixada; o site usa a do YouTube"
+
+      - name: Detectar VSL em MP4 já enviada para a hospedagem
+        id: mp4
+        if: steps.creds.outputs.skip != 'true'
+        run: |
+          dir="${{ steps.creds.outputs.dir }}"
+          if [ -n "${{ vars.NEXT_PUBLIC_VSL_MP4 }}" ]; then
+            echo "url=${{ vars.NEXT_PUBLIC_VSL_MP4 }}" >> "$GITHUB_OUTPUT"
+            echo "MP4 definido pela variável NEXT_PUBLIC_VSL_MP4"; exit 0
+          fi
+          # procura public_html/video/vsl.mp4 no servidor (TLS quando disponível)
+          if size=$(curl -sS --ssl --max-time 60 -u "$FTP_USER:$FTP_PASSWORD" -I "ftp://$FTP_HOST/${dir}video/vsl.mp4" 2>/dev/null | grep -i '^content-length' | tr -dc '0-9'); then
+            if [ -n "$size" ] && [ "$size" -gt 1000000 ]; then
+              echo "url=/video/vsl.mp4" >> "$GITHUB_OUTPUT"
+              echo "Encontrado ${dir}video/vsl.mp4 ($((size/1024/1024)) MB): player nativo ativado."; exit 0
+            fi
+          fi
+          echo "Sem video/vsl.mp4 na hospedagem: o site usa o YouTube. Envie o arquivo para ${dir}video/vsl.mp4 e rode o deploy de novo."
+
+      - name: Build (export estático)
+        if: steps.creds.outputs.skip != 'true'
+        run: npm run build
+        env:
+          STATIC_EXPORT: "1"
+          NEXT_PUBLIC_SITE_URL: ${{ vars.HOSTINGER_SITE_URL }}
+          NEXT_PUBLIC_VSL_MP4: ${{ steps.mp4.outputs.url }}
+          NEXT_PUBLIC_WHATSAPP: ${{ vars.NEXT_PUBLIC_WHATSAPP }}
+          NEXT_PUBLIC_INSTAGRAM: ${{ vars.NEXT_PUBLIC_INSTAGRAM }}
+          NEXT_PUBLIC_LEAD_WEBHOOK_URL: ${{ vars.NEXT_PUBLIC_LEAD_WEBHOOK_URL }}
+          NEXT_PUBLIC_META_PIXEL_ID: ${{ vars.NEXT_PUBLIC_META_PIXEL_ID }}
+
+      # Envia a pasta out/ para a hospedagem. Só apaga arquivos que o próprio deploy
+      # enviou antes; o que você subir manualmente (ex.: video/) fica intacto.
+      - name: Enviar por FTPS
+        id: ftps
+        if: steps.creds.outputs.skip != 'true'
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
+          username: ${{ secrets.HOSTINGER_FTP_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: secretarias-alta-performance/out/
+          server-dir: ${{ steps.creds.outputs.dir }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+
+      - name: Enviar por FTP (quando o servidor não aceita TLS)
+        if: steps.creds.outputs.skip != 'true' && steps.ftps.outcome == 'failure'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_HOST }}
+          username: ${{ secrets.HOSTINGER_FTP_USER }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftp
+          local-dir: secretarias-alta-performance/out/
+          server-dir: ${{ steps.creds.outputs.dir }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+
+      - name: Conferir o site no ar
+        if: steps.creds.outputs.skip != 'true' && vars.HOSTINGER_SITE_URL != ''
+        run: |
+          url="${SITE_URL%/}/"
+          echo "## Hostinger" >> "$GITHUB_STEP_SUMMARY"
+          for i in 1 2 3; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$url" || true)
+            [ "$code" = "200" ] && break; sleep 5
+          done
+          curl -sS -o /dev/null -w "HTTP %{http_code} | TTFB %{time_starttransfer}s | total %{time_total}s | %{size_download} B\n" "$url" | tee -a "$GITHUB_STEP_SUMMARY"
+          curl -sS -I "$url" | grep -iE "^(server|content-encoding|cache-control|strict-transport)" || true
+          echo "Site publicado em $url" >> "$GITHUB_STEP_SUMMARY"
