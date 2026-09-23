@@ -91,7 +91,8 @@ jobs:
           fi
       - name: VSL em MP4 (opcional)
         env:
-          VSL_MP4_URL: ${{ secrets.VSL_MP4_URL || vars.VSL_MP4_URL }}
+          # Link do Google Drive da VSL ("qualquer pessoa com o link"). Pode ser trocado por secret/variável.
+          VSL_MP4_URL: ${{ secrets.VSL_MP4_URL || vars.VSL_MP4_URL || 'https://drive.google.com/file/d/1T4U9ON_--kVlOHVbmqVaRGvxHKJgVE0C/view' }}
         run: |
           if [ -z "$VSL_MP4_URL" ]; then
             echo "VSL_MP4_URL não definido: o site usa o MP4 externo (se houver) ou o YouTube."; exit 0
@@ -112,7 +113,8 @@ jobs:
           # bitrate para o arquivo caber em ~85 MB, no máximo 1400 kbps (720p)
           vb=$(( 680000 / dur )); if [ "$vb" -gt 1400 ]; then vb=1400; fi
           mkdir -p public/video
-          ffmpeg -v error -y -i /tmp/vsl-src -vf "scale='min(1280,iw)':-2" -r 30 \
+          echo "Origem: $(du -h /tmp/vsl-src | cut -f1), ${dur}s → convertendo para 720p a ${vb} kbps (pode levar alguns minutos)"
+          ffmpeg -v error -stats -y -i /tmp/vsl-src -vf "scale='min(1280,iw)':-2" -r 30 \
             -c:v libx264 -preset medium -b:v ${vb}k -maxrate $((vb*3/2))k -bufsize $((vb*3))k \
             -profile:v high -pix_fmt yuv420p -movflags +faststart \
             -c:a aac -b:a 96k -ac 2 public/video/vsl.mp4
