@@ -1,0 +1,43 @@
+# Diagnóstico de velocidade do site publicado (execução manual)
+name: Diagnóstico de velocidade
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: URL a medir
+        default: https://secretarias-focus.vercel.app/
+        required: true
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cabeçalhos e tempos de resposta (5 amostras)
+        run: |
+          URL="${{ github.event.inputs.url }}"
+          echo "== HEADERS"; curl -sS -D - -o /dev/null -H "User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) Safari/604.1" "$URL" | sed -n '1,40p'
+          echo "== TIMINGS"
+          for i in 1 2 3 4 5; do
+            curl -sS -o /dev/null -H "Accept-Encoding: gzip, br" -w "dns=%{time_namelookup}s tls=%{time_appconnect}s ttfb=%{time_starttransfer}s total=%{time_total}s size=%{size_download}B code=%{http_code}\n" "$URL"
+          done
+          echo "== ASSETS"
+          curl -sS "$URL" | grep -oE '(src|href)="[^"]+\.(js|css|woff2|png|jpg)[^"]*"' | sed 's/^[a-z]*=//' | tr -d '"' | sort -u | head -30 | while read a; do
+            case "$a" in http*) u="$a";; *) u="${URL%/}$a";; esac
+            curl -sS -o /dev/null -H "Accept-Encoding: gzip, br" -w "  %{time_total}s %{size_download}B %{http_code} $u\n" "$u"
+          done
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Lighthouse (celular, rede 4G simulada)
+        run: |
+          npx -y lighthouse "${{ github.event.inputs.url }}" --quiet --chrome-flags="--headless --no-sandbox" --only-categories=performance --form-factor=mobile --screenEmulation.mobile --output=json --output-path=./lh.json || true
+          node -e '
+            const r=require("./lh.json"); const a=r.audits;
+            const ms=(k)=>Math.round(a[k].numericValue);
+            console.log("Performance score:", Math.round(r.categories.performance.score*100));
+            console.log("TTFB:", ms("server-response-time"), "ms | FCP:", ms("first-contentful-paint"), "ms | LCP:", ms("largest-contentful-paint"), "ms | TBT:", ms("total-blocking-time"), "ms | Speed Index:", ms("speed-index"), "ms");
+            const items=(a["network-requests"].details.items||[]).sort((x,y)=>(y.transferSize||0)-(x.transferSize||0)).slice(0,15);
+            console.log("Maiores transferências:"); for (const it of items) console.log(" ", Math.round((it.transferSize||0)/1024)+"KB", Math.round(it.endTime-it.startTime)+"ms", it.url.slice(0,110));
+            const lcp=a["largest-contentful-paint-element"]; if (lcp && lcp.details && lcp.details.items && lcp.details.items[0]) console.log("LCP element:", JSON.stringify(lcp.details.items[0].items?.[0]?.node?.snippet||lcp.details.items[0]).slice(0,200));
+          '
