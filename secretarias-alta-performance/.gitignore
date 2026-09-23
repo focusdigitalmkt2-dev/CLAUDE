@@ -25,3 +25,5 @@ next-env.d.ts
 
 # capa da VSL baixada no deploy
 /public/images/vsl-poster.jpg
+# VSL em MP4 gerada no deploy
+/public/video/

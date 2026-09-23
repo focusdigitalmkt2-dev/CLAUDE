@@ -92,6 +92,15 @@ export const event = {
  */
 export const vsl = {
   youtubeId: "0RyKkb6d7Xs",
+  /**
+   * MP4 hospedado pelo próprio site (ou URL direta de um host de vídeo).
+   * Quando definido, o player nativo substitui o YouTube: abre mais rápido,
+   * toca com som no primeiro toque em qualquer celular (inclusive no navegador
+   * do Instagram/Facebook) e não carrega os ~850 KB do player do YouTube.
+   * No deploy da Vercel basta definir VSL_MP4_URL (ver .github/workflows/deploy-vercel.yml).
+   */
+  mp4Url: env("NEXT_PUBLIC_VSL_MP4", ""),
+  posterSrc: asset("/images/vsl-poster.jpg"),
   unlockAtSeconds: 210,
   fallbackSeconds: 40,
   restartOnUnmute: true,

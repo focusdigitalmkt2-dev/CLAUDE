@@ -62,10 +62,46 @@ jobs:
               || cp /tmp/poster.jpg public/images/vsl-poster.jpg
           fi
           ls -la public/images/vsl-poster.jpg || echo "capa não baixada; o site usa a do YouTube"
+      # Opcional, recomendado: VSL em MP4 servida pelo próprio site (player nativo,
+      # abre mais rápido e toca com som no primeiro toque em qualquer celular).
+      # Defina a variável/secret VSL_MP4_URL no repositório (Settings → Secrets and
+      # variables → Actions) com um link direto do arquivo ou um link compartilhado
+      # do Google Drive ("qualquer pessoa com o link"). Sem ela, o site usa o YouTube.
+      - name: VSL em MP4 (opcional)
+        env:
+          VSL_MP4_URL: ${{ secrets.VSL_MP4_URL || vars.VSL_MP4_URL }}
+        run: |
+          if [ -z "$VSL_MP4_URL" ]; then
+            echo "VSL_MP4_URL não definido: o site usa o player do YouTube."; exit 0
+          fi
+          url="$VSL_MP4_URL"
+          if echo "$url" | grep -q "drive.google.com"; then
+            fid=$(echo "$url" | grep -oE '/d/[^/?]+|id=[^&]+' | head -1 | sed -E 's#^/d/##; s#^id=##')
+            url="https://drive.usercontent.google.com/download?id=$fid&export=download&confirm=t"
+          fi
+          echo "Baixando a VSL..."
+          if ! curl -sSL --retry 3 --max-time 900 "$url" -o /tmp/vsl-src; then
+            echo "::warning::Não foi possível baixar a VSL; o site usa o YouTube."; exit 0
+          fi
+          dur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/vsl-src 2>/dev/null | cut -d. -f1)
+          if [ -z "$dur" ] || [ "$dur" -le 0 ]; then
+            echo "::warning::O link não entregou um vídeo válido (é um link direto/público?); o site usa o YouTube."; exit 0
+          fi
+          # bitrate para o arquivo caber em ~85 MB, no máximo 1400 kbps (720p)
+          vb=$(( 680000 / dur )); if [ "$vb" -gt 1400 ]; then vb=1400; fi
+          mkdir -p public/video
+          ffmpeg -v error -y -i /tmp/vsl-src -vf "scale='min(1280,iw)':-2" -r 30 \
+            -c:v libx264 -preset medium -b:v ${vb}k -maxrate $((vb*3/2))k -bufsize $((vb*3))k \
+            -profile:v high -pix_fmt yuv420p -movflags +faststart \
+            -c:a aac -b:a 96k -ac 2 public/video/vsl.mp4
+          ls -la public/video/vsl.mp4
+          echo "VSL: ${dur}s, vídeo ${vb} kbps → $(du -h public/video/vsl.mp4 | cut -f1)"
+          echo "VSL_BUILD_ENV=--build-env NEXT_PUBLIC_VSL_MP4=/video/vsl.mp4" >> "$GITHUB_ENV"
+          echo "VSL em MP4: $(du -h public/video/vsl.mp4 | cut -f1) (${dur}s)" >> "$GITHUB_STEP_SUMMARY"
       - name: Deploy de produção
         id: deploy
         run: |
-          url=$(npx vercel@latest deploy --prod --yes --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN")
+          url=$(npx vercel@latest deploy --prod --yes $VSL_BUILD_ENV --scope "$VERCEL_SCOPE" --token "$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "## Deploy Vercel" >> "$GITHUB_STEP_SUMMARY"
           echo "$url" >> "$GITHUB_STEP_SUMMARY"

@@ -6,6 +6,19 @@ profissionais da saúde.
 
 **Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Framer Motion · lucide-react
 
+## VSL (vídeo de vendas)
+
+Por padrão o vídeo vem do YouTube (`vsl.youtubeId` em `src/lib/config.ts`). O iframe já
+vem no HTML e o toque no ▶ do YouTube toca com som em qualquer celular.
+
+**Recomendado:** servir a VSL em MP4 pelo próprio site. O player nativo abre mais rápido,
+não carrega o player do YouTube (~850 KB) e toca com som no primeiro toque, inclusive no
+navegador interno do Instagram/Facebook. Basta criar no GitHub (Settings → Secrets and
+variables → Actions) a variável `VSL_MP4_URL` com um link direto do arquivo ou um link
+compartilhado do Google Drive ("qualquer pessoa com o link"). O deploy baixa, converte
+para 720p e publica em `/video/vsl.mp4`. Para usar um host de vídeo próprio, defina
+`NEXT_PUBLIC_VSL_MP4` na Vercel com a URL direta do MP4.
+
 ## Rodando o projeto
 
 ```bash
