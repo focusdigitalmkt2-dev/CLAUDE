@@ -1,35 +1,26 @@
+import { event } from "@/lib/config";
+
 export interface FaqItem {
   q: string;
   a: string;
 }
 
+/** Dúvidas essenciais (o restante a VSL já responde). */
 export const faq: FaqItem[] = [
   {
     q: "Para quem é o treinamento?",
-    a: "Para donos de clínicas, médicos, dentistas, secretárias, recepcionistas e profissionais responsáveis pelo atendimento e agendamento.",
+    a: "Donos de clínica, médicos, dentistas e quem cuida do atendimento e da agenda. Pode vir com a secretária ou sozinho e aplicar depois. Se você mesmo atende, também é para você.",
   },
   {
-    q: "Preciso levar minha secretária?",
-    a: "Não. Você pode participar sozinho e aplicar o método posteriormente na clínica.",
+    q: "Quando e onde acontece?",
+    a: `Nos dias ${event.dateLabel}, na ${event.address}, ${event.addressHint.toLowerCase()}, em ${event.city}. São 2 dias intensivos.`,
   },
   {
-    q: "E se eu ainda não tiver secretária?",
-    a: "Você também pode participar. O método pode ser utilizado diretamente por quem realiza o próprio atendimento.",
-  },
-  {
-    q: "Quanto tempo dura?",
-    a: "O treinamento acontece durante 2 dias.",
-  },
-  {
-    q: "O treinamento é apenas para clínicas grandes?",
-    a: "Não. Pode ser aplicado tanto em clínicas em crescimento quanto em operações mais estruturadas.",
-  },
-  {
-    q: "O que receberei?",
-    a: "Treinamento, apostila, checklists, processos e materiais para implementação.",
+    q: "O que está incluso?",
+    a: "Os 2 dias de treinamento, apostila, checklists, scripts de atendimento e follow-up e o material de implementação.",
   },
   {
     q: "O resultado é garantido?",
-    a: "Não existem resultados garantidos. O treinamento oferece metodologia, processos e direcionamentos, mas os resultados dependem da implementação, operação e contexto de cada clínica.",
+    a: "Não. Entregamos método, processos e direcionamento; o resultado depende da aplicação na rotina de cada clínica.",
   },
 ];

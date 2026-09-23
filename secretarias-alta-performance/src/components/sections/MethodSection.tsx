@@ -75,7 +75,7 @@ export function MethodSection() {
                 <span className="text-gold-gradient">Alta Performance</span>
               </>
             }
-            subtitle="2 dias de atendimento, vendas, mentalidade e processos."
+            subtitle="Os 6 pilares que a sua secretária aprende em 2 dias."
           />
         </Reveal>
 

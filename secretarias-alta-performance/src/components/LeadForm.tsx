@@ -18,8 +18,15 @@ interface LeadFormProps {
 }
 
 /** Máscara (DD) 9XXXX-XXXX */
+/**
+ * Máscara "(DD) 9XXXX-XXXX". O +55 é fixo no campo; se o preenchimento automático
+ * do celular mandar "+55 81 9..." ou "081...", o código do país e o zero são removidos.
+ */
 function maskPhone(value: string) {
-  const d = value.replace(/\D/g, "").slice(0, 11);
+  let d = value.replace(/\D/g, "");
+  if (d.startsWith("55") && d.length > 11) d = d.slice(2);
+  if (d.startsWith("0")) d = d.slice(1);
+  d = d.slice(0, 11);
   if (d.length <= 2) return d;
   if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
   if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
@@ -49,7 +56,9 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
 
   const digits = phone.replace(/\D/g, "");
   const nameOk = name.trim().length >= 2;
-  const phoneOk = digits.length >= 10 && digits.length <= 11;
+  // DDD válido (11 a 99) + 8 dígitos (fixo) ou 9 dígitos começando com 9 (celular)
+  const dddOk = digits.length >= 2 && Number(digits.slice(0, 2)) >= 11;
+  const phoneOk = dddOk && (digits.length === 10 || (digits.length === 11 && digits[2] === "9"));
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -176,18 +185,30 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
             <label htmlFor={`${uid}-phone`} className="mb-1.5 block text-[11px] font-bold uppercase tracking-[0.18em] text-muted">
               WhatsApp
             </label>
-            <input
-              id={`${uid}-phone`}
-              name="phone"
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel-national"
-              required
-              value={phone}
-              onChange={(e) => setPhone(maskPhone(e.target.value))}
-              placeholder="(00) 00000-0000"
-              className="h-13 w-full rounded-xl border border-line-strong bg-graphite-2 px-4 text-base text-paper placeholder:text-muted-2 focus:border-gold focus:outline-none"
-            />
+            <div className="relative">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center rounded-l-xl border-r border-line-strong bg-graphite-3 px-3.5 font-display text-sm font-bold text-paper"
+              >
+                +55
+              </span>
+              <input
+                id={`${uid}-phone`}
+                name="phone"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel-national"
+                required
+                value={phone}
+                onChange={(e) => setPhone(maskPhone(e.target.value))}
+                placeholder="(DDD) 90000-0000"
+                aria-describedby={`${uid}-phone-hint`}
+                className="h-13 w-full rounded-xl border border-line-strong bg-graphite-2 pl-[4.5rem] pr-4 text-base text-paper placeholder:text-muted-2 focus:border-gold focus:outline-none"
+              />
+            </div>
+            <p id={`${uid}-phone-hint`} className="mt-1.5 text-[11px] text-muted">
+              Só o DDD e o número. O +55 já está incluído.
+            </p>
           </div>
 
           {/* honeypot anti-spam */}

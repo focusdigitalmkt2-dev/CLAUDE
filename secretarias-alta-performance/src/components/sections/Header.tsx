@@ -10,7 +10,6 @@ import { sections } from "@/lib/config";
 import { useVslUnlocked } from "@/lib/vslStore";
 
 const nav = [
-  { label: "O problema", href: `#${sections.problem}` },
   { label: "Método", href: `#${sections.method}` },
   { label: "Cases", href: `#${sections.cases}` },
   { label: "Inscrição", href: `#${sections.signup}` },

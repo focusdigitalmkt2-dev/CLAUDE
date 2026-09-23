@@ -9,12 +9,10 @@ import { Button } from "@/components/ui/Button";
 import { sections } from "@/lib/config";
 
 const items = [
-  "Sua secretária poderia converter muito mais.",
   "Chegam leads, mas poucos viram agendamentos.",
-  "Ela responde mensagens, mas não conduz a venda.",
+  "Sua secretária responde mensagens, mas não conduz a venda.",
   "Você quer mais pacientes sem depender só de anúncios.",
-  "Falta postura comercial e iniciativa no atendimento.",
-  "Você quer uma cultura comercial forte e agenda cheia.",
+  "Você quer agenda cheia todos os dias.",
 ];
 
 export function AudienceSection() {

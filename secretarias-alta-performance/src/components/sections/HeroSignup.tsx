@@ -46,10 +46,6 @@ export function HeroSignup() {
               levou clínicas a recordes de vendas.
             </p>
           </div>
-          <p className="text-xs font-medium text-muted sm:text-[13px]">
-            Treinamento intensivo de 2 dias ·{" "}
-            <span className="font-bold text-gold">{event.dateLabel}</span> · Vagas limitadas.
-          </p>
         </div>
 
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">

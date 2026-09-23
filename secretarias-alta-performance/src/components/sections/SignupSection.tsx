@@ -10,11 +10,9 @@ import { LocationBadge } from "@/components/ui/LocationBadge";
 
 const included = [
   "2 dias de treinamento intensivo",
-  "Apostila completa",
-  "Checklists de atendimento",
+  "Apostila e checklists",
   "Scripts e processo de follow-up",
   "Material de implementação",
-  "Método completo",
 ];
 
 export function SignupSection() {
