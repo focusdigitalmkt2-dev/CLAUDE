@@ -104,7 +104,7 @@ export const vsl = {
  * - gtmId: ID do Google Tag Manager (GTM-XXXX), opcional
  */
 export const tracking = {
-  metaPixelId: env("NEXT_PUBLIC_META_PIXEL_ID", ""),
+  metaPixelId: env("NEXT_PUBLIC_META_PIXEL_ID", "933428856047544"),
   ga4Id: env("NEXT_PUBLIC_GA4_ID", ""),
   gtmId: env("NEXT_PUBLIC_GTM_ID", ""),
 } as const;
