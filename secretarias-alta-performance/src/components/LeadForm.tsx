@@ -4,6 +4,7 @@ import { useId, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, CheckCircle2, Loader2, MessageCircle, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/cn";
+import { useRouter } from "next/navigation";
 import { event, lead, leadWhatsappUrl, links } from "@/lib/config";
 import { trackContact, trackLead } from "@/lib/analytics";
 
@@ -35,6 +36,7 @@ type Status = "idle" | "sending" | "success" | "error";
  */
 export function LeadForm({ source, className, title = "Garanta sua vaga", compact = false }: LeadFormProps) {
   const uid = useId();
+  const router = useRouter();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -90,6 +92,10 @@ export function LeadForm({ source, className, title = "Garanta sua vaga", compac
     if (lead.redirectToWhatsApp) {
       trackContact({ source });
       window.open(leadWhatsappUrl(payload.name, phone), "_blank", "noopener,noreferrer");
+    }
+    if (lead.thankYouPath) {
+      const q = new URLSearchParams({ nome: payload.name, tel: phone });
+      router.push(`${lead.thankYouPath}?${q.toString()}`);
     }
   }
 

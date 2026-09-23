@@ -42,7 +42,10 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
   const gate = useVslGate();
   const { report, markStarted, finish } = gate;
 
-  const unavailable = onUnavailable ?? finish;
+  // guardado em ref: a página liberar (re-render do pai) não pode recarregar o vídeo
+  const unavailableRef = useRef<() => void>(() => {});
+  unavailableRef.current = onUnavailable ?? finish;
+  const unavailable = () => unavailableRef.current();
 
   useEffect(() => {
     try {
@@ -72,20 +75,21 @@ export function NativeVsl({ onUnavailable }: { onUnavailable?: () => void }) {
     const p = v.play();
     if (p && typeof p.catch === "function") {
       p.catch((e: unknown) => {
-        if (e instanceof DOMException && e.name === "NotSupportedError") unavailable();
+        if (e instanceof DOMException && e.name === "NotSupportedError") unavailableRef.current();
         else setAutoplayBlocked(true);
       });
     }
-  }, [unavailable]);
+    // roda UMA vez: definir src de novo recomeçaria o vídeo do zero
+  }, []);
 
   // Proteção: sem metadados do arquivo em 15 s → troca para o YouTube (ou libera a página)
   useEffect(() => {
     const id = window.setTimeout(() => {
       const v = videoRef.current;
-      if (!v || v.readyState === 0) unavailable();
+      if (!v || v.readyState === 0) unavailableRef.current();
     }, 15000);
     return () => window.clearTimeout(id);
-  }, [unavailable]);
+  }, []);
 
   const soundOn = () => {
     const v = videoRef.current;

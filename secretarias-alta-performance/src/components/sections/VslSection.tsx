@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { vsl } from "@/lib/config";
 import { useVslUnlocked } from "@/lib/vslStore";
 import { NativeVsl } from "@/components/vsl/NativeVsl";
@@ -15,13 +15,14 @@ import { YouTubeVsl } from "@/components/vsl/YouTubeVsl";
 export function VslSection() {
   const unlocked = useVslUnlocked();
   const [mp4Failed, setMp4Failed] = useState(false);
+  const onUnavailable = useCallback(() => setMp4Failed(true), []);
   const useNative = Boolean(vsl.mp4Url) && !mp4Failed;
 
   return (
     <section id="vsl" aria-label="Vídeo de apresentação" className="relative scroll-mt-20 bg-black pb-12 sm:pb-16">
       <div className="container-x">
         <div className="mx-auto max-w-4xl">
-          {useNative ? <NativeVsl onUnavailable={() => setMp4Failed(true)} /> : <YouTubeVsl />}
+          {useNative ? <NativeVsl onUnavailable={onUnavailable} /> : <YouTubeVsl />}
 
           {!unlocked && (
             <p className="mt-4 text-center text-sm font-semibold text-muted">

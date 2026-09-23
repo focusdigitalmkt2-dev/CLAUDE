@@ -81,7 +81,10 @@ export const lead = {
     // Planilha de leads (Google Sheets via Apps Script) — código em docs/planilha-leads-apps-script.js
     "https://script.google.com/macros/s/AKfycbz0D-9mvwTABmVwR2BPRVAIPhomnDzh7FDEc5czMOSr06izozhZmk__ZOTO6q1MIMOZ/exec",
   ),
-  redirectToWhatsApp: true,
+  /** Após o cadastro: leva para a página /obrigado (com botão de WhatsApp). */
+  thankYouPath: "/obrigado",
+  /** Abrir o WhatsApp automaticamente após o cadastro (false = só pelo botão da página de obrigado). */
+  redirectToWhatsApp: false,
   successTitle: "Recebemos seus dados!",
   successText:
     "Nossa equipe vai falar com você pelo WhatsApp para confirmar sua vaga.",
