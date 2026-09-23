@@ -297,7 +297,7 @@ export function VslSection() {
   const showHint = !nativeControls && !failed && (muted || autoplayBlocked);
 
   return (
-    <section id="vsl" aria-label="Vídeo de apresentação" className="enter relative scroll-mt-20 bg-black pb-12 sm:pb-16" style={{ "--d": "0.1s" } as React.CSSProperties}>
+    <section id="vsl" aria-label="Vídeo de apresentação" className="relative scroll-mt-20 bg-black pb-12 sm:pb-16">
       <div className="container-x">
         <div className="mx-auto max-w-4xl">
           <div className="border-gradient-gold relative overflow-clip rounded-2xl bg-graphite-2 shadow-card">

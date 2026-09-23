@@ -52,8 +52,12 @@ jobs:
       - name: Capa da VSL servida pelo próprio site
         run: |
           id=$(grep -oE 'youtubeId: "[^"]+"' src/lib/config.ts | cut -d'"' -f2)
-          curl -sSf "https://i.ytimg.com/vi/$id/maxresdefault.jpg" -o public/images/vsl-poster.jpg \
-            || curl -sSf "https://i.ytimg.com/vi/$id/sddefault.jpg" -o public/images/vsl-poster.jpg || true
+          curl -sSf "https://i.ytimg.com/vi/$id/maxresdefault.jpg" -o /tmp/poster.jpg \
+            || curl -sSf "https://i.ytimg.com/vi/$id/sddefault.jpg" -o /tmp/poster.jpg || true
+          if [ -s /tmp/poster.jpg ]; then
+            # reduz para 960px de largura e qualidade 72: ~40 KB em vez de ~100 KB
+            convert /tmp/poster.jpg -resize 960x -strip -quality 72 public/images/vsl-poster.jpg || cp /tmp/poster.jpg public/images/vsl-poster.jpg
+          fi
           ls -la public/images/vsl-poster.jpg || echo "capa não baixada; o site usa a do YouTube"
       - name: Deploy de produção
         id: deploy

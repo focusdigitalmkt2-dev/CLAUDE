@@ -1,10 +1,6 @@
 "use client";
 
-import type { CSSProperties } from "react";
 import { sections } from "@/lib/config";
-
-/** Entrada em CSS (.enter) com atraso via --d. Nada fica oculto sem JavaScript. */
-const enter = (delay: number) => ({ "--d": `${delay}s` }) as CSSProperties;
 
 export function Hero() {
   return (
@@ -21,8 +17,7 @@ export function Hero() {
       <div className="container-x relative">
         <h1
           id="hero-title"
-          className="enter mx-auto max-w-4xl text-center font-display text-[clamp(1.85rem,5.6vw,3.6rem)] font-black uppercase leading-[0.98] tracking-tight text-balance"
-          style={enter(0)}
+          className="mx-auto max-w-4xl text-center font-display text-[clamp(1.85rem,5.6vw,3.6rem)] font-black uppercase leading-[0.98] tracking-tight text-balance"
         >
           Transforme sua secretária em uma{" "}
           <span className="text-gold-gradient">vendedora</span> e comece a{" "}
