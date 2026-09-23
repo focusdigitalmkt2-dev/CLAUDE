@@ -128,12 +128,17 @@ chown -R caddy:caddy "$SITE_DIR" 2>/dev/null || true
 
 # ---------------------------------------------------------------- Caddy config
 say "Configurando o domínio $DOMAIN no Caddy"
-cat > /etc/caddy/Caddyfile <<CADDY
-# Landing page Secretárias de Alta Performance (gerado por deploy/hostinger-vps.sh)
-www.$DOMAIN {
+WWW_BLOCK=""
+case "$DOMAIN" in
+  *.hstgr.cloud) ;;  # hostname temporário da Hostinger: não existe www.
+  *) WWW_BLOCK="www.$DOMAIN {
 	redir https://$DOMAIN{uri} permanent
 }
-
+";;
+esac
+cat > /etc/caddy/Caddyfile <<CADDY
+# Landing page Secretárias de Alta Performance (gerado por deploy/hostinger-vps.sh)
+$WWW_BLOCK
 $DOMAIN {
 	root * $SITE_DIR
 	encode zstd gzip
